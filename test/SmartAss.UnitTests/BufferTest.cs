@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SmartAss.Buffering;
 
-namespace Tests
+namespace SmartAss.Tests
 {
     public class BufferTest
     {

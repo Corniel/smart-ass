@@ -8,7 +8,7 @@ namespace SmartAss.Collections
     public struct ArrayEnumerator<T> : IEnumerator<T>, IEnumerable<T>
     {
         private readonly T[] array;
-        private readonly int length;
+        private readonly int end;
         private int index;
 
         /// <summary>Creates a new instance of an enumerator.</summary>
@@ -18,7 +18,7 @@ namespace SmartAss.Collections
         public ArrayEnumerator(T[] array, int startIndex, int count)
         {
             this.array = array;
-            length = count;
+            end = startIndex + count;
             index = startIndex - 1;
             Logger.Ctor<ArrayEnumerator<T>>();
         }
@@ -30,7 +30,7 @@ namespace SmartAss.Collections
         object IEnumerator.Current => Current;
 
         /// <inheritdoc />
-        public bool MoveNext() => ++index < length;
+        public bool MoveNext() => ++index < end;
 
         /// <inheritdoc />
         public void Reset() => index = -1;

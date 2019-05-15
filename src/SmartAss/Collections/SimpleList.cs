@@ -53,7 +53,7 @@ namespace SmartAss.Collections
         /// <inheritdoc />
         public void AddRange(IEnumerable<T> items)
         {
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 Add(item);
             }
@@ -100,6 +100,9 @@ namespace SmartAss.Collections
         /// <inheritdoc />
         public void CopyTo(T[] array, int arrayIndex) => Array.Copy(this.array, 0, array, arrayIndex, Count);
 
+        /// <summary>Sorts the items in the array.</summary>
+        public virtual void Sort() => Array.Sort(array, 0, Count);
+
         /// <inheritdoc />
         public virtual void Clear() => Count = 0;
 
@@ -115,6 +118,5 @@ namespace SmartAss.Collections
 
         /// <summary>Represents the simple list as a DEBUG <see cref="string"/>.</summary>
         internal string DebuggerDisplay => Invariant($"Count = {Count:#,##0}, Capacity: {Capacity:#,##0}");
-
     }
 }

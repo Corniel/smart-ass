@@ -34,7 +34,7 @@ namespace SmartAss.UnitTests
             if (runs > 1)
             {
                 Console.WriteLine(
-                    "Runs: {0} Avg: {1:#,##0.00} Ticks/run ({2:#,##0.000} ms/run)",
+                    "Runs: {0} Avg: {1:#,##0.000} Ticks/run ({2:#,##0.000} ms/run)",
                     runs,
                     sw.Elapsed.Ticks / (double)runs,
                     sw.Elapsed.TotalMilliseconds / runs);

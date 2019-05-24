@@ -157,7 +157,6 @@ namespace SmartAss
 
                 ulong b0 = 0;
                 ulong b1 = 0;
-                ulong b2 = 0;
 
                 if (str[0] == '-')
                 {
@@ -190,32 +189,29 @@ namespace SmartAss
 
                     b0 *= 10;
                     b1 *= 10;
-                    b2 *= 10;
 
                     b0 += digit;
                     // add overflow
-                    b1 += b0 >> 32;
-                    b2 += b1 >> 32;
+                    b1 += b0 >> 48;
 
-                    if ((b2 & ~DecimalMask) != 0)
+                    if ((b1 & ~DecimalMask) != 0)
                     {
                         return false;
                     }
 
                     // clear overflow.
                     b0 &= DecimalMask;
-                    b1 &= DecimalMask;
                 }
 
                 var lo = (int)b0;
-                var mi = (int)b1;
-                var hi = (int)b2;
+                var mi = (int)((b1 << 16) | (b0 >> 32));
+                var hi = (int)(b1 >> 16);
 
                 dec = new decimal(lo, mi, hi, negative, scale < 0 ? default : (byte)scale);
 
                 return true;
             }
         }
-        private const ulong DecimalMask = 0xFFFFFFFF;
+        private const ulong DecimalMask = 0xFFFFFFFFFFFF;
     }
 }

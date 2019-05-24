@@ -8,6 +8,8 @@ namespace SmartAss.UnitTests
 {
     public class ParserTest
     {
+        const int Zillions = 1 * 1000 * 1000;
+
         [Test]
         public void Int32_Overflow()
         {
@@ -22,30 +24,41 @@ namespace SmartAss.UnitTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void ToInt32_10million_ShouldBeFaster()
+        [TestCase("666")]
+        [TestCase("3.14159")]
+        [TestCase("-3.14159")]
+        [TestCase("12345.6789012")]
+        [TestCase("12345.678901234")]
+        [TestCase("81284722.68774923738")]
+        public void ToDecimal(string str)
         {
-            var numbers = 2 * 1000 * 1000;
+            var expected = decimal.Parse(str, CultureInfo.InvariantCulture);
+            Assert.IsTrue(Parser.ToDecimal(str, out decimal actual));
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ToInt32_Zillions_ShouldBeFaster()
+        {
             var rnd = new MT19937Generator(17);
 
-            var strings = Enumerable.Range(0, numbers).Select(n => rnd.Next(int.MinValue, int.MaxValue).ToString()).ToArray();
+            var strings = Enumerable.Range(0, Zillions).Select(n => rnd.Next(int.MinValue, int.MaxValue).ToString()).ToArray();
 
-            Speed.Test(numbers, nameof(Int32TryParse), (num) => Int32TryParse(strings[num]));
-            Speed.Test(numbers, nameof(ParserInt32), (num) => ParserInt32(strings[num]));
+            Speed.Test(Zillions, nameof(Int32TryParse), (num) => Int32TryParse(strings[num]));
+            Speed.Test(Zillions, nameof(ParserInt32), (num) => ParserInt32(strings[num]));
 
-            for (var num = 0; num < numbers; num++)
+            foreach(var str in strings)
             {
-                Assert.AreEqual(Int32TryParse(strings[num]), ParserInt32(strings[num]));
+                Assert.AreEqual(Int32TryParse(str), ParserInt32(str));
             }
         }
 
         [Test]
-        public void ToInt64_10million_ShouldBeFaster()
+        public void ToInt64_Zillions_ShouldBeFaster()
         {
-            var numbers = 2 * 1000 * 1000;
             var rnd = new MT19937Generator(17);
 
-            var strings = Enumerable.Range(0, numbers).Select(n =>
+            var strings = Enumerable.Range(0, Zillions).Select(n =>
             {
                 long top = rnd.Next(int.MinValue, int.MaxValue);
                 long bot = rnd.Next(int.MinValue, int.MaxValue);
@@ -53,34 +66,54 @@ namespace SmartAss.UnitTests
 
             }).ToArray();
 
-            Speed.Test(numbers, nameof(Int64TryParse), (num) => Int64TryParse(strings[num]));
-            Speed.Test(numbers, nameof(ParserInt64), (num) => ParserInt64(strings[num]));
+            Speed.Test(Zillions, nameof(Int64TryParse), (num) => Int64TryParse(strings[num]));
+            Speed.Test(Zillions, nameof(ParserInt64), (num) => ParserInt64(strings[num]));
 
-            for (var num = 0; num < numbers; num++)
+            foreach (var str in strings)
             {
-                Assert.AreEqual(Int64TryParse(strings[num]), ParserInt64(strings[num]));
+                Assert.AreEqual(Int64TryParse(str), ParserInt64(str));
             }
         }
 
         [Test]
-        public void ToDecimal_10million_ShouldBeFaster()
+        public void ToDouble_Zillions_ShouldBeFaster()
         {
-            var numbers = 2 * 1000 * 1000;
             var rnd = new Random(17);
 
-            var strings = Enumerable.Range(0, numbers).Select(n =>
+            var strings = Enumerable.Range(0, Zillions).Select(n =>
             {
-                var f = (decimal)(2 * rnd.NextDouble() - 1);
-                var dec =  f * int.MaxValue;
-                return dec.ToString();
+                double numerator = rnd.Next(int.MinValue, int.MaxValue);
+                double denumerator = rnd.Next(1, int.MaxValue);
+                return (numerator / denumerator).ToString(CultureInfo.InvariantCulture);
             }).ToArray();
 
-            Speed.Test(numbers, nameof(DecimalTryParse), (num) => DecimalTryParse(strings[num]));
-            Speed.Test(numbers, nameof(ParserDecimal), (num) => ParserDecimal(strings[num]));
+            Speed.Test(Zillions, nameof(DoublelTryParse), (num) => DoublelTryParse(strings[num]));
+            Speed.Test(Zillions, nameof(ParserDouble), (num) => ParserDouble(strings[num]));
 
-            for (var num = 0; num < numbers; num++)
+            foreach (var str in strings)
             {
-                Assert.AreEqual(DecimalTryParse(strings[num]), ParserDecimal(strings[num]));
+                Assert.AreEqual(DoublelTryParse(str), ParserDouble(str));
+            }
+        }
+
+        [Test]
+        public void ToDecimal_Zillions_ShouldBeFaster()
+        {
+            var rnd = new Random(17);
+
+            var strings = Enumerable.Range(0, Zillions).Select(n =>
+            {
+                double numerator = rnd.Next(int.MinValue, int.MaxValue);
+                double denumerator = rnd.Next(1, int.MaxValue);
+                return (numerator / denumerator).ToString(CultureInfo.InvariantCulture);
+            }).ToArray();
+
+            Speed.Test(Zillions, nameof(DecimalTryParse), (num) => DecimalTryParse(strings[num]));
+            Speed.Test(Zillions, nameof(ParserDecimal), (num) => ParserDecimal(strings[num]));
+
+            foreach(var str in strings)
+            {
+                Assert.AreEqual(DecimalTryParse(str), ParserDecimal(str));
             }
         }
 
@@ -94,6 +127,11 @@ namespace SmartAss.UnitTests
             Parser.ToInt64(str, out long result);
             return result;
         }
+        private static double ParserDouble(string str)
+        {
+            Parser.ToDouble(str, out double result);
+            return result;
+        }
         private static decimal ParserDecimal(string str)
         {
             Parser.ToDecimal(str, out decimal result);
@@ -105,10 +143,14 @@ namespace SmartAss.UnitTests
             int.TryParse(str, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out int result);
             return result;
         }
-
         private static long Int64TryParse(string str)
         {
             long.TryParse(str, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out long result);
+            return result;
+        }
+        private static double DoublelTryParse(string str)
+        {
+            double.TryParse(str, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double result);
             return result;
         }
         private static decimal DecimalTryParse(string str)

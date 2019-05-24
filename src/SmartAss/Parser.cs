@@ -1,4 +1,6 @@
-﻿namespace SmartAss
+﻿using System;
+
+namespace SmartAss
 {
     public static class Parser
     {
@@ -107,6 +109,27 @@
             return true;
         }
 
+        /// <summary>Parses a double.</summary>
+        /// <param name="str">
+        /// The input string.
+        /// </param>
+        /// <param name="n">
+        /// The parsed double.
+        /// </param>
+        /// <returns>
+        /// True if parsable, otherwise false.
+        /// </returns>
+        public static bool ToDouble(string str, out double n)
+        {
+            if(ToDecimal(str, out decimal dec))
+            {
+                n = (double)dec;
+                return true;
+            }
+            n = default;
+            return false;
+        }
+        
         /// <summary>Parses a decimal.</summary>
         /// <param name="str">
         /// The input string.
@@ -125,78 +148,74 @@
                 return false;
             }
 
-            var start = 0;
-            var end = str.Length;
-            var buffer = 0L;
-            var negative = false;
-            byte scale = 255;
-
-            int lo = 0;
-            int mid = 0;
-            var block = 0;
-
-            if (str[0] == '-')
+            unchecked
             {
-                start = 1;
-                negative = true;
-            }
+                var start = 0;
 
-            for (var i = start; i < end; i++)
-            {
-                var ch = str[i];
+                var negative = false;
+                int scale = int.MinValue;
 
-                // Not a digit.
-                if (ch < '0' || ch > '9')
+                ulong b0 = 0;
+                ulong b1 = 0;
+                ulong b2 = 0;
+
+                if (str[0] == '-')
                 {
-                    // if a dot and not found yet.
-                    if (ch == '.' && scale == 255)
-                    {
-                        scale = 0;
-                        continue;
-                    }
-                    return false;
-                }
-                unchecked
-                {
-                    buffer *= 10;
-                    buffer += ch - '0';
-
-                    // increase scale if found.
-                    if (scale != 255)
-                    {
-                        scale++;
-                    }
+                    start = 1;
+                    negative = true;
                 }
 
-                // Maximum decimals allowed is 28.
-                if (scale > 28)
+                for (var i = start; i < str.Length; i++)
                 {
-                    return false;
-                }
-                // No longer fits an int.
-                if ((buffer & 0xFFFF00000000) != 0)
-                {
-                    if (block == 0)
+                    var ch = str[i];
+
+                    // Not a digit.
+                    if (ch < '0' || ch > '9')
                     {
-                        lo = unchecked((int)buffer);
+                        // if a dot and not found yet.
+                        if (ch == '.' && scale < 0)
+                        {
+                            scale = 0;
+                            continue;
+                        }
+                        return false;
                     }
-                    else if (block == 1)
-                    {
-                        mid = unchecked((int)buffer);
-                    }
-                    // Does not longer fits block 2, so overflow.
-                    else if (block == 2)
+                    // Precision does not fit.
+                    if (scale++ >= 28)
                     {
                         return false;
                     }
-                    buffer >>= 32;
-                    block++;
-                }
-            }
 
-            var hi = unchecked((int)buffer);
-            dec = new decimal(lo, mid, hi, negative, scale == 255 ? default : scale);
-            return true;
+                    uint digit = (uint)(ch - '0');
+
+                    b0 *= 10;
+                    b1 *= 10;
+                    b2 *= 10;
+
+                    b0 += digit;
+                    // add overflow
+                    b1 += b0 >> 32;
+                    b2 += b1 >> 32;
+
+                    if ((b2 & ~DecimalMask) != 0)
+                    {
+                        return false;
+                    }
+
+                    // clear overflow.
+                    b0 &= DecimalMask;
+                    b1 &= DecimalMask;
+                }
+
+                var lo = (int)b0;
+                var mi = (int)b1;
+                var hi = (int)b2;
+
+                dec = new decimal(lo, mi, hi, negative, scale < 0 ? default : (byte)scale);
+
+                return true;
+            }
         }
+        private const ulong DecimalMask = 0xFFFFFFFF;
     }
 }

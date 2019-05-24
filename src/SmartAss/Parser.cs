@@ -121,14 +121,91 @@ namespace SmartAss
         /// </returns>
         public static bool ToDouble(string str, out double n)
         {
-            if(ToDecimal(str, out decimal dec))
+            n = default;
+            if (string.IsNullOrEmpty(str))
             {
-                n = (double)dec;
+                return false;
+            }
+
+            unchecked
+            {
+                var start = 0;
+
+                var negative = false;
+                int scale = int.MinValue;
+
+                ulong buffer = 0;
+
+                if (str[0] == '-')
+                {
+                    start = 1;
+                    negative = true;
+                }
+
+                for (var i = start; i < str.Length; i++)
+                {
+                    var ch = str[i];
+                    scale++;
+                    // Not a digit.
+                    if (ch < '0' || ch > '9')
+                    {
+                        // if a dot and not found yet.
+                        if (ch == '.' && scale < 0)
+                        {
+                            scale = 0;
+                            continue;
+                        }
+                        return false;
+                    }
+
+                    uint digit = (uint)(ch - '0');
+
+                    buffer *= 10;
+                    buffer += digit;
+
+                    if ((buffer & 0x8000000000000000) != 0)
+                    {
+                        return false;
+                    }
+                }
+
+                n = buffer;
+                if (scale > 0)
+                {
+                    n /= deviders[scale];
+                }
+                if (negative)
+                {
+                    n = -n;
+                }
+
+                
+
                 return true;
             }
-            n = default;
-            return false;
         }
+        private static readonly double[] deviders = new[] {
+            1d,
+            10,
+            100,
+            1000,
+            10000,
+            100000,
+            1000000,
+            10000000,
+            100000000,
+            1000000000,
+            10000000000,
+            100000000000,
+            1000000000000,
+            10000000000000,
+            100000000000000,
+            1000000000000000,
+            10000000000000000,
+            100000000000000000,
+            1000000000000000000,
+            10000000000000000000,
+        };
         
         /// <summary>Parses a decimal.</summary>
         /// <param name="str">

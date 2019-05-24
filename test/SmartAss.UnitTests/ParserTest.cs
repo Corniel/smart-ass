@@ -17,6 +17,7 @@ namespace SmartAss.UnitTests
             Assert.AreEqual(0, result);
         }
 
+        [TestCase("-666", -666)]
         [TestCase("8128472268774923738", 8128472268774923738L)]
         public void ToInt64(string str, long expected)
         {
@@ -37,6 +38,19 @@ namespace SmartAss.UnitTests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase("666")]
+        [TestCase("3.14159")]
+        [TestCase("-3.14159")]
+        [TestCase("12345.6789012")]
+        [TestCase("12345.678901234")]
+        [TestCase("81284722.68774923738")]
+        public void ToDouble(string str)
+        {
+            var expected = double.Parse(str, CultureInfo.InvariantCulture);
+            Assert.IsTrue(Parser.ToDouble(str, out double actual));
+            Assert.AreEqual(expected, actual);
+        }
+
         [Test]
         public void ToInt32_Zillions_ShouldBeFaster()
         {
@@ -44,10 +58,12 @@ namespace SmartAss.UnitTests
 
             var strings = Enumerable.Range(0, Zillions).Select(n => rnd.Next(int.MinValue, int.MaxValue).ToString()).ToArray();
 
-            Speed.Test(Zillions, nameof(Int32TryParse), (num) => Int32TryParse(strings[num]));
-            Speed.Test(Zillions, nameof(ParserInt32), (num) => ParserInt32(strings[num]));
+            var reference = Speed.Test(Zillions, nameof(Int32TryParse), (num) => Int32TryParse(strings[num]));
+            var challence = Speed.Test(Zillions, nameof(ParserInt32), (num) => ParserInt32(strings[num]));
 
-            foreach(var str in strings)
+            Console.WriteLine(reference / challence);
+
+            foreach (var str in strings)
             {
                 Assert.AreEqual(Int32TryParse(str), ParserInt32(str));
             }
@@ -66,8 +82,10 @@ namespace SmartAss.UnitTests
 
             }).ToArray();
 
-            Speed.Test(Zillions, nameof(Int64TryParse), (num) => Int64TryParse(strings[num]));
-            Speed.Test(Zillions, nameof(ParserInt64), (num) => ParserInt64(strings[num]));
+            var reference = Speed.Test(Zillions, nameof(Int64TryParse), (num) => Int64TryParse(strings[num]));
+            var challence = Speed.Test(Zillions, nameof(ParserInt64), (num) => ParserInt64(strings[num]));
+
+            Console.WriteLine(reference / challence);
 
             foreach (var str in strings)
             {
@@ -87,13 +105,10 @@ namespace SmartAss.UnitTests
                 return (numerator / denumerator).ToString(CultureInfo.InvariantCulture);
             }).ToArray();
 
-            Speed.Test(Zillions, nameof(DoublelTryParse), (num) => DoublelTryParse(strings[num]));
-            Speed.Test(Zillions, nameof(ParserDouble), (num) => ParserDouble(strings[num]));
+            var reference = Speed.Test(Zillions, nameof(DoublelTryParse), (num) => DoublelTryParse(strings[num]));
+            var challence = Speed.Test(Zillions, nameof(ParserDouble), (num) => ParserDouble(strings[num]));
 
-            foreach (var str in strings)
-            {
-                Assert.AreEqual(DoublelTryParse(str), ParserDouble(str));
-            }
+            Console.WriteLine(reference / challence);
         }
 
         [Test]
@@ -108,10 +123,12 @@ namespace SmartAss.UnitTests
                 return (numerator / denumerator).ToString(CultureInfo.InvariantCulture);
             }).ToArray();
 
-            Speed.Test(Zillions, nameof(DecimalTryParse), (num) => DecimalTryParse(strings[num]));
-            Speed.Test(Zillions, nameof(ParserDecimal), (num) => ParserDecimal(strings[num]));
+            var reference = Speed.Test(Zillions, nameof(DecimalTryParse), (num) => DecimalTryParse(strings[num]));
+            var challence = Speed.Test(Zillions, nameof(ParserDecimal), (num) => ParserDecimal(strings[num]));
 
-            foreach(var str in strings)
+            Console.WriteLine(reference / challence);
+
+            foreach (var str in strings)
             {
                 Assert.AreEqual(DecimalTryParse(str), ParserDecimal(str));
             }

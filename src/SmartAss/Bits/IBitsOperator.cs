@@ -3,6 +3,9 @@
     /// <summary>Operator that can tweak/manipulate bits.</summary>
     public interface IBitsOperator<T> where T : struct
     {
+        /// <summary>Gets the bit size of the <see cref="T"/> type.</summary>
+        int BitSize { get; }
+
         /// <summary>Counts the number of bits with the value 1.</summary>
         int Count(T bits);
 

@@ -6,6 +6,9 @@ namespace SmartAss
     internal class BitsUInt32 : IBitsOperator<uint>
     {
         /// <inheritdoc />
+        public int BitSize => 32;
+
+        /// <inheritdoc />
         public int Count(uint bits)
         {
             unchecked

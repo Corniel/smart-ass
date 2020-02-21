@@ -6,6 +6,9 @@ namespace SmartAss
     internal class BitsUInt64 : IBitsOperator<ulong>
     {
         /// <inheritdoc />
+        public int BitSize => 64;
+
+        /// <inheritdoc />
         public int Count(ulong bits)
         {
             unchecked

@@ -6,6 +6,8 @@ namespace SmartAss
     internal class BitsByte : IBitsOperator<byte>
     {
         /// <inheritdoc />
+        public int BitSize => 8;
+        
         public int Count(byte bits) => count[bits];
 
         /// <inheritdoc />

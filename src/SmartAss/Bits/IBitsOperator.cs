@@ -21,6 +21,9 @@
         /// <summary>Unflags the bit at the specified position.</summary>
         T Unflag(T bits, int position);
 
+        /// <summary>Mirrors the bits.</summary>
+        T Mirror(T bits);
+
         /// <summary>Represents the bits as binary string.</summary>
         string ToString(T bits);
     }

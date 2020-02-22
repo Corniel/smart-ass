@@ -73,7 +73,21 @@ namespace SmartAss
         public ulong Unflag(ulong bits, int position) => bits & unflag[position];
 
         /// <inheritdoc />
+        public ulong Mirror(ulong bits)
+        {
+            var mirror = bits;
+            mirror = (mirror >> 01) & 0x5555555555555555 | (mirror << 01) & 0xaaaaaaaaaaaaaaaa;
+            mirror = (mirror >> 02) & 0x3333333333333333 | (mirror << 02) & 0xcccccccccccccccc;
+            mirror = (mirror >> 04) & 0x0f0f0f0f0f0f0f0f | (mirror << 04) & 0xf0f0f0f0f0f0f0f0;
+            mirror = (mirror >> 08) & 0x00ff00ff00ff00ff | (mirror << 08) & 0xff00ff00ff00ff00;
+            mirror = (mirror >> 16) & 0x0000ffff0000ffff | (mirror << 16) & 0xffff0000ffff0000;
+            mirror = (mirror >> 32) & 0x00000000ffffffff | (mirror << 32) & 0xffffffff00000000;
+            return mirror;
+        }
+
+        /// <inheritdoc />
         public string ToString(ulong bits) => Bits.ToString(BitConverter.GetBytes(bits));
+
 
         internal static readonly ulong[] flag =
         {

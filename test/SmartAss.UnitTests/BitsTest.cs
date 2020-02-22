@@ -133,5 +133,34 @@ namespace SmartAss.Tests
             var flagged = Bits.UInt64.Unflag(number, position);
             BitsAssert.AreEqual((ulong)expected, flagged);
         }
+
+        [TestCase(0x01, 0x80)]
+        [TestCase(0x24, 0x24)]
+        [TestCase(0xC8, 0x13)]
+        public void Mirror_Byte(byte bits, byte expected)
+        {
+            var actual = Bits.Byte.Mirror(bits);
+            BitsAssert.AreEqual(expected, actual);
+        }
+
+        [TestCase(0x0000_0001, 0x8000_0000)]
+        [TestCase(0x0000_2400, 0x0024_0000)]
+        [TestCase(0x000C_0080, 0x0100_3000)]
+        [TestCase(0x51C8_7AB8, 0x1D5E_138A)]
+        public void Mirror_UInt32(long bits, long expected)
+        {
+            var actual = Bits.UInt32.Mirror((uint)bits);
+            BitsAssert.AreEqual((uint)expected, actual);
+        }
+
+        [TestCase(0x0000_0000_0001_0000, 0x0000_8000_0000_0000)]
+        [TestCase(0x0000_0000_0200_0400, 0x0020_0040_0000_0000)]
+        [TestCase(0x000C_0080_3456_0670, 0x0E60_6A2C_0100_3000)]
+        [TestCase(0x51C8_7AB8_0545_3210, 0x084C_A2A0_1D5E_138A)]
+        public void Mirror_UInt64(long bits, long expected)
+        {
+            var actual = Bits.UInt64.Mirror((ulong)bits);
+            BitsAssert.AreEqual((ulong)expected, actual);
+        }
     }
 }

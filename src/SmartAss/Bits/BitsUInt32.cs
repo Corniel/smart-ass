@@ -57,6 +57,18 @@ namespace SmartAss
         public uint Unflag(uint bits, int position) => bits & unflag[position];
 
         /// <inheritdoc />
+        public uint Mirror(uint bits)
+        {
+            var mirror = bits;
+            mirror = (mirror >> 01) & 0x55555555 | (mirror << 01) & 0xaaaaaaaa;
+            mirror = (mirror >> 02) & 0x33333333 | (mirror << 02) & 0xcccccccc;
+            mirror = (mirror >> 04) & 0x0f0f0f0f | (mirror << 04) & 0xf0f0f0f0;
+            mirror = (mirror >> 08) & 0x00ff00ff | (mirror << 08) & 0xff00ff00;
+            mirror = (mirror >> 16) & 0x0000ffff | (mirror << 16) & 0xffff0000;
+            return mirror;
+        }
+
+        /// <inheritdoc />
         public string ToString(uint bits) => Bits.ToString(BitConverter.GetBytes(bits));
 
         internal static readonly uint[] flag =

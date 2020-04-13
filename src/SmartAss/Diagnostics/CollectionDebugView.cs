@@ -1,4 +1,9 @@
-﻿#pragma warning disable S2365 
+﻿// <copyright file = "CollectionDebugView.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+#pragma warning disable S2365
 // Properties should not make collection or array copies
 // Required for debugging purposes.
 

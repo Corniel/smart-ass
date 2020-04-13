@@ -1,4 +1,9 @@
-﻿using SmartAss.Topology;
+﻿// <copyright file = "ImageLogger.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using SmartAss.Topology;
 using System;
 using System.Drawing;
 using System.Linq;

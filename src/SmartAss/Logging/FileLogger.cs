@@ -1,4 +1,9 @@
-﻿using System;
+﻿// <copyright file = "FileLogger.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System;
 using System.IO;
 using System.Text;
 
@@ -10,6 +15,7 @@ namespace SmartAss.Logging
         {
             file = new FileInfo($"{directory}/{DateTime.Now:yyyy-MM-dd_HH_mm_ss}.log");
         }
+
         private readonly FileInfo file;
 
         public override Encoding Encoding => Encoding.UTF8;

@@ -1,4 +1,9 @@
-﻿using SmartAss.Diagnostics;
+﻿// <copyright file = "SimpleList.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using SmartAss.Diagnostics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +28,7 @@ namespace SmartAss.Collections
         /// <summary>Creates a new instance of a simple list.</summary>
         public SimpleList(int capacity) => array = new T[capacity];
 
-        /// <inheritdoc />
+        /// <summary>Gets an item of the simple list based on its index.</summary>
         public T this[int index] => array[index];
 
         /// <inheritdoc />
@@ -50,7 +55,7 @@ namespace SmartAss.Collections
         /// <inheritdoc />
         public virtual void Add(T item) => array[Count++] = item;
 
-        /// <inheritdoc />
+        /// <summary>Adds multiple items at once.</summary>
         public void AddRange(IEnumerable<T> items)
         {
             foreach (var item in items)
@@ -117,6 +122,7 @@ namespace SmartAss.Collections
         #endregion
 
         /// <summary>Represents the simple list as a DEBUG <see cref="string"/>.</summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => Invariant($"Count = {Count:#,##0}, Capacity: {Capacity:#,##0}");
     }
 }

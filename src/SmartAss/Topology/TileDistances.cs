@@ -1,4 +1,9 @@
-﻿using SmartAss.Diagnostics;
+﻿// <copyright file = "TileDistances.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using SmartAss.Diagnostics;
 using SmartAss.Logging;
 using System;
 using System.Collections;

@@ -1,4 +1,9 @@
-﻿namespace SmartAss
+﻿// <copyright file = "IBitsOperator.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace SmartAss
 {
     /// <summary>Operator that can tweak/manipulate bits.</summary>
     public interface IBitsOperator<T> where T : struct

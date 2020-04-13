@@ -1,4 +1,9 @@
-﻿using System;
+﻿// <copyright file = "Logger.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,11 +17,13 @@ namespace SmartAss.Logging
         Warn,
         Error,
     }
+
     public static class Logger
     {
         public static LogLevel Level { get; set; } = LogLevel.Error;
 
         public static void SetWriter(TextWriter writer) => Writer = writer ?? Console.Error;
+
         private static TextWriter Writer = Console.Error;
 
         [Conditional("DEBUG")]
@@ -24,16 +31,19 @@ namespace SmartAss.Logging
         {
             if (Level <= LogLevel.Debug) { Write("DEBUG ", message, args); }
         }
+
         [Conditional("DEBUG")]
         public static void Info(string message, params object[] args)
         {
             if (Level <= LogLevel.Info) { Write("INFO  ", message, args); }
         }
+
         [Conditional("DEBUG")]
         public static void Warn(string message, params object[] args)
         {
             if (Level <= LogLevel.Warn) { Write("WARN  ", message, args); }
         }
+
         [Conditional("DEBUG")]
         public static void Error(string message, params object[] args)
         {

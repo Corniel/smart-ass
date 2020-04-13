@@ -1,4 +1,9 @@
-﻿using SmartAss.Collections;
+﻿// <copyright file = "Map.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using SmartAss.Collections;
 using SmartAss.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;

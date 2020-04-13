@@ -1,4 +1,8 @@
-﻿using static System.FormattableString;
+﻿// <copyright file = "Raster.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+using static System.FormattableString;
 
 namespace SmartAss.Topology
 {

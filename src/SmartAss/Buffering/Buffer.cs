@@ -14,7 +14,7 @@ namespace SmartAss.Buffering
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly T[] buffer;
 
-        /// <summary>A locker object to prevent getting invalid snakes back.</summary>		
+        /// <summary>A locker object to prevent getting invalid snakes back.</summary>
         private readonly object locker = new object();
 
         /// <summary>Creates a new instance of a <see cref="T"/>.</summary>
@@ -23,7 +23,7 @@ namespace SmartAss.Buffering
             buffer = new T[capacity];
             Capacity = capacity;
         }
-   
+
         /// <summary>Gets the capacity of the buffer.</summary>
         public int Capacity { get; }
 
@@ -83,9 +83,9 @@ namespace SmartAss.Buffering
         /// <summary>Populates the full buffer.</summary>
         public void Populate()
         {
-            lock(locker)
+            lock (locker)
             {
-                while(Count < Capacity)
+                while (Count < Capacity)
                 {
                     buffer[Count++] = new T();
                 }

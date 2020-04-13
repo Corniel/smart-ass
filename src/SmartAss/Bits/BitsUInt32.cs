@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="BitsUInt32.cs">
+// Copyright (c) 2018-current, Corniel Nobel
+// </copyright>
+
+using System;
 
 namespace SmartAss
 {
@@ -20,7 +24,7 @@ namespace SmartAss
         }
 
         /// <inheritdoc />
-		public int Size(uint bits)
+        public int Size(uint bits)
         {
             unchecked
             {
@@ -35,7 +39,7 @@ namespace SmartAss
         }
 
         /// <inheritdoc />
-		public int First(uint bits)
+        public int First(uint bits)
         {
             unchecked
             {
@@ -110,6 +114,7 @@ namespace SmartAss
             0x00000000,
             #endregion
         };
+
         internal static readonly uint[] unflag =
         {
             #region values

@@ -46,7 +46,7 @@ namespace SmartAss.Collections
         #endregion
 
         /// <inheritdoc />
-        public void Dispose() { /* Nothing to dispose */}
+        public void Dispose() { /* Nothing to dispose */ }
 
     }
 }

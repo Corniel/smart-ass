@@ -30,7 +30,7 @@ namespace SmartAss.Topology
 
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(tiles, Size);
-        
+
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

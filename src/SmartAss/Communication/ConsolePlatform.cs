@@ -11,7 +11,7 @@ namespace SmartAss.Communication
     {
         public static void Run<TBot, TReader>()
             where TBot : new()
-            where TReader: IMessageReader, new()
+            where TReader : IMessageReader, new()
         {
             using (var platform = new ConsolePlatform(Console.In, Console.Out))
             {
@@ -42,7 +42,7 @@ namespace SmartAss.Communication
             foreach (var message in reader.Read(Reader))
             {
                 var response = Process(bot, message);
-                if(response != null)
+                if (response != null)
                 {
                     Logger.Info("Response: {0}", response);
                     Writer.WriteLine(response.ToString());
@@ -52,7 +52,7 @@ namespace SmartAss.Communication
 
         private object Process(object bot, object message)
         {
-            if(ApplyMethods.TryGetValue(message.GetType(), out MethodInfo apply))
+            if (ApplyMethods.TryGetValue(message.GetType(), out MethodInfo apply))
             {
                 try
                 {
@@ -71,7 +71,7 @@ namespace SmartAss.Communication
         {
             var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(m => m.Name == "Apply" && m.GetParameters().Length == 1);
 
-            foreach(var method in methods)
+            foreach (var method in methods)
             {
                 ApplyMethods[method.GetParameters()[0].ParameterType] = method;
             }

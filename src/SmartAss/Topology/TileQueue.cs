@@ -9,7 +9,7 @@ using static System.FormattableString;
 namespace SmartAss.Topology
 {
     [DebuggerDisplay("{DebuggerDisplay}"), DebuggerTypeProxy(typeof(CollectionDebugView))]
-    public class TileQueue<T>: IEnumerable<T> where T: ITile<T>
+    public class TileQueue<T> : IEnumerable<T> where T : ITile<T>
     {
         private readonly T[] queue;
         private int head;
@@ -34,7 +34,7 @@ namespace SmartAss.Topology
         public IEnumerable<T> DequeueCurrent()
         {
             var count = Count;
-            for(var i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 yield return Dequeue();
             }
@@ -50,7 +50,7 @@ namespace SmartAss.Topology
 
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(queue, tail, Count);
-        
+
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

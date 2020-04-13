@@ -7,14 +7,14 @@ namespace SmartAss.Logging
 {
     public static class ImageLogger
     {
-        public static Bitmap Heatmap<T>(int[] heatmap, Raster<T> raster) where T: RasterTile<T>
+        public static Bitmap Heatmap<T>(int[] heatmap, Raster<T> raster) where T : RasterTile<T>
         {
             var size = 16;
             var image = new Bitmap(raster.Cols * size, raster.Rows * size);
 
             var max = heatmap.Max();
 
-            if(max == 0)
+            if (max == 0)
             {
                 return image;
             }

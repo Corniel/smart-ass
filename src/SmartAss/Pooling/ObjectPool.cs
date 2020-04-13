@@ -31,7 +31,7 @@ namespace SmartAss.Pooling
         /// <remarks>
         /// Creates a new item, if the object pool is empty.
         /// </remarks>
-        public T Get(Func<T> create)
+        public Reusable<T> Get(Func<T> create)
         {
             T item;
             lock (locker)
@@ -40,7 +40,7 @@ namespace SmartAss.Pooling
                     ? create()
                     : pool[--Count];
             }
-            return item;
+            return new Reusable<T>(item, this);
         }
 
         /// <summary>Releases the item for reuse.</summary>
@@ -70,7 +70,7 @@ namespace SmartAss.Pooling
         }
 
         /// <summary>Releases the list for reuse, and clears it.</summary>
-        public void PushAndClear(SimpleList<T> list)
+        public void ReleaseAndClear(SimpleList<T> list)
         {
             Release(list);
             list.Clear();

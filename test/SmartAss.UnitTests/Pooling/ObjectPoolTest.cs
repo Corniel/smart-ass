@@ -14,6 +14,19 @@ namespace SmartAss.Tests.Pooling
             Assert.AreEqual(16, buffer.Count);
         }
 
+
+        [Test]
+        public void Reuse_Example()
+        {
+            using (var resuable = ExampleItem.New())
+            {
+                var example = resuable;
+            }
+
+            Assert.AreEqual(1, ExampleItem.pool.Count);
+        }
+
+
         public class TestItem
         {
             public int Value { get; set; }
@@ -22,21 +35,19 @@ namespace SmartAss.Tests.Pooling
 
         public class ExampleItem
         {
-            private static readonly ObjectPool<ExampleItem> pool = new ObjectPool<ExampleItem>(16);
+            public static readonly ObjectPool<ExampleItem> pool = new ObjectPool<ExampleItem>(16);
 
             private ExampleItem() { }
 
             public int Value { get; set; }
 
 
-            public static ExampleItem New()
+            public static Reusable<ExampleItem> New()
             {
-                var item = pool.Get(() => new ExampleItem());
-                item.Value = 0;
-                return item;
+                var reusable = pool.Get(() => new ExampleItem());
+                reusable.Item.Value = 0;
+                return reusable;
             }
-
-            public static void Release(ExampleItem item) => pool.Release(item);
         }
     }
 }

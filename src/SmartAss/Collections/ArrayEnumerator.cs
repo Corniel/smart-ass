@@ -47,6 +47,5 @@ namespace SmartAss.Collections
 
         /// <inheritdoc />
         public void Dispose() { /* Nothing to dispose */}
-
     }
 }

@@ -33,7 +33,7 @@ namespace SmartAss.Topology
                 var col = tile.Col;
 
                 var n = this[(col + 0) /*         */, (row - 1 + rows) % rows];
-                var e = this[(col + 1) % cols/*   */, (row + 0)];
+                var e = this[(col + 1) % cols /*  */, (row + 0)];
                 var s = this[(col + 0) /*         */, (row + 1) % rows];
                 var w = this[(col - 1 + cols) % cols, (row + 0)];
 

@@ -21,7 +21,7 @@ namespace SmartAss.Topology
             // This is what we want, different initializations for
             // different overrides.
             Initialize(cols, rows);
-#pragma warning restore S1699 
+#pragma warning restore S1699
         }
 
         /// <summary>Initializes a rows * cols sized raster.</summary>

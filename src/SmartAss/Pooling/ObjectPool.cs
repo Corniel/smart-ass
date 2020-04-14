@@ -46,6 +46,7 @@ namespace SmartAss.Pooling
                     ? create()
                     : pool[--Count];
             }
+
             return item;
         }
 

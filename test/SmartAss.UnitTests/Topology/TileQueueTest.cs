@@ -34,7 +34,7 @@ namespace SmartAss.UnitTests.Topology
             {
                 for(var i = 0; i < size; i++)
                 {
-                    tiles[i] = new DummyTile(i);
+                    Tiles[i] = new DummyTile(i);
                 }
             }
         }

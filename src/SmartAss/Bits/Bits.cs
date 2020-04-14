@@ -1,4 +1,9 @@
-﻿using System.Text;
+﻿// <copyright file = "Bits.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Text;
 
 namespace SmartAss
 {
@@ -7,8 +12,10 @@ namespace SmartAss
     {
         /// <summary>Bits based on <see cref="byte"/>.</summary>
         public static readonly IBitsOperator<byte> Byte = new BitsByte();
+
         /// <summary>Bits based on <see cref="uint"/>.</summary>
         public static readonly IBitsOperator<uint> UInt32 = new BitsUInt32();
+
         /// <summary>Bits based on <see cref="ulong"/>.</summary>
         public static readonly IBitsOperator<ulong> UInt64 = new BitsUInt64();
 
@@ -35,12 +42,15 @@ namespace SmartAss
                     shift++;
                 }
             }
+
             return mask;
         }
 
         /// <summary>Represents the <see cref="byte[]"/> as binary string.</summary>
         public static string ToString(byte[] bytes)
         {
+            if (bytes is null) { return string.Empty; }
+
             var sb = new StringBuilder();
 
             for (var index = bytes.Length - 1; index >= 0; index--)
@@ -50,8 +60,10 @@ namespace SmartAss
                 {
                     sb.Append(' ');
                 }
+
                 sb.Append(Byte.ToString(b));
             }
+
             return sb.ToString();
         }
     }

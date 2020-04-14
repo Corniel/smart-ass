@@ -7,7 +7,7 @@ namespace SmartAss.Tests
     [TestFixture]
     public class BitsTest
     {
-        private const int CountTestRuns = 1000000;
+        private const int Zillions = 10_000;
 
         [TestCase("", 0x00)]
         [TestCase("0001", 0x01)]
@@ -45,27 +45,31 @@ namespace SmartAss.Tests
         public void Count_UInt32()
         {
             var rnd = new Random(17);
-            var numbers = new uint[CountTestRuns];
-            var actual = new int[CountTestRuns];
+            var numbers = new uint[Zillions];
+            var actual = new int[Zillions];
             for (var i = 0; i < numbers.Length; i++)
             {
                 numbers[i] = (uint)rnd.Next();
             }
-            Speed.Test(numbers.Length, (index) => actual[index] = Bits.UInt32.Count(numbers[index]));
+            var duration = Speed.Test(numbers.Length, (index) => actual[index] = Bits.UInt32.Count(numbers[index]));
+            AssertIsFast(duration);
         }
+
+       
 
         [Test]
         public void Count_UInt64()
         {
             var rnd = new Random(17);
-            var numbers = new ulong[CountTestRuns];
-            var actual = new int[CountTestRuns];
+            var numbers = new ulong[Zillions];
+            var actual = new int[Zillions];
             for (var i = 0; i < numbers.Length; i++)
             {
                 numbers[i] = (ulong)rnd.Next();
                 numbers[i] |= (ulong)((long)rnd.Next()) << 32;
             }
-            Speed.Test(numbers.Length, (index) => actual[index] = Bits.UInt64.Count(numbers[index]));
+            var duration = Speed.Test(numbers.Length, (index) => actual[index] = Bits.UInt64.Count(numbers[index]));
+            AssertIsFast(duration);
         }
 
         [TestCase(0, 0x13)]
@@ -161,6 +165,12 @@ namespace SmartAss.Tests
         {
             var actual = Bits.UInt64.Mirror((ulong)bits);
             BitsAssert.AreEqual((ulong)expected, actual);
+        }
+
+        private static void AssertIsFast(TimeSpan duration)
+        {
+            Console.WriteLine($"{duration.Ticks / (double)Zillions:0.00} Ticks/operation");
+            Assert.IsTrue(duration < TimeSpan.FromMilliseconds(Zillions / 100d), duration.ToString());
         }
     }
 }

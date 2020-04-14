@@ -1,9 +1,40 @@
-﻿using System;
+﻿// <copyright file = "Parser.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
 
 namespace SmartAss
 {
+    /// <summary>A parser of primitives, with the most limited support.</summary>
     public static class Parser
     {
+        private const ulong DecimalMask = 0xFFFFFFFFFFFF;
+
+        private static readonly double[] Deviders = new[]
+        {
+            1d,
+            10d,
+            100d,
+            1000d,
+            10000d,
+            100000d,
+            1000000d,
+            10000000d,
+            100000000d,
+            1000000000d,
+            10000000000d,
+            100000000000d,
+            1000000000000d,
+            10000000000000d,
+            100000000000000d,
+            1000000000000000d,
+            10000000000000000d,
+            100000000000000000d,
+            1000000000000000000d,
+            10000000000000000000d,
+            100000000000000000000d,
+        };
+
         /// <summary>Parses a int.</summary>
         /// <param name="str">
         /// The input string.
@@ -41,11 +72,13 @@ namespace SmartAss
                 {
                     return false;
                 }
+
                 unchecked
                 {
                     number *= 10;
                     number += ch - '0';
                 }
+
                 // becomes negative, so overflow.
                 if ((number & 0x80000000) != 0)
                 {
@@ -94,11 +127,13 @@ namespace SmartAss
                 {
                     return false;
                 }
+
                 unchecked
                 {
                     number *= 10;
                     number += ch - '0';
                 }
+
                 if ((number & unchecked((long)0x8000000000000000)) != 0)
                 {
                     return false;
@@ -146,6 +181,7 @@ namespace SmartAss
                 {
                     var ch = str[i];
                     scale++;
+
                     // Not a digit.
                     if (ch < '0' || ch > '9')
                     {
@@ -155,6 +191,7 @@ namespace SmartAss
                             scale = 0;
                             continue;
                         }
+
                         return false;
                     }
 
@@ -172,41 +209,18 @@ namespace SmartAss
                 n = buffer;
                 if (scale > 0)
                 {
-                    n /= deviders[scale];
+                    n /= Deviders[scale];
                 }
+
                 if (negative)
                 {
                     n = -n;
                 }
 
-                
-
                 return true;
             }
         }
-        private static readonly double[] deviders = new[] {
-            1d,
-            10,
-            100,
-            1000,
-            10000,
-            100000,
-            1000000,
-            10000000,
-            100000000,
-            1000000000,
-            10000000000,
-            100000000000,
-            1000000000000,
-            10000000000000,
-            100000000000000,
-            1000000000000000,
-            10000000000000000,
-            100000000000000000,
-            1000000000000000000,
-            10000000000000000000,
-        };
-        
+
         /// <summary>Parses a decimal.</summary>
         /// <param name="str">
         /// The input string.
@@ -254,8 +268,10 @@ namespace SmartAss
                             scale = 0;
                             continue;
                         }
+
                         return false;
                     }
+
                     // Precision does not fit.
                     if (scale++ >= 28)
                     {
@@ -268,6 +284,7 @@ namespace SmartAss
                     b1 *= 10;
 
                     b0 += digit;
+
                     // add overflow
                     b1 += b0 >> 48;
 
@@ -289,6 +306,5 @@ namespace SmartAss
                 return true;
             }
         }
-        private const ulong DecimalMask = 0xFFFFFFFFFFFF;
     }
 }

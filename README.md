@@ -1,5 +1,6 @@
 # Smart Ass
 
-Just an library I use to (try to) gain some speed when building projects I
-think it is worth the effort. I would in general, discourage the usage in
-production code.
+In this library I research some techniques to help build high performant code
+(speedwise) in C#. It comes with absolutely no warranty, and you should in most
+cases really wonder, if using this code will safe your day.
+

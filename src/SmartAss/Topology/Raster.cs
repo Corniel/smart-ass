@@ -1,11 +1,16 @@
-﻿using static System.FormattableString;
+﻿// <copyright file = "Raster.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+using static System.FormattableString;
 
 namespace SmartAss.Topology
 {
     /// <summary>Represents a 2d raster map.</summary>
-    public abstract class Raster<T> : Map<T> where T : RasterTile<T>
+    public abstract class Raster<T> : Map<T>
+        where T : RasterTile<T>
     {
-        /// <summary>Creates a new instance of a raster.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Raster{T}"/> class.</summary>
         protected Raster(int cols, int rows)
             : base(rows * cols)
         {
@@ -17,7 +22,7 @@ namespace SmartAss.Topology
             // This is what we want, different initializations for
             // different overrides.
             Initialize(cols, rows);
-#pragma warning restore S1699 
+#pragma warning restore S1699
         }
 
         /// <summary>Initializes a rows * cols sized raster.</summary>
@@ -48,14 +53,17 @@ namespace SmartAss.Topology
                 {
                     tile.Neighbors.Add(tiles[up]);
                 }
+
                 if (tile.Col < cols - 1)
                 {
                     tile.Neighbors.Add(tiles[ri]);
                 }
+
                 if (dw < Size)
                 {
                     tile.Neighbors.Add(tiles[dw]);
                 }
+
                 if (tile.Col > 0)
                 {
                     tile.Neighbors.Add(tiles[le]);
@@ -67,11 +75,11 @@ namespace SmartAss.Topology
         protected abstract T Create(int index, int col, int row, int neighbors);
 
         /// <summary>Gets the tile based on its row and column.</summary>
-        public T this[int col, int row] => tiles[col + row * Cols];
+        public T this[int col, int row] => tiles[col + (row * Cols)];
 
         /// <summary>The number of rows (height).</summary>
         public int Rows { get; }
-        
+
         /// <summary>The number of columns (width).</summary>
         public int Cols { get; }
 

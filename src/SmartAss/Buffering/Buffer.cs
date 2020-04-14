@@ -8,8 +8,10 @@ using static System.FormattableString;
 namespace SmartAss.Buffering
 {
     /// <summary>Contains multiple snakes that can be reused.</summary>
-    [DebuggerDisplay("{DebuggerDisplay}"), DebuggerTypeProxy(typeof(CollectionDebugView))]
-    public class Buffer<T> : IEnumerable<T> where T : class, IBufferable, new()
+    [DebuggerDisplay("{DebuggerDisplay}")]
+    [DebuggerTypeProxy(typeof(CollectionDebugView))]
+    public class Buffer<T> : IEnumerable<T>
+        where T : class, IBufferable, new()
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly T[] buffer;
@@ -17,7 +19,7 @@ namespace SmartAss.Buffering
         /// <summary>A locker object to prevent getting invalid snakes back.</summary>
         private readonly object locker = new object();
 
-        /// <summary>Creates a new instance of a <see cref="T"/>.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Buffer{T}"/> class.</summary>
         public Buffer(int capacity = 1024)
         {
             buffer = new T[capacity];
@@ -43,6 +45,7 @@ namespace SmartAss.Buffering
                     ? new T()
                     : buffer[--Count];
             }
+
             item.Reset();
             return item;
         }
@@ -63,6 +66,8 @@ namespace SmartAss.Buffering
         /// <summary>Pushes items to the buffer.</summary>
         public void Push(IEnumerable<T> items)
         {
+            Guard.NotNull(items, nameof(items));
+
             lock (locker)
             {
                 foreach (var item in items)
@@ -76,6 +81,8 @@ namespace SmartAss.Buffering
         /// <summary>Pushes items of the list to the buffer and clears the list.</summary>
         public void PushAndClear(SimpleList<T> list)
         {
+            Guard.NotNull(list, nameof(list));
+
             Push(list);
             list.Clear();
         }
@@ -92,15 +99,11 @@ namespace SmartAss.Buffering
             }
         }
 
-        #region IEnumerable
-
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(buffer, Count);
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
 
         /// <summary>Represents the buffer as a DEBUG <see cref="string"/>.</summary>
         internal string DebuggerDisplay => Invariant($"Count = {Count:#,##0}, Capacity: {Capacity:#,##0}");

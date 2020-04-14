@@ -10,28 +10,29 @@ namespace SmartAss
     {
         private const ulong DecimalMask = 0xFFFFFFFFFFFF;
 
-
-        private static readonly double[] Deviders = new[] {
+        private static readonly double[] Deviders = new[]
+        {
             1d,
-            10,
-            100,
-            1000,
-            10000,
-            100000,
-            1000000,
-            10000000,
-            100000000,
-            1000000000,
-            10000000000,
-            100000000000,
-            1000000000000,
-            10000000000000,
-            100000000000000,
-            1000000000000000,
-            10000000000000000,
-            100000000000000000,
-            1000000000000000000,
-            10000000000000000000,
+            10d,
+            100d,
+            1000d,
+            10000d,
+            100000d,
+            1000000d,
+            10000000d,
+            100000000d,
+            1000000000d,
+            10000000000d,
+            100000000000d,
+            1000000000000d,
+            10000000000000d,
+            100000000000000d,
+            1000000000000000d,
+            10000000000000000d,
+            100000000000000000d,
+            1000000000000000000d,
+            10000000000000000000d,
+            100000000000000000000d,
         };
 
         /// <summary>Parses a int.</summary>
@@ -126,11 +127,13 @@ namespace SmartAss
                 {
                     return false;
                 }
+
                 unchecked
                 {
                     number *= 10;
                     number += ch - '0';
                 }
+
                 if ((number & unchecked((long)0x8000000000000000)) != 0)
                 {
                     return false;
@@ -265,8 +268,10 @@ namespace SmartAss
                             scale = 0;
                             continue;
                         }
+
                         return false;
                     }
+
                     // Precision does not fit.
                     if (scale++ >= 28)
                     {
@@ -279,6 +284,7 @@ namespace SmartAss
                     b1 *= 10;
 
                     b0 += digit;
+
                     // add overflow
                     b1 += b0 >> 48;
 

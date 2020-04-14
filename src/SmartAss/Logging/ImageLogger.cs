@@ -12,9 +12,13 @@ namespace SmartAss.Logging
 {
     public static class ImageLogger
     {
-        public static Bitmap Heatmap<T>(int[] heatmap, Raster<T> raster) where T : RasterTile<T>
+        public static Bitmap Heatmap<T>(int[] heatmap, Raster<T> raster)
+            where T : RasterTile<T>
         {
-            var size = 16;
+            Guard.NotNull(heatmap, nameof(heatmap));
+            Guard.NotNull(raster, nameof(raster));
+
+            const int size = 16;
             var image = new Bitmap(raster.Cols * size, raster.Rows * size);
 
             var max = heatmap.Max();
@@ -23,6 +27,7 @@ namespace SmartAss.Logging
             {
                 return image;
             }
+
             var ratio = 254d / max;
 
             for (var row = 0; row < raster.Rows; row++)
@@ -41,6 +46,7 @@ namespace SmartAss.Logging
                     }
                 }
             }
+
             return image;
         }
     }

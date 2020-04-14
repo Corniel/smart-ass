@@ -8,10 +8,12 @@ namespace SmartAss.Topology
     /// <summary>Represents a 2d raster map where both top and bottom and left
     /// and right are connected.
     /// </summary>
-    public abstract class SphereRaster<T> : Raster<T> where T : RasterTile<T>
+    public abstract class SphereRaster<T> : Raster<T>
+        where T : RasterTile<T>
     {
-        /// <summary>Creates a new instance of a sphere raster.</summary>
-        protected SphereRaster(int cols, int rows) : base(cols, rows) { }
+        /// <summary>Initializes a new instance of the <see cref="SphereRaster{T}"/> class.</summary>
+        protected SphereRaster(int cols, int rows)
+            : base(cols, rows) => Do.Nothing();
 
         /// <summary>Initializes a rows * cols sized sphere raster.</summary>
         protected override void Initialize(int cols, int rows)

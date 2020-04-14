@@ -22,9 +22,9 @@ namespace SmartAss.Logging
     {
         public static LogLevel Level { get; set; } = LogLevel.Error;
 
-        public static void SetWriter(TextWriter writer) => Writer = writer ?? Console.Error;
+        public static void SetWriter(TextWriter writer) => Logger.writer = writer ?? Console.Error;
 
-        private static TextWriter Writer = Console.Error;
+        private static TextWriter writer = Console.Error;
 
         [Conditional("DEBUG")]
         public static void Debug(string message, params object[] args)
@@ -49,15 +49,16 @@ namespace SmartAss.Logging
         {
             if (Level <= LogLevel.Error) { Write("ERROR ", message, args); }
         }
+
         private static void Write(string prefix, string message, params object[] args)
         {
             if (args.Length == 0)
             {
-                Writer.WriteLine(prefix + message);
+                writer.WriteLine(prefix + message);
             }
             else
             {
-                Writer.WriteLine(prefix + message, args);
+                writer.WriteLine(prefix + message, args);
             }
         }
 
@@ -96,6 +97,7 @@ namespace SmartAss.Logging
         [Conditional("DEBUG")]
         public static void Heatmap(int[] heatmap, int index)
         {
+            Guard.NotNull(heatmap, nameof(heatmap));
             heatmap[index]++;
         }
 

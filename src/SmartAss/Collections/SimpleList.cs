@@ -19,13 +19,14 @@ namespace SmartAss.Collections
     /// The capacity is a hard limit.
     /// The clear just resets the count.
     /// </remarks>
-    [DebuggerDisplay("{DebuggerDisplay}"), DebuggerTypeProxy(typeof(CollectionDebugView))]
+    [DebuggerDisplay("{DebuggerDisplay}")]
+    [DebuggerTypeProxy(typeof(CollectionDebugView))]
     public class SimpleList<T> : ICollection<T>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected readonly T[] array;
+        private readonly T[] array;
 
-        /// <summary>Creates a new instance of a simple list.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SimpleList{T}"/> class.</summary>
         public SimpleList(int capacity) => array = new T[capacity];
 
         /// <summary>Gets an item of the simple list based on its index.</summary>
@@ -58,6 +59,8 @@ namespace SmartAss.Collections
         /// <summary>Adds multiple items at once.</summary>
         public void AddRange(IEnumerable<T> items)
         {
+            Guard.NotNull(items, nameof(items));
+
             foreach (var item in items)
             {
                 Add(item);
@@ -80,6 +83,7 @@ namespace SmartAss.Collections
                     return index;
                 }
             }
+
             return -1;
         }
 
@@ -96,9 +100,11 @@ namespace SmartAss.Collections
                 {
                     array[i - 1] = array[i];
                 }
+
                 Count--;
                 return true;
             }
+
             return false;
         }
 
@@ -111,15 +117,11 @@ namespace SmartAss.Collections
         /// <inheritdoc />
         public virtual void Clear() => Count = 0;
 
-        #region IEnumerable
-
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(array, Count);
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
 
         /// <summary>Represents the simple list as a DEBUG <see cref="string"/>.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

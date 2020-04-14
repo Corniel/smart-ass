@@ -12,21 +12,3 @@ indent_size = 4
 [*.{csproj,props}]
 indent_style = space
 indent_size = 2
-
-# SA0001: XML comment analysis is disabled due to project configuration
-dotnet_diagnostic.SA0001.severity = none
-
-# SA1101: Prefix local calls with this
-dotnet_diagnostic.SA1101.severity = none
-
-# SA1208: System using directives should be placed before other using directives
-dotnet_diagnostic.SA1208.severity = none
-
-# SA1200: Using directives should be placed correctly
-dotnet_diagnostic.SA1200.severity = none
-
-# SA1611: Element parameters should be documented
-dotnet_diagnostic.SA1611.severity = none
-
-# SA1615: Element return value should be documented
-dotnet_diagnostic.SA1615.severity = none

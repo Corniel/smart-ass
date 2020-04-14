@@ -42,12 +42,15 @@ namespace SmartAss
                     shift++;
                 }
             }
+
             return mask;
         }
 
         /// <summary>Represents the <see cref="byte[]"/> as binary string.</summary>
         public static string ToString(byte[] bytes)
         {
+            if (bytes is null) { return string.Empty; }
+
             var sb = new StringBuilder();
 
             for (var index = bytes.Length - 1; index >= 0; index--)
@@ -57,8 +60,10 @@ namespace SmartAss
                 {
                     sb.Append(' ');
                 }
+
                 sb.Append(Byte.ToString(b));
             }
+
             return sb.ToString();
         }
     }

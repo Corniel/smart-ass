@@ -10,7 +10,8 @@ using static System.FormattableString;
 
 namespace SmartAss.Topology
 {
-    public class RasterTile<T> : ITile<T> where T : ITile<T>
+    public class RasterTile<T> : ITile<T>
+        where T : ITile<T>
     {
         public RasterTile(int index, int col, int row, int neighbors)
         {

@@ -1,4 +1,9 @@
-﻿using SmartAss.Collections;
+﻿// <copyright file = "ObjectPool.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using SmartAss.Collections;
 using SmartAss.Diagnostics;
 using System;
 using System.Collections;
@@ -9,16 +14,17 @@ using static System.FormattableString;
 namespace SmartAss.Pooling
 {
     /// <summary>Contains multiple objects that can be reused.</summary>
-    [DebuggerDisplay("{DebuggerDisplay}"), DebuggerTypeProxy(typeof(CollectionDebugView))]
+    [DebuggerDisplay("{DebuggerDisplay}")]
+    [DebuggerTypeProxy(typeof(CollectionDebugView))]
     public class ObjectPool<T> : IEnumerable<T> where T : class
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly T[] pool;
 
-        /// <summary>A locker object to prevent getting invalid objects back.</summary>		
+        /// <summary>A locker object to prevent getting invalid objects back.</summary>
         private readonly object locker = new object();
 
-        /// <summary>Creates a new instance of the <see cref="ObjectPool{T}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ObjectPool{T}"/> class.</summary>
         public ObjectPool(int capacity = 1024) => pool = new T[capacity];
 
         /// <summary>Gets the capacity of the object pool.</summary>
@@ -31,7 +37,7 @@ namespace SmartAss.Pooling
         /// <remarks>
         /// Creates a new item, if the object pool is empty.
         /// </remarks>
-        public Reusable<T> Get(Func<T> create)
+        public T Get(Func<T> create)
         {
             T item;
             lock (locker)
@@ -40,8 +46,14 @@ namespace SmartAss.Pooling
                     ? create()
                     : pool[--Count];
             }
-            return new Reusable<T>(item, this);
+            return item;
         }
+
+        /// <summary>Gets an item from the object pool.</summary>
+        /// <remarks>
+        /// Creates a new item, if the object pool is empty.
+        /// </remarks>
+        public Reusable<T> Reusable(Func<T> create) => new Reusable<T>(Get(create), this);
 
         /// <summary>Releases the item for reuse.</summary>
         public void Release(T item)
@@ -59,6 +71,8 @@ namespace SmartAss.Pooling
         /// <summary>Releases the items for reuse.</summary>
         public void Release(IEnumerable<T> items)
         {
+            Guard.NotNull(items, nameof(items));
+
             lock (locker)
             {
                 foreach (var item in items)
@@ -72,6 +86,8 @@ namespace SmartAss.Pooling
         /// <summary>Releases the list for reuse, and clears it.</summary>
         public void ReleaseAndClear(SimpleList<T> list)
         {
+            Guard.NotNull(list, nameof(list));
+
             Release(list);
             list.Clear();
         }
@@ -88,15 +104,11 @@ namespace SmartAss.Pooling
             }
         }
 
-        #region IEnumerable
-
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(pool, Count);
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
 
         /// <summary>Represents the buffer as a DEBUG <see cref="string"/>.</summary>
         internal string DebuggerDisplay => Invariant($"Count = {Count:#,##0}, Capacity: {Capacity:#,##0}");

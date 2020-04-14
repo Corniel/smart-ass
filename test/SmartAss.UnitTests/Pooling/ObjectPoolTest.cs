@@ -20,10 +20,12 @@ namespace SmartAss.Tests.Pooling
         {
             using (var resuable = ExampleItem.New())
             {
-                var example = resuable;
+                ExampleItem example = resuable;
+                example.Value = 17;
             }
 
             Assert.AreEqual(1, ExampleItem.pool.Count);
+            Assert.AreEqual(0, ExampleItem.New().Item.Value);
         }
 
 
@@ -44,7 +46,7 @@ namespace SmartAss.Tests.Pooling
 
             public static Reusable<ExampleItem> New()
             {
-                var reusable = pool.Get(() => new ExampleItem());
+                var reusable = pool.Reusable(() => new ExampleItem());
                 reusable.Item.Value = 0;
                 return reusable;
             }

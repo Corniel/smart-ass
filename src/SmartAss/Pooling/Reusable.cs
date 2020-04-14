@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿// <copyright file = "ObjectPool.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Diagnostics;
 
 namespace SmartAss.Pooling
 {
@@ -11,7 +16,7 @@ namespace SmartAss.Pooling
         internal Reusable(T item, ObjectPool<T> pool)
         {
             Item = item;
-            Pool = pool;
+            this.pool = pool;
             released = false;
         }
 
@@ -20,7 +25,7 @@ namespace SmartAss.Pooling
 
         /// <summary>Gets the pool to return when the item is released.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ObjectPool<T> Pool;
+        private readonly ObjectPool<T> pool;
 
         /// <summary>Indicates that the item has been released.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -36,7 +41,7 @@ namespace SmartAss.Pooling
         {
             if (!released)
             {
-                Pool.Release(Item);
+                pool.Release(Item);
                 released = true;
             }
         }

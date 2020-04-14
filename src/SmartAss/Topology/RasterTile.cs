@@ -1,11 +1,17 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file = "RasterTile.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 using SmartAss.Collections;
 using static System.FormattableString;
 
 namespace SmartAss.Topology
 {
-    public class RasterTile<T> : ITile<T> where T: ITile<T>
+    public class RasterTile<T> : ITile<T>
+        where T : ITile<T>
     {
         public RasterTile(int index, int col, int row, int neighbors)
         {

@@ -8,7 +8,7 @@ namespace SmartAss.UnitTests
 {
     public class ParserTest
     {
-        const int Zillions = 1 * 1000 * 1000;
+        const int Zillions = 10_000;
 
         [Test]
         public void Int32_Overflow()
@@ -108,7 +108,7 @@ namespace SmartAss.UnitTests
             var reference = Speed.Test(Zillions, nameof(DoublelTryParse), (num) => DoublelTryParse(strings[num]));
             var challence = Speed.Test(Zillions, nameof(ParserDouble), (num) => ParserDouble(strings[num]));
 
-            Console.WriteLine(reference / challence);
+            AssertChallengeIsBeter(reference, challence);
         }
 
         [Test]
@@ -174,6 +174,15 @@ namespace SmartAss.UnitTests
         {
             decimal.TryParse(str, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal result);
             return result;
+        }
+
+
+        private static void AssertChallengeIsBeter(TimeSpan reference, TimeSpan challence)
+        {
+            Console.WriteLine(reference / challence);
+
+            Assert.IsTrue(reference > challence, 
+                $"Reference: {reference.TotalMilliseconds:#,##0.0}ms, Challence: {challence.TotalMilliseconds:#,##0.0}ms");
         }
     }
 }

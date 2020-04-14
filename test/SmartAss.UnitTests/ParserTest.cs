@@ -8,7 +8,7 @@ namespace SmartAss.UnitTests
 {
     public class ParserTest
     {
-        const int Zillions = 1_000_000;
+        const int Zillions = 10_000;
 
         [Test]
         public void Int32_Overflow()
@@ -112,7 +112,7 @@ namespace SmartAss.UnitTests
 
             foreach (var str in strings)
             {
-                Assert.AreEqual(DoublelTryParse(str), ParserDouble(str), 0.000_000_000_001);
+                Assert.AreEqual(DoublelTryParse(str), ParserDouble(str), 0.000_000_001);
             }
         }
 

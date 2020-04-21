@@ -109,6 +109,11 @@ namespace SmartAss.UnitTests
             var challence = Speed.Test(Zillions, nameof(ParserDouble), (num) => ParserDouble(strings[num]));
 
             AssertChallengeIsBeter(reference, challence);
+
+            foreach (var str in strings)
+            {
+                Assert.AreEqual(DoublelTryParse(str), ParserDouble(str), 0.000_000_001);
+            }
         }
 
         [Test]
@@ -126,7 +131,7 @@ namespace SmartAss.UnitTests
             var reference = Speed.Test(Zillions, nameof(DecimalTryParse), (num) => DecimalTryParse(strings[num]));
             var challence = Speed.Test(Zillions, nameof(ParserDecimal), (num) => ParserDecimal(strings[num]));
 
-            Console.WriteLine(reference / challence);
+            AssertChallengeIsBeter(reference, challence);
 
             foreach (var str in strings)
             {

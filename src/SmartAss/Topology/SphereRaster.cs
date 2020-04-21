@@ -24,12 +24,12 @@ namespace SmartAss.Topology
             {
                 for (var col = 0; col < cols; col++)
                 {
-                    tiles[index] = Create(index, col, row, 4);
+                    Tiles[index] = Create(index, col, row, 4);
                     index++;
                 }
             }
 
-            foreach (var tile in tiles)
+            foreach (var tile in Tiles)
             {
                 var row = tile.Row;
                 var col = tile.Col;

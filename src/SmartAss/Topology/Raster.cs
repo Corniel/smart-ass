@@ -37,12 +37,12 @@ namespace SmartAss.Topology
                     var n = 2;
                     n += (col < 1 || col >= cols - 1) ? 0 : 1;
                     n += (row < 1 || row >= rows - 1) ? 0 : 1;
-                    tiles[index] = Create(index, col, row, n);
+                    Tiles[index] = Create(index, col, row, n);
                     index++;
                 }
             }
 
-            foreach (var tile in tiles)
+            foreach (var tile in Tiles)
             {
                 var up = tile.Index - cols;
                 var dw = tile.Index + cols;
@@ -51,22 +51,22 @@ namespace SmartAss.Topology
 
                 if (up >= 0)
                 {
-                    tile.Neighbors.Add(tiles[up]);
+                    tile.Neighbors.Add(Tiles[up]);
                 }
 
                 if (tile.Col < cols - 1)
                 {
-                    tile.Neighbors.Add(tiles[ri]);
+                    tile.Neighbors.Add(Tiles[ri]);
                 }
 
                 if (dw < Size)
                 {
-                    tile.Neighbors.Add(tiles[dw]);
+                    tile.Neighbors.Add(Tiles[dw]);
                 }
 
                 if (tile.Col > 0)
                 {
-                    tile.Neighbors.Add(tiles[le]);
+                    tile.Neighbors.Add(Tiles[le]);
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace SmartAss.Topology
         protected abstract T Create(int index, int col, int row, int neighbors);
 
         /// <summary>Gets the tile based on its row and column.</summary>
-        public T this[int col, int row] => tiles[col + (row * Cols)];
+        public T this[int col, int row] => Tiles[col + (row * Cols)];
 
         /// <summary>The number of rows (height).</summary>
         public int Rows { get; }

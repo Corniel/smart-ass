@@ -19,19 +19,19 @@ namespace SmartAss.Topology
         where T : ITile<T>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected readonly T[] tiles;
+        protected T[] Tiles { get; }
 
         /// <summary>Initializes a new instance of the <see cref="Map{T}"/> class.</summary>
-        protected Map(int size) => tiles = new T[size];
+        protected Map(int size) => Tiles = new T[size];
 
         /// <summary>Gets the number of tiles on the map.</summary>
-        public int Size => tiles.Length;
+        public int Size => Tiles.Length;
 
         /// <summary>Gets a tile with the specified index.</summary>
-        public T this[int index] => tiles[index];
+        public T this[int index] => Tiles[index];
 
         /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(tiles, Size);
+        public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(Tiles, Size);
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

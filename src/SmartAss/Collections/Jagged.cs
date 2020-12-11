@@ -1,4 +1,9 @@
-﻿namespace SmartAss.Collections
+﻿// <copyright file = "Jagged.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace SmartAss.Collections
 {
     /// <summary>Helper for creating jagged arrays.</summary>
     public static class Jagged
@@ -42,7 +47,9 @@
             var array = new T[m][][][];
             for (var i = 0; i < m; i++)
             {
+#pragma warning disable S2234 // Parameters should be passed in the correct order
                 array[i] = Array<T>(n, o, p);
+#pragma warning restore S2234 // Parameters should be passed in the correct order
             }
 
             return array;

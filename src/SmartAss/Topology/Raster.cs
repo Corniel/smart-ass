@@ -77,6 +77,9 @@ namespace SmartAss.Topology
         /// <summary>Gets the tile based on its row and column.</summary>
         public T this[int col, int row] => Tiles[col + (row * Cols)];
 
+        /// <summary>Gets the tile based on its position.</summary>
+        public T this[Point position] => this[position.X, position.Y];
+
         /// <summary>The number of rows (height).</summary>
         public int Rows { get; }
 

@@ -18,17 +18,21 @@ namespace SmartAss.Topology
             Index = index;
             Col = col;
             Row = row;
+            Position = new Point(col, row);
             Neighbors = new SimpleList<T>(neighbors);
         }
 
         /// <inheritdoc />
         public int Index { get; }
 
-        /// <summary>The x coordinate (column) of the tile.</summary>
+        /// <summary>The x-coordinate (column) of the tile.</summary>
         public int Col { get; }
 
-        /// <summary>The y coordinate (row) of the tile.</summary>
+        /// <summary>The y-coordinate (row) of the tile.</summary>
         public int Row { get; }
+
+        /// <summary>The position (point) of the tile.</summary>
+        public Point Position { get; }
 
         /// <inheritdoc />
         public SimpleList<T> Neighbors { get; }

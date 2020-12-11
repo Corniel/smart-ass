@@ -16,7 +16,7 @@ namespace SmartAss.Topology
     [DebuggerDisplay("{DebuggerDisplay}")]
     [DebuggerTypeProxy(typeof(CollectionDebugView))]
     public class TileQueue<T> : IEnumerable<T>
-        where T : ITile<T>
+        where T : class, ITile<T>
     {
         private readonly T[] queue;
         private int head;

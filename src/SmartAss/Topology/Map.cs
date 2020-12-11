@@ -8,6 +8,7 @@ using SmartAss.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using static System.FormattableString;
 
 namespace SmartAss.Topology
@@ -16,7 +17,7 @@ namespace SmartAss.Topology
     [DebuggerDisplay("{DebuggerDisplay}")]
     [DebuggerTypeProxy(typeof(CollectionDebugView))]
     public abstract class Map<T> : IEnumerable<T>
-        where T : ITile<T>
+        where T : class, ITile<T>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected T[] Tiles { get; }
@@ -30,8 +31,19 @@ namespace SmartAss.Topology
         /// <summary>Gets a tile with the specified index.</summary>
         public T this[int index] => Tiles[index];
 
+        public void Remove(T tile)
+        {
+            Guard.NotNull(tile, nameof(tile));
+            foreach (var neighbors in tile.Neighbors)
+            {
+                neighbors.Neighbors.Remove(tile);
+            }
+
+            Tiles[tile.Index] = null;
+        }
+
         /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(Tiles, Size);
+        public IEnumerator<T> GetEnumerator() => Tiles.Where(tile => tile is ITile).GetEnumerator();
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

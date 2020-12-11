@@ -38,9 +38,7 @@ namespace SmartAss
         public override string ToString() => $"{Left:G}";
 
         /// <summary>Creates a countdown timer that will expire after the specified duration.</summary>
-        public static CountdownTimer Duration(TimeSpan duration)
-        {
-            return new CountdownTimer(DateTime.UtcNow.Add(duration));
-        }
+        public static CountdownTimer Duration(TimeSpan span)
+            => new CountdownTimer(DateTime.UtcNow.Add(span));
     }
 }

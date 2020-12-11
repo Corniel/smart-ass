@@ -171,12 +171,10 @@ namespace SmartAss
         /// The guarded parameter.
         /// </returns>
         [DebuggerStepThrough]
-#pragma warning disable S4018 // Generic methods should provide type parameters, but here it provides casting.
         public static T IsInstanceOf<T>(object parameter, string paramName)
-#pragma warning restore S4018 // Generic methods should provide type parameters
         {
             NotNull(parameter, paramName);
-            if (!(parameter is T instance))
+            if (parameter is not T instance)
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Messages.ArgumentException_NotAnInstanceOf, typeof(T)), paramName);
             }

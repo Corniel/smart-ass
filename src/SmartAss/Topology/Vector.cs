@@ -39,5 +39,11 @@ namespace SmartAss.Topology
 
         /// <inheritdoc />
         public override int GetHashCode() => X ^ (Y << 16);
+
+        /// <summary>Compares two vectors.</summary>
+        public static bool operator ==(Vector a, Vector b) => a.Equals(b);
+
+        /// <summary>Compares two vectors.</summary>
+        public static bool operator !=(Vector a, Vector b) => !(a == b);
     }
 }

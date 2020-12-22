@@ -9,9 +9,7 @@ namespace SmartAss
     public static class Do
     {
         /// <summary>Does nothing.</summary>
-        public static void Nothing()
-        {
-            // Does nothing.
-        }
+        [System.Diagnostics.DebuggerStepThrough]
+        public static void Nothing() { /* Does nothing. */ }
     }
 }

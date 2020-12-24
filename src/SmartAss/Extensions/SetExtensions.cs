@@ -1,4 +1,9 @@
-﻿using SmartAss;
+﻿// <copyright file = "SetExtensions.cs">
+// Copyright (c) 2018-current, Corniel Nobel.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+using SmartAss;
 using System.Collections.Generic;
 
 namespace System.Linq
@@ -18,7 +23,6 @@ namespace System.Linq
             {
                 ret = ret.Intersect(selector(enumerator.Current));
             }
-
             return ret;
         }
 
@@ -28,10 +32,7 @@ namespace System.Linq
             Guard.NotNull(items, nameof(items));
 
             var added = false;
-            foreach (var item in items)
-            {
-                added |= set.Add(item);
-            }
+            foreach (var item in items) { added |= set.Add(item); }
             return added;
         }
     }

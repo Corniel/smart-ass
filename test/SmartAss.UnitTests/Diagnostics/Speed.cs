@@ -22,7 +22,7 @@ namespace SmartAss.UnitTests
             var sw = Stopwatch.StartNew();
             for (var run = 0; run < runs; run++)
             {
-                action.Invoke(run);
+                action?.Invoke(run);
             }
             sw.Stop();
 

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Microsoft Managed Recommended Rules" Description="Smart-ass rules" ToolsVersion="16.0">
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S101" Action="None" />
     <Rule Id="S105" Action="Warning" />
     <Rule Id="S106" Action="Warning" />
     <Rule Id="S107" Action="Info" />
@@ -30,6 +31,7 @@
     <Rule Id="S3257" Action="Warning" />
     <Rule Id="S3353" Action="Warning" />
     <Rule Id="S3366" Action="Warning" />
+    <Rule Id="S3376" Action="None" />
     <Rule Id="S3431" Action="Warning" />
     <Rule Id="S3532" Action="Warning" />
     <Rule Id="S3693" Action="Warning" />
@@ -44,7 +46,7 @@
     <Rule Id="S3909" Action="Warning" />
     <Rule Id="S3937" Action="Warning" />
     <Rule Id="S3956" Action="Warning" />
-    <Rule Id="S3967" Action="Warning" />
+    <Rule Id="S3967" Action="Info" />
     <Rule Id="S3993" Action="Warning" />
     <Rule Id="S3994" Action="Warning" />
     <Rule Id="S3995" Action="Warning" />
@@ -85,6 +87,7 @@
     <Rule Id="SA1203" Action="None" />
     <Rule Id="SA1204" Action="None" />
     <Rule Id="SA1208" Action="None" />
+    <Rule Id="SA1302" Action="None" />
     <Rule Id="SA1501" Action="None" />
     <Rule Id="SA1502" Action="None" />
     <Rule Id="SA1512" Action="None" />

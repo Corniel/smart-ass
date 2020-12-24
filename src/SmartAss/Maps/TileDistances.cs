@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using static System.FormattableString;
 
-namespace SmartAss.Topology
+namespace SmartAss.Maps
 {
     [DebuggerDisplay("{DebuggerDisplay}")]
     [DebuggerTypeProxy(typeof(CollectionDebugView))]
@@ -24,10 +24,10 @@ namespace SmartAss.Topology
 
         private readonly int[] distances;
 
-        public TileDistances(int size)
+        public TileDistances(int capacity)
         {
             Logger.Ctor<TileDistances>();
-            distances = new int[size];
+            distances = new int[capacity];
         }
 
         public int Known => distances.Count(d => d != Unknown);

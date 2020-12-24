@@ -5,7 +5,7 @@
 
 using System;
 
-namespace SmartAss.Topology
+namespace SmartAss.Numeric
 {
     public readonly struct Vector3D : IEquatable<Vector3D>
     {

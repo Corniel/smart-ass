@@ -4,8 +4,10 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace SmartAss.Topology
+namespace SmartAss.Numeric
 {
     public readonly struct Point : IEquatable<Point>
     {
@@ -28,6 +30,13 @@ namespace SmartAss.Topology
         private Point Add(Vector vector) => new Point(X + vector.X, Y + vector.Y);
 
         private Vector Subtract(Point other) => new Vector(X - other.X, Y - other.Y);
+
+        /// <summary>Gets all projections on the transforms.</summary>
+        public IEnumerable<Point> Projections(IEnumerable<Vector> transforms)
+        {
+            var point = this;
+            return transforms.Select(distance => point + distance);
+        }
 
         /// <inheritdoc />
         public override string ToString() => $"({X}, {Y})";

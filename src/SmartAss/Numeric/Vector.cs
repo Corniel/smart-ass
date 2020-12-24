@@ -5,12 +5,36 @@
 
 using System;
 
-namespace SmartAss.Topology
+namespace SmartAss.Numeric
 {
     public readonly struct Vector : IEquatable<Vector>
     {
         /// <summary>Zero length vector.</summary>
         public static readonly Vector O;
+
+        /// <summary>North (0, -1).</summary>
+        public static readonly Vector N = new Vector(+0, -1);
+
+        /// <summary>East (1, 0).</summary>
+        public static readonly Vector E = new Vector(+1, +0);
+
+        /// <summary>South (0, 1).</summary>
+        public static readonly Vector S = new Vector(+0, +1);
+
+        /// <summary>West (-1, 0).</summary>
+        public static readonly Vector W = new Vector(-1, +0);
+
+        /// <summary>Northeast (1, -1).</summary>
+        public static readonly Vector NE = N + E;
+
+        /// <summary>Northwest (-1, -1).</summary>
+        public static readonly Vector NW = N + W;
+
+        /// <summary>Northeast (1, 1).</summary>
+        public static readonly Vector SE = S + E;
+
+        /// <summary>Southwest (-1, 1).</summary>
+        public static readonly Vector SW = S + W;
 
         /// <summary>Initializes a new instance of the <see cref="Vector"/> struct.</summary>
         public Vector(int x, int y)
@@ -27,6 +51,10 @@ namespace SmartAss.Topology
 
         /// <summary>Gets the angle.</summary>
         public double Angle => Math.Atan2(Y, X);
+
+        private Vector Add(Vector vector) => new Vector(X + vector.X, Y + vector.Y);
+
+        private Vector Multiply(int factor) => new Vector(X * factor, Y * factor);
 
         /// <inheritdoc />
         public override string ToString() => $"({X}, {Y})";
@@ -45,5 +73,11 @@ namespace SmartAss.Topology
 
         /// <summary>Compares two vectors.</summary>
         public static bool operator !=(Vector a, Vector b) => !(a == b);
+
+        /// <summary>Adds two vectors.</summary>
+        public static Vector operator +(Vector a, Vector b) => a.Add(b);
+
+        /// <summary>Multiplies a vector by a factor.</summary>
+        public static Vector operator *(Vector vector, int factor) => vector.Multiply(factor);
     }
 }

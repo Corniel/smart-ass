@@ -21,5 +21,17 @@ namespace SmartAss.Navigation
 
         /// <summary>West.</summary>
         W = 4,
+
+        /// <summary>North-east.</summary>
+        NE = 5,
+
+        /// <summary>North-west.</summary>
+        NW = 6,
+
+        /// <summary>South-east.</summary>
+        SE = 7,
+
+        /// <summary>South-west.</summary>
+        SW = 8,
     }
 }

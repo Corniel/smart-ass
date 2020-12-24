@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace SmartAss.Numeric
+namespace SmartAss.Numerics
 {
     public static class Vectors
     {

@@ -5,7 +5,7 @@
 
 using System;
 
-namespace SmartAss.Numeric
+namespace SmartAss.Numerics
 {
     public readonly struct Vector : IEquatable<Vector>
     {
@@ -51,6 +51,15 @@ namespace SmartAss.Numeric
 
         /// <summary>Gets the angle.</summary>
         public double Angle => Math.Atan2(Y, X);
+
+        public Vector Rotate(DiscreteRotation rotation)
+            => ((int)rotation).Mod(4) switch
+            {
+                1 => new Vector(+Y, -X),
+                2 => new Vector(-X, -Y),
+                3 => new Vector(-Y, +X),
+                _ => this,
+            };
 
         private Vector Add(Vector vector) => new Vector(X + vector.X, Y + vector.Y);
 

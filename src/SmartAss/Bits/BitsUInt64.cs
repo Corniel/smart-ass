@@ -7,8 +7,8 @@ using System;
 
 namespace SmartAss
 {
-    /// <summary>Implements <see cref="IBitsOperator{T}"/> for <see cref="ulong"/>.</summary>
-    internal class BitsUInt64 : IBitsOperator<ulong>
+    /// <summary>Implements <see cref="BitsOperator{T}"/> for <see cref="ulong"/>.</summary>
+    internal class BitsUInt64 : BitsOperator<ulong>
     {
         internal static readonly ulong[] Flags =
         {
@@ -214,6 +214,9 @@ namespace SmartAss
         }
 
         /// <inheritdoc />
+        public bool HasFlag(ulong bits, int position) => (bits & Flags[position]) != 0;
+
+        /// <inheritdoc />
         public ulong Flag(ulong bits, int position) => bits | Flags[position];
 
         /// <inheritdoc />
@@ -231,6 +234,9 @@ namespace SmartAss
             mirror = (mirror >> 32) & 0x00000000ffffffff | (mirror << 32) & 0xffffffff00000000;
             return mirror;
         }
+
+        /// <inheritdoc />
+        public ulong Parse(string str, string ones, string zeros) => Bits.Parse(str, ones, zeros);
 
         /// <inheritdoc />
         public string ToString(ulong bits) => Bits.ToString(BitConverter.GetBytes(bits));

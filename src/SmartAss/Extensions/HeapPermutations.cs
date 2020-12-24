@@ -11,11 +11,11 @@ namespace System
     /// <summary>Gets permutations using the Heap's algorithm.</summary>
     public static class HeapPermutations
     {
-        public static IEnumerable<int[]> Permutations(this int[] values)
+        public static IEnumerable<T[]> Permutations<T>(this T[] values)
             => values.Permutations(Guard.NotNull(values, nameof(values)).Length, 0);
 
         /// <remarks>Heap's algorithm.</remarks>
-        private static IEnumerable<int[]> Permutations(this int[] array, int size, int n)
+        private static IEnumerable<T[]> Permutations<T>(this T[] array, int size, int n)
         {
             if (size == 1)
             {
@@ -33,7 +33,7 @@ namespace System
             }
         }
 
-        private static void Swap(this int[] array, int index0, int index1)
+        private static void Swap<T>(this T[] array, int index0, int index1)
         {
             var value = array[index0];
             array[index0] = array[index1];

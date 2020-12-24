@@ -4,13 +4,13 @@
 // </copyright>
 
 using SmartAss.Collections;
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using System.Collections.Generic;
 
 namespace SmartAss.Maps
 {
     /// <summary>Constructor for a <see cref="GridTile{T}"/>.</summary>
-    public delegate T GridTileCtor<T>(int id, Point position, int maxNeighbors) where T : GridTile<T>;
+    public delegate T GridTileCtor<T>(int id, Point position) where T : GridTile<T>;
 
     /// <summary>Represents a tile on a grid.</summary>
     /// <typeparam name="T">

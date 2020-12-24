@@ -7,8 +7,8 @@ using System;
 
 namespace SmartAss
 {
-    /// <summary>Implements <see cref="IBitsOperator{T}"/> for <see cref="uint"/>.</summary>
-    internal class BitsUInt32 : IBitsOperator<uint>
+    /// <summary>Implements <see cref="BitsOperator{T}"/> for <see cref="uint"/>.</summary>
+    internal class BitsUInt32 : BitsOperator<uint>
     {
         internal static readonly uint[] Flags =
         {
@@ -134,6 +134,9 @@ namespace SmartAss
         }
 
         /// <inheritdoc />
+        public bool HasFlag(uint bits, int position) => (bits & Flags[position]) != 0;
+
+        /// <inheritdoc />
         public uint Flag(uint bits, int position) => bits | Flags[position];
 
         /// <inheritdoc />
@@ -150,6 +153,9 @@ namespace SmartAss
             mirror = (mirror >> 16) & 0x0000ffff | (mirror << 16) & 0xffff0000;
             return mirror;
         }
+
+        /// <inheritdoc />
+        public uint Parse(string str, string ones, string zeros) => (uint)Bits.Parse(str, ones, zeros);
 
         /// <inheritdoc />
         public string ToString(uint bits) => Bits.ToString(BitConverter.GetBytes(bits));

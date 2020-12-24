@@ -18,7 +18,7 @@ namespace SmartAss.Tests
         [TestCase("111 Some 1 Stuff 1 that 1 should 1 be ignored", 0x7F)]
         public void Parse(string pattern, int expected)
         {
-            var bits = Bits.Parse(pattern);
+            var bits = Bits.UInt32.Parse(pattern);
             BitsAssert.AreEqual((ulong)expected, bits);
         }
 

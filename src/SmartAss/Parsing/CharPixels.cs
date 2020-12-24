@@ -5,14 +5,14 @@
 
 using SmartAss.Collections;
 using SmartAss.Diagnostics;
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using CharPixel = System.Collections.Generic.KeyValuePair<SmartAss.Numeric.Point, char>;
+using CharPixel = System.Collections.Generic.KeyValuePair<SmartAss.Numerics.Point, char>;
 
 namespace SmartAss.Parsing
 {

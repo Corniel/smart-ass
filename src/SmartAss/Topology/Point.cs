@@ -5,13 +5,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SmartAss.Numeric
+namespace SmartAss.Topology
 {
     public readonly struct Point : IEquatable<Point>
     {
-        /// <summary>The orgin.</summary>
+        /// <summary>The origin.</summary>
         public static readonly Point O;
 
         /// <summary>Initializes a new instance of the <see cref="Point"/> struct.</summary>
@@ -27,16 +26,31 @@ namespace SmartAss.Numeric
         /// <summary> Gets or sets the y-coordinate.</summary>
         public int Y { get; }
 
+        public IEnumerable<Point> Repeat(Vector transform)
+        {
+            var current = this;
+            while (true)
+            {
+                current += transform;
+                yield return current;
+            }
+        }
+
+        public Vector Vector() => new Vector(X, Y);
+        /// <summary>Rotates this point around a center.</summary>
+        /// <param name="center">
+        /// The point to rotate around.
+        /// </param>
+        /// <param name="steps">
+        /// Steps of 90°.
+        /// </param>
+        public Point Rotate(Point center, int steps) => center + (this - center).Rotate(steps);
+
         private Point Add(Vector vector) => new Point(X + vector.X, Y + vector.Y);
 
-        private Vector Subtract(Point other) => new Vector(X - other.X, Y - other.Y);
+        private Point Subtract(Vector vector) => new Point(X - vector.X, Y - vector.Y);
 
-        /// <summary>Gets all projections on the transforms.</summary>
-        public IEnumerable<Point> Projections(IEnumerable<Vector> transforms)
-        {
-            var point = this;
-            return transforms.Select(distance => point + distance);
-        }
+        private Vector Subtract(Point other) => new Vector(X - other.X, Y - other.Y);
 
         /// <inheritdoc />
         public override string ToString() => $"({X}, {Y})";
@@ -61,6 +75,9 @@ namespace SmartAss.Numeric
 
         /// <summary>Adds a vector to a point.</summary>
         public static Point operator +(Point point, Vector vector) => point.Add(vector);
+
+        /// <summary>Subtracts a vector to a point.</summary>
+        public static Point operator -(Point point, Vector vector) => point.Subtract(vector);
 
         /// <summary>Calulates the vector distantce between two points.</summary>
         public static Vector operator -(Point point, Point other) => point.Subtract(other);

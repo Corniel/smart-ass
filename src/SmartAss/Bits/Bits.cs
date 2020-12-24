@@ -11,36 +11,31 @@ namespace SmartAss
     public static class Bits
     {
         /// <summary>Bits based on <see cref="byte"/>.</summary>
-        public static readonly IBitsOperator<byte> Byte = new BitsByte();
+        public static readonly BitsOperator<byte> Byte = new BitsByte();
 
         /// <summary>Bits based on <see cref="uint"/>.</summary>
-        public static readonly IBitsOperator<uint> UInt32 = new BitsUInt32();
+        public static readonly BitsOperator<uint> UInt32 = new BitsUInt32();
 
         /// <summary>Bits based on <see cref="ulong"/>.</summary>
-        public static readonly IBitsOperator<ulong> UInt64 = new BitsUInt64();
+        public static readonly BitsOperator<ulong> UInt64 = new BitsUInt64();
 
         /// <summary>Parses a pattern into a bit mask, ignoring all characters except 0 and.</summary>
-        public static ulong Parse(string pattern)
+        internal static ulong Parse(string pattern, string ones, string zeros)
         {
             if (string.IsNullOrEmpty(pattern))
             {
                 return 0;
             }
-
+            ones ??= "1";
+            zeros ??= "0";
             var mask = 0UL;
             var shift = 0;
 
             for (var index = pattern.Length - 1; index >= 0; index--)
             {
                 var ch = pattern[index];
-                if (ch == '1')
-                {
-                    mask |= 1UL << shift++;
-                }
-                else if (ch == '0')
-                {
-                    shift++;
-                }
+                if (ones.Contains(ch)) { mask |= 1UL << shift++; }
+                else if (zeros.Contains(ch)) { shift++; }
             }
 
             return mask;
@@ -56,10 +51,7 @@ namespace SmartAss
             for (var index = bytes.Length - 1; index >= 0; index--)
             {
                 var b = bytes[index];
-                if (sb.Length != 0)
-                {
-                    sb.Append(' ');
-                }
+                if (sb.Length != 0) { sb.Append(' '); }
 
                 sb.Append(Byte.ToString(b));
             }

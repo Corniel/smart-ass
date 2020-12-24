@@ -5,11 +5,11 @@
 
 using System;
 
-namespace SmartAss.Numeric
+namespace SmartAss.Numerics
 {
     public readonly struct Point3D : IEquatable<Point3D>
     {
-        /// <summary>The orgin.</summary>
+        /// <summary>The origin.</summary>
         public static readonly Point3D O;
 
         /// <summary>Initializes a new instance of the <see cref="Point3D"/> struct.</summary>

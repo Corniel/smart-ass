@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -98,12 +98,73 @@ namespace SmartAss.Collections
         /// <summary>Returns true if the point is on the grid.</summary>
         public bool OnGrid(Point p) => p.X >= 0 && p.X < Cols && p.Y >= 0 && p.Y < Rows;
 
+        public Grid<T> Rotate(DiscreteRotation rotation)
+         => ((int)rotation).Mod(4) switch
+         {
+             1 => RotateDeg090(),
+             2 => RotateDeg180(),
+             3 => RotateDeg270(),
+             _ => this,
+         };
+
+        public Grid<T> Flip(bool horizontal) => horizontal ? FlipHorizontal() : FlipVertical();
+
         private T Get(Point p) => OnGrid(p) ? elements[p.Y][p.X] : throw new NotOnGrid(p);
 
         private void Set(Point p, T value)
         {
             if (!OnGrid(p)) { throw new NotOnGrid(p); }
             else { elements[p.Y][p.X] = value; }
+        }
+
+        private Grid<T> RotateDeg090()
+        {
+            var rotated = new Grid<T>(Rows, Cols);
+            foreach (var source in Points.Grid(Cols, Rows))
+            {
+                rotated[source.Y, Cols - source.X - 1] = this[source];
+            }
+            return rotated;
+        }
+
+        private Grid<T> RotateDeg180()
+        {
+            var rotated = new Grid<T>(Cols, Rows);
+            foreach (var source in Points.Grid(Cols, Rows))
+            {
+                rotated[Cols - source.X - 1, Rows - source.Y - 1] = this[source];
+            }
+            return rotated;
+        }
+
+        private Grid<T> RotateDeg270()
+        {
+            var rotated = new Grid<T>(Rows, Cols);
+            foreach (var source in Points.Grid(Cols, Rows))
+            {
+                rotated[Rows - source.Y - 1, source.X] = this[source];
+            }
+            return rotated;
+        }
+
+        private Grid<T> FlipHorizontal()
+        {
+            var flipped = new Grid<T>(Cols, Rows);
+            foreach (var point in Points.Grid(Cols, Rows))
+            {
+                flipped[Cols - point.X - 1, point.Y] = this[point];
+            }
+            return flipped;
+        }
+
+        private Grid<T> FlipVertical()
+        {
+            var flipped = new Grid<T>(Cols, Rows);
+            foreach (var point in Points.Grid(Cols, Rows))
+            {
+                flipped[point.X, Rows - point.Y - 1] = this[point];
+            }
+            return flipped;
         }
 
         /// <inheritdoc />

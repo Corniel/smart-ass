@@ -11,6 +11,18 @@ namespace System
     /// <summary>Extensions on collections of numbers.</summary>
     public static class NumbersExtensions
     {
+        public static int Product(this IEnumerable<int> numbers)
+        {
+            Guard.NotNull(numbers, nameof(numbers));
+
+            var product = 1;
+            foreach (var number in numbers)
+            {
+                product *= number;
+            }
+            return product;
+        }
+
         public static long Product(this IEnumerable<long> numbers)
         {
             Guard.NotNull(numbers, nameof(numbers));
@@ -20,8 +32,20 @@ namespace System
             {
                 product *= number;
             }
-
             return product;
+        }
+
+        public static ulong Sum(this IEnumerable<ulong> numbers)
+        {
+            Guard.NotNull(numbers, nameof(numbers));
+
+            ulong sum = 0;
+
+            foreach (var number in numbers)
+            {
+                sum += number;
+            }
+            return sum;
         }
     }
 }

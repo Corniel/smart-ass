@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using SmartAss.Collections;
 using System;
 using System.Collections.Generic;
@@ -160,5 +160,106 @@ namespace Grid_specs
         {
             Assert.AreEqual(6, new Grid<int>(2, 3).Size);
         }
+    }
+    public class Rotation
+    {
+        [Test]
+        public void _90_deg_with_different_dimensions_swaps_rows_cols()
+        {
+            var matrix = new Grid<int>(new int[][]
+            {
+                new[] { 1, 2 },
+                new[] { 3, 4 },
+                new[] { 5, 6 },
+            });
+
+            var rotated = new Grid<int>(new int[][]
+            {
+                new[] { 2, 4, 6 },
+                new[] { 1, 3, 5 },
+            });
+
+            Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg090));
+        }
+
+        [Test]
+        public void _180_deg_with_same_dimensions()
+        {
+            var matrix = new Grid<int>(new int[][]
+            {
+                new[] { 1, 2 },
+                new[] { 3, 4 },
+                new[] { 5, 6 },
+            });
+
+            var rotated = new Grid<int>(new int[][]
+            {
+                new[] { 6, 5 },
+                new[] { 4, 3 },
+                new[] { 2, 1 },
+            });
+
+            Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg180));
+        }
+
+        [Test]
+        public void _270_deg_with_different_dimensions_swaps_rows_cols()
+        {
+            var matrix = new Grid<int>(new int[][]
+            {
+                new[] { 1, 2 },
+                new[] { 3, 4 },
+                new[] { 5, 6 },
+            });
+
+            var rotated = new Grid<int>(new int[][]
+            {
+                new[] { 5, 3, 1 },
+                new[] { 6, 4, 2 },
+            });
+
+            Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg270));
+        }
+
+        [Test]
+        public void _4_times_results_in_identical_values()
+        {
+            var matrix = new Grid<int>(new int[][]
+            {
+                new[] { 1, 2 },
+                new[] { 3, 4 },
+                new[] { 5, 6 },
+            });
+
+            Assert.AreEqual(matrix, matrix
+                .Rotate(DiscreteRotation.Deg090)
+                .Rotate(DiscreteRotation.Deg090)
+                .Rotate(DiscreteRotation.Deg090)
+                .Rotate(DiscreteRotation.Deg090));
+        }
+    }
+
+    public class Flip
+    {
+        [Test]
+        public void horizontal_mirrors_x_coordinates()
+        {
+            var matrix = new Grid<int>(new int[][]
+            {
+                new[] { 1, 2 },
+                new[] { 3, 4 },
+                new[] { 5, 6 },
+            });
+
+            var flipped = new Grid<int>(new int[][]
+            {
+                new[] { 2, 1 },
+                new[] { 4, 3 },
+                new[] { 6, 5 },
+            });
+
+            Assert.AreEqual(flipped, matrix.Flip(horizontal: true));
+        }
+
     }
 }

@@ -4,7 +4,7 @@
 // </copyright>
 
 using SmartAss.Collections;
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,9 +46,8 @@ namespace SmartAss.Maps
             int id = 0;
             foreach (var location in locations)
             {
-                grid[location] = ctor(id++, location, neighbors(grid, location).Count());
+                grid[location] = ctor(id++, location);
             }
-
             foreach (var tile in grid.Tiles)
             {
                 tile.Neighbors.AddRange(neighbors(grid, tile.Location).Select(loc => grid[loc]).Where(n => n is not null));

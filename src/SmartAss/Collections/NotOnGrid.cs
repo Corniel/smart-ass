@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using System;
 using System.Runtime.Serialization;
 

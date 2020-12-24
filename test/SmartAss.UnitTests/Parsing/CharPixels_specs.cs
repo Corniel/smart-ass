@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SmartAss.Numeric;
+using SmartAss.Numerics;
 using SmartAss.Parsing;
 using System.Linq;
 

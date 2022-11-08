@@ -9,7 +9,7 @@ namespace SmartAss.Tests.Pooling
         public void Populate_ShouldBeFull()
         {
             var buffer = new ObjectPool<TestItem>(16);
-            buffer.Populate(() => new TestItem());
+            buffer.Populate(() => new TestItem(), 16);
 
             Assert.AreEqual(16, buffer.Count);
         }

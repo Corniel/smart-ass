@@ -22,7 +22,7 @@ namespace SmartAss.Pooling
         private readonly T[] pool;
 
         /// <summary>A locker object to prevent getting invalid objects back.</summary>
-        private readonly object locker = new object();
+        private readonly object locker = new();
 
         /// <summary>Initializes a new instance of the <see cref="ObjectPool{T}"/> class.</summary>
         public ObjectPool(int capacity = 1024) => pool = new T[capacity];
@@ -94,15 +94,16 @@ namespace SmartAss.Pooling
         }
 
         /// <summary>Populates the full object pool.</summary>
-        public void Populate(Func<T> create)
+        public ObjectPool<T> Populate(Func<T> create, int count)
         {
             lock (locker)
             {
-                while (Count < Capacity)
+                while (Count < count)
                 {
                     pool[Count++] = create();
                 }
             }
+            return this;
         }
 
         /// <inheritdoc />

@@ -3,8 +3,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
-
 namespace SmartAss.Numerics
 {
     public readonly struct Vector : IEquatable<Vector>
@@ -52,6 +50,8 @@ namespace SmartAss.Numerics
         /// <summary>Gets the angle.</summary>
         public double Angle => Math.Atan2(Y, X);
 
+        public Vector Sign() => new(X.Sign(), Y.Sign());
+
         public Vector Rotate(DiscreteRotation rotation)
             => ((int)rotation).Mod(4) switch
             {
@@ -61,9 +61,9 @@ namespace SmartAss.Numerics
                 _ => this,
             };
 
-        private Vector Add(Vector vector) => new Vector(X + vector.X, Y + vector.Y);
+        private Vector Add(Vector vector) => new(X + vector.X, Y + vector.Y);
 
-        private Vector Multiply(int factor) => new Vector(X * factor, Y * factor);
+        private Vector Multiply(int factor) => new(X * factor, Y * factor);
 
         /// <inheritdoc />
         public override string ToString() => $"({X}, {Y})";

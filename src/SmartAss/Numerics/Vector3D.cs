@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using SmartAss.Parsing;
 using System;
 
 namespace SmartAss.Numerics
@@ -29,6 +30,14 @@ namespace SmartAss.Numerics
         /// <summary> Gets or sets the z-coordinate.</summary>
         public int Z { get; }
 
+        public int this[int index] => index switch
+        {
+            0 => X,
+            1 => Y, 
+            2 => Z,
+            _ => throw new IndexOutOfRangeException()
+        };
+
         public Vector3D Adjust(int x = 0, int y = 0, int z = 0) => new Vector3D(X + x, Y + y, Z + z);
 
         /// <inheritdoc />
@@ -51,5 +60,11 @@ namespace SmartAss.Numerics
 
         /// <summary>Compares two vectors.</summary>
         public static bool operator !=(Vector3D a, Vector3D b) => !(a == b);
+
+        public static Vector3D Parse(string str)
+        {
+            var split = str.Split(',');
+            return new Vector3D(split[0].Int32(), split[1].Int32(), split[2].Int32());
+        }
     }
 }

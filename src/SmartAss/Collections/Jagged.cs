@@ -19,7 +19,6 @@ namespace SmartAss.Collections
             {
                 array[i] = new T[n];
             }
-
             return array;
         }
 
@@ -34,7 +33,6 @@ namespace SmartAss.Collections
             {
                 array[i] = Array<T>(n, o);
             }
-
             return array;
         }
 
@@ -51,7 +49,22 @@ namespace SmartAss.Collections
                 array[i] = Array<T>(n, o, p);
 #pragma warning restore S2234 // Parameters should be passed in the correct order
             }
+            return array;
+        }
 
+        /// <summary>Creates a jagged array of m x n x o x p xq.</summary>
+        /// <typeparam name="T">
+        /// Type of the jagged array.
+        /// </typeparam>
+        public static T[][][][][] Array<T>(int m, int n, int o, int p, int q)
+        {
+            var array = new T[m][][][][];
+            for (var i = 0; i < m; i++)
+            {
+#pragma warning disable S2234 // Parameters should be passed in the correct order
+                array[i] = Array<T>(n, o, p, q);
+#pragma warning restore S2234 // Parameters should be passed in the correct order
+            }
             return array;
         }
     }

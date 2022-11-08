@@ -5,7 +5,6 @@
 
 using SmartAss.Collections;
 using SmartAss.Numerics;
-using System.Collections.Generic;
 
 namespace SmartAss.Maps
 {

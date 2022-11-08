@@ -50,6 +50,13 @@ namespace SmartAss.Parsing
             return grid;
         }
 
+        public Grid<T> Grid<T>(Func<char, T> transform)
+        {
+            var grid = new Grid<T>(Cols, Rows);
+            foreach (var pixel in this) { grid[pixel.Key] = transform(pixel.Value); }
+            return grid;
+        }
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -68,7 +75,7 @@ namespace SmartAss.Parsing
         }
 
         /// <summary>Parses <see cref="CharPixel"/>'s.</summary>
-        public static CharPixels Parse(string input)
+        public static CharPixels Parse(string input, bool ignoreSpace)
         {
             Guard.NotNull(input, nameof(input));
 
@@ -91,7 +98,7 @@ namespace SmartAss.Parsing
                     }
                     col = 0;
                 }
-                else if (!char.IsWhiteSpace(ch))
+                else if (!char.IsWhiteSpace(ch) || (!ignoreSpace && ch == ' '))
                 {
                     buffer.Add(new CharPixel(new Point(col, row), ch));
                     cols = Math.Max(cols, ++col);
@@ -99,6 +106,12 @@ namespace SmartAss.Parsing
                 }
             }
             return new CharPixels(buffer, cols, rows + 1, hasMissingColumns);
+        }
+
+        public static CharPixels From<T>(Grid<T> grid, Func<T, char> transform)
+        {
+            var pixels = new CharPixels(grid.Select(tile => new CharPixel(tile.Key, transform(tile.Value))), grid.Cols, grid.Rows, false);
+            return pixels;
         }
 
         /// <inheritdoc />

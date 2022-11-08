@@ -22,5 +22,15 @@ namespace System.Collections.Generic
             }
             return queue;
         }
+
+        public static IEnumerable<T> DeuqueCurrent<T>(this Queue<T> queue)
+        {
+            Guard.NotNull(queue, nameof(queue));
+            var count = queue.Count;
+            while (count-- > 0)
+            {
+                yield return queue.Dequeue();
+            }
+        }
     }
 }

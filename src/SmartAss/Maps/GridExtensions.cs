@@ -53,5 +53,7 @@ namespace SmartAss.Maps
                 tile.Neighbors.AddRange(neighbors(grid, tile.Location).Select(loc => grid[loc]).Where(n => n is not null));
             }
         }
+
+        public static GridDistances Distances<T>(this Grid<T> grid) => new(grid.Cols, grid.Rows);
     }
 }

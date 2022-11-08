@@ -21,6 +21,9 @@ namespace SmartAss.Parsing
         public static string[] Seperate(this string str, string splitter)
             => str.Split(new[] { splitter }, SplitOptions);
 
+        public static string[] Seperate(this string str, params string[] splitters)
+            => str.Split(splitters, SplitOptions);
+
         public static IEnumerable<string> CommaSeperated(this string str)
             => str.Seperate(',');
 
@@ -86,6 +89,6 @@ namespace SmartAss.Parsing
 
         public static CharPixels CharPixels(this IEnumerable<string> lines) => string.Join('\n', lines).CharPixels();
 
-        public static CharPixels CharPixels(this string str) => Parsing.CharPixels.Parse(str);
+        public static CharPixels CharPixels(this string str, bool ignoreSpace = true) => Parsing.CharPixels.Parse(str, ignoreSpace);
     }
 }

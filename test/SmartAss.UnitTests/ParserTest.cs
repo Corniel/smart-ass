@@ -1,8 +1,6 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
-using Troschuetz.Random.Generators;
 
 namespace SmartAss.UnitTests
 {
@@ -54,7 +52,7 @@ namespace SmartAss.UnitTests
         [Test]
         public void ToInt32_Zillions_ShouldBeFaster()
         {
-            var rnd = new MT19937Generator(17);
+            var rnd = new Random(17);
 
             var strings = Enumerable.Range(0, Zillions).Select(n => rnd.Next(int.MinValue, int.MaxValue).ToString()).ToArray();
 
@@ -72,12 +70,12 @@ namespace SmartAss.UnitTests
         [Test]
         public void ToInt64_Zillions_ShouldBeFaster()
         {
-            var rnd = new MT19937Generator(17);
+            var rnd = new Random(17);
 
             var strings = Enumerable.Range(0, Zillions).Select(n =>
             {
-                long top = rnd.Next(int.MinValue, int.MaxValue);
-                long bot = rnd.Next(int.MinValue, int.MaxValue);
+                long top = rnd.Next(int.MinValue, int.MaxValue - 1);
+                long bot = rnd.Next(int.MinValue, int.MaxValue - 1);
                 return ((top << 32) | bot).ToString();
 
             }).ToArray();
@@ -186,7 +184,7 @@ namespace SmartAss.UnitTests
         {
             Console.WriteLine(reference / challence);
 
-            Assert.IsTrue(reference > challence, 
+            Assert.IsTrue(reference > challence,
                 $"Reference: {reference.TotalMilliseconds:#,##0.0}ms, Challence: {challence.TotalMilliseconds:#,##0.0}ms");
         }
     }

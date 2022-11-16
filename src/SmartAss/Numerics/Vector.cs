@@ -62,7 +62,7 @@ namespace SmartAss.Numerics
             };
 
         private Vector Add(Vector vector) => new(X + vector.X, Y + vector.Y);
-
+        private Vector Subtract(Vector vector) => new(X - vector.X, Y - vector.Y);
         private Vector Multiply(int factor) => new(X * factor, Y * factor);
 
         /// <inheritdoc />
@@ -85,6 +85,9 @@ namespace SmartAss.Numerics
 
         /// <summary>Adds two vectors.</summary>
         public static Vector operator +(Vector a, Vector b) => a.Add(b);
+
+        /// <summary>Subtracts two vectors.</summary>
+        public static Vector operator -(Vector a, Vector b) => a.Subtract(b);
 
         /// <summary>Multiplies a vector by a factor.</summary>
         public static Vector operator *(Vector vector, int factor) => vector.Multiply(factor);

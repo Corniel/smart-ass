@@ -156,38 +156,10 @@ namespace SmartAss
         public int BitSize => 64;
 
         /// <inheritdoc />
-        public int Count(ulong bits)
-        {
-            unchecked
-            {
-                bits = bits - ((bits >> 1) & 0x5555555555555555UL);
-                bits = (bits & 0x3333333333333333UL) + ((bits >> 2) & 0x3333333333333333UL);
-                return (int)(unchecked(((bits + (bits >> 4)) & 0xF0F0F0F0F0F0F0FUL) * 0x101010101010101UL) >> 56);
-            }
-        }
+        public int Count(ulong bits) => System.Numerics.BitOperations.PopCount(bits);
 
         /// <inheritdoc />
-        public int Size(ulong bits)
-        {
-            unchecked
-            {
-                var size = BitsByte.Sizes[bits >> 54];
-                if (size != 0) { return size + 54; }
-                size = BitsByte.Sizes[bits >> 48];
-                if (size != 0) { return size + 48; }
-                size = BitsByte.Sizes[bits >> 40];
-                if (size != 0) { return size + 40; }
-                size = BitsByte.Sizes[bits >> 32];
-                if (size != 0) { return size + 32; }
-                size = BitsByte.Sizes[bits >> 24];
-                if (size != 0) { return size + 24; }
-                size = BitsByte.Sizes[bits >> 16];
-                if (size != 0) { return size + 16; }
-                size = BitsByte.Sizes[bits >> 8];
-                if (size != 0) { return size + 8; }
-                return BitsByte.Sizes[bits];
-            }
-        }
+        public int Size(ulong bits) => 64 - System.Numerics.BitOperations.LeadingZeroCount(bits);
 
         /// <inheritdoc />
         public int First(ulong bits)

@@ -1,7 +1,5 @@
-﻿using NUnit.Framework;
-using SmartAss.Numerics;
+﻿using SmartAss.Numerics;
 using SmartAss.Parsing;
-using System.Linq;
 
 namespace CharPixels_specs
 {

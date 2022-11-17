@@ -1,4 +1,6 @@
-﻿namespace Parsing.Numbers_parsing_specs;
+﻿using SmartAss.Parsing;
+
+namespace Parsing.Numbers_specs;
 
 public class Int32s
 {

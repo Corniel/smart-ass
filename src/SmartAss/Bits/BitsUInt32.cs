@@ -92,30 +92,10 @@ namespace SmartAss
         public int BitSize => 32;
 
         /// <inheritdoc />
-        public int Count(uint bits)
-        {
-            unchecked
-            {
-                bits = bits - ((bits >> 1) & 0x55555555);
-                bits = (bits & 0x33333333) + ((bits >> 2) & 0x33333333);
-                return (int)(((bits + (bits >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
-            }
-        }
+        public int Count(uint bits) => System.Numerics.BitOperations.PopCount(bits);
 
         /// <inheritdoc />
-        public int Size(uint bits)
-        {
-            unchecked
-            {
-                var size = BitsByte.Sizes[bits >> 24];
-                if (size != 0) { return size + 24; }
-                size = BitsByte.Sizes[bits >> 16];
-                if (size != 0) { return size + 16; }
-                size = BitsByte.Sizes[bits >> 8];
-                if (size != 0) { return size + 8; }
-                return BitsByte.Sizes[bits];
-            }
-        }
+        public int Size(uint bits) => 32 - System.Numerics.BitOperations.LeadingZeroCount(bits);
 
         /// <inheritdoc />
         public int First(uint bits)

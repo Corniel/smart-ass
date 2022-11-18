@@ -27,6 +27,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\build-test.yml = .github\workflows\build-test.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specs", "Specs", "{C28E03DB-7C1E-447D-AD62-465CF220A475}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAss.Specs", "specs\SmartAss.Specs\SmartAss.Specs.csproj", "{BAD72450-530A-489E-981D-C9F56E8BEB4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "specs\Benchmarks\Benchmarks.csproj", "{231B7AD1-8AD4-45E1-AFAC-E1768480506B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +47,14 @@ Global
 		{88987B62-A5DF-4ACD-A281-BDE03A092845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88987B62-A5DF-4ACD-A281-BDE03A092845}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88987B62-A5DF-4ACD-A281-BDE03A092845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD72450-530A-489E-981D-C9F56E8BEB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD72450-530A-489E-981D-C9F56E8BEB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD72450-530A-489E-981D-C9F56E8BEB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD72450-530A-489E-981D-C9F56E8BEB4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{231B7AD1-8AD4-45E1-AFAC-E1768480506B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{231B7AD1-8AD4-45E1-AFAC-E1768480506B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{231B7AD1-8AD4-45E1-AFAC-E1768480506B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{231B7AD1-8AD4-45E1-AFAC-E1768480506B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +63,8 @@ Global
 		{88987B62-A5DF-4ACD-A281-BDE03A092845} = {D216A3BC-7DE9-43FA-805C-D597E5AFCC89}
 		{3F10891A-D850-45BD-80DF-723BC8A8F713} = {7E0BAEE4-A78B-4817-AE9B-4EA3488E9D3E}
 		{39585F18-52D9-439B-82EC-29C7DEF41943} = {3F10891A-D850-45BD-80DF-723BC8A8F713}
+		{BAD72450-530A-489E-981D-C9F56E8BEB4B} = {C28E03DB-7C1E-447D-AD62-465CF220A475}
+		{231B7AD1-8AD4-45E1-AFAC-E1768480506B} = {C28E03DB-7C1E-447D-AD62-465CF220A475}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE7B26F7-A91E-4868-AE31-74DF35A3C33D}

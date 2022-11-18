@@ -14,7 +14,7 @@ public class Parsing
         var rnd = new MersenneTwister(17);
         Decimals = Enumerable.Range(0, Zillions).Select(n => Int(rnd).ToString(Culture)).ToArray();
         Int32s = Enumerable.Range(0, Zillions).Select(n => Long(rnd).ToString(Culture)).ToArray();
-        Int64s =  Enumerable.Range(0, Zillions).Select(n => Decimal(rnd).ToString(Culture)).ToArray();
+        Int64s = Enumerable.Range(0, Zillions).Select(n => Decimal(rnd).ToString(Culture)).ToArray();
 
         static int Int(RandomSource rnd) => rnd.Next(short.MinValue, short.MaxValue) * rnd.Next(short.MaxValue);
         static long Long(RandomSource rnd) => Int(rnd) * rnd.NextInt64(int.MaxValue);
@@ -76,27 +76,15 @@ public class Parsing
     private static class SmartAssParser
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-         public static decimal Decimal(string str)
-        {
-            Parser.ToDecimal(str, out decimal result);
-            return result;
-        }
+        public static decimal Decimal(string str) => Parser.ToDecimal(str).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Double(string str) => Parser.ToDouble(str).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Int(string str)
-        {
-            Parser.ToInt32(str, out int result);
-            return result;
-        }
+        public static int Int(string str) => Parser.ToInt32(str).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Long(string str)
-        {
-            Parser.ToInt64(str, out long result);
-            return result;
-        }
+        public static long Long(string str) => Parser.ToInt64(str).GetValueOrDefault();
     }
 }

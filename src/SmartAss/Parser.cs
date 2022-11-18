@@ -45,49 +45,31 @@ namespace SmartAss
         /// <returns>
         /// True if parsable, otherwise false.
         /// </returns>
-        public static bool ToInt32(string str, out int n)
+        public static int? ToInt32(ReadOnlySpan<char> str)
         {
-            n = default;
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
+            if (str.Length == 0) return null;
 
-            var start = 0;
-            var end = str.Length;
             var number = 0;
             var negative = false;
 
             if (str[0] == '-')
             {
-                start = 1;
+                str = str[1..];
                 negative = true;
             }
-
-            for (var i = start; i < end; i++)
-            {
-                var ch = str[i];
-
-                if (ch < '0' || ch > '9')
-                {
-                    return false;
-                }
+            foreach (var ch in str)
+            { 
+                if (ch < '0' || ch > '9') return null;
 
                 unchecked
                 {
                     number *= 10;
                     number += ch - '0';
                 }
-
                 // becomes negative, so overflow.
-                if ((number & 0x80000000) != 0)
-                {
-                    return false;
-                }
+                if ((number & 0x80000000) != 0) return null;
             }
-
-            n = negative ? -number : number;
-            return true;
+            return negative ? -number : number;
         }
 
         /// <summary>Parses a long.</summary>
@@ -100,48 +82,30 @@ namespace SmartAss
         /// <returns>
         /// True if parsable, otherwise false.
         /// </returns>
-        public static bool ToInt64(string str, out long n)
+        public static long? ToInt64(ReadOnlySpan<char> str)
         {
-            n = default;
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
+            if (str.Length == 0) return null;
 
-            var start = 0;
-            var end = str.Length;
             var number = 0L;
             var negative = false;
 
             if (str[0] == '-')
             {
-                start = 1;
+                str = str[1..];
                 negative = true;
             }
 
-            for (var i = start; i < end; i++)
+            foreach(var ch in str) 
             {
-                var ch = str[i];
-
-                if (ch < '0' || ch > '9')
-                {
-                    return false;
-                }
-
+                if (ch < '0' || ch > '9') return null;
                 unchecked
                 {
                     number *= 10;
                     number += ch - '0';
                 }
-
-                if ((number & unchecked((long)0x8000000000000000)) != 0)
-                {
-                    return false;
-                }
+                if ((number & unchecked((long)0x8000000000000000)) != 0) return null;
             }
-
-            n = negative ? -number : number;
-            return true;
+            return negative ? -number : number;
         }
 
         /// <summary>Parses a double.</summary>
@@ -206,34 +170,25 @@ namespace SmartAss
         /// <returns>
         /// True if parsable, otherwise false.
         /// </returns>
-        public static bool ToDecimal(string str, out decimal dec)
+        public static decimal? ToDecimal(ReadOnlySpan<char> str)
         {
-            dec = default;
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
+            if (str.Length == 0) return null;
 
             unchecked
             {
-                var start = 0;
-
                 var negative = false;
                 int scale = int.MinValue;
-
                 ulong b0 = 0;
                 ulong b1 = 0;
 
                 if (str[0] == '-')
                 {
-                    start = 1;
-                    negative = true;
+                    str= str[1..];
+                    negative= true;
                 }
 
-                for (var i = start; i < str.Length; i++)
-                {
-                    var ch = str[i];
-
+                foreach(var ch in str)
+                { 
                     // Not a digit.
                     if (ch < '0' || ch > '9')
                     {
@@ -243,31 +198,20 @@ namespace SmartAss
                             scale = 0;
                             continue;
                         }
-
-                        return false;
+                        else return null;
                     }
 
                     // Precision does not fit.
-                    if (scale++ >= 28)
-                    {
-                        return false;
-                    }
-
-                    uint digit = (uint)(ch - '0');
+                    if (scale++ >= 28) return null;
 
                     b0 *= 10;
                     b1 *= 10;
-
-                    b0 += digit;
+                    b0 += (uint)(ch - '0');
 
                     // add overflow
                     b1 += b0 >> 48;
 
-                    if ((b1 & ~DecimalMask) != 0)
-                    {
-                        return false;
-                    }
-
+                    if ((b1 & ~DecimalMask) != 0) return null;
                     // clear overflow.
                     b0 &= DecimalMask;
                 }
@@ -276,9 +220,7 @@ namespace SmartAss
                 var mi = (int)((b1 << 16) | (b0 >> 32));
                 var hi = (int)(b1 >> 16);
 
-                dec = new decimal(lo, mi, hi, negative, scale < 0 ? default : (byte)scale);
-
-                return true;
+                return new decimal(lo, mi, hi, negative, scale < 0 ? default : (byte)scale);
             }
         }
     }

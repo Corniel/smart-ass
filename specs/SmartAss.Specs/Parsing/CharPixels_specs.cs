@@ -10,7 +10,7 @@ namespace CharPixels_specs
         {
             var pixels = "ABCD\nEFG\nHIJKP\nMNOP7\nQRSTZ".CharPixels();
 
-            AssertThat("ABCD\r\nEFG\r\nHIJKP\r\nMNOP7\r\nQRSTZ",
+            AssertThat("ABCD\nEFG\nHIJKP\nMNOP7\nQRSTZ",
                 cols: 5,
                 rows: 5,
                 missesColumns: true,
@@ -24,7 +24,7 @@ namespace CharPixels_specs
         {
             var pixels = $"{whitespace}{whitespace}ABCD\r\nED{whitespace}FG\r\nHIJK{whitespace}\r\n{whitespace}\r\nMNOP\r\nQRST".CharPixels();
 
-            AssertThat("ABCD\r\nEDFG\r\nHIJK\r\nMNOP\r\nQRST",
+            AssertThat("ABCD\nEDFG\nHIJK\nMNOP\nQRST",
                 cols: 4,
                 rows: 5,
                 missesColumns: false,
@@ -36,7 +36,7 @@ namespace CharPixels_specs
         {
             var pixels = "\n\nABCD\nEDFG\nHIJK\n\nMNOP\nQRST\n".CharPixels();
 
-            AssertThat("ABCD\r\nEDFG\r\nHIJK\r\nMNOP\r\nQRST",
+            AssertThat("ABCD\nEDFG\nHIJK\nMNOP\nQRST",
                 cols: 4,
                 rows: 5,
                 missesColumns: false,
@@ -48,7 +48,7 @@ namespace CharPixels_specs
         {
             var pixels = "ABCD\nEDFG\nHIJK\nMNOP\nQRST".CharPixels();
 
-            AssertThat("ABCD\r\nEDFG\r\nHIJK\r\nMNOP\r\nQRST",
+            AssertThat("ABCD\nEDFG\nHIJK\nMNOP\nQRST",
                 cols: 4,
                 rows: 5,
                 missesColumns: false,
@@ -60,17 +60,14 @@ namespace CharPixels_specs
         {
             var pixels = "AB\nCDE".CharPixels();
             var positions = pixels.Select(p => p.Key).ToArray();
-
-            Assert.AreEqual(new[]
+            positions.Should().BeEquivalentTo(new[]
             {
                 new Point(0, 0),
                 new Point(1, 0),
                 new Point(0, 1),
                 new Point(1, 1),
                 new Point(2, 1),
-            },
-            positions);
-            Assert.AreEqual(5, pixels.Count);
+            });
         }
 
         private static void AssertThat(
@@ -80,10 +77,14 @@ namespace CharPixels_specs
             bool missesColumns,
             CharPixels actual)
         {
-            Assert.AreEqual(toString, actual.ToString());
-            Assert.AreEqual(cols, actual.Cols, "Cols");
-            Assert.AreEqual(rows, actual.Rows, "Rows");
-            Assert.AreEqual(missesColumns, actual.HasMissingColumns, "HasMissingColumns");
+            var str = string.Join('\n', actual.ToString().Lines());
+            str.Should().Be(toString);
+            actual.Should().BeEquivalentTo(new
+            {
+                Cols = cols,
+                Rows = rows,
+                HasMissingColumns = missesColumns,
+            });
         }
     }
 }

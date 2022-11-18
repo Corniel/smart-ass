@@ -154,32 +154,23 @@ namespace SmartAss
         /// <returns>
         /// True if parsable, otherwise false.
         /// </returns>
-        public static bool ToDouble(string str, out double n)
+        public static double? ToDouble(ReadOnlySpan<char> str)
         {
-            n = default;
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
+            if (str.Length == 0) return null;
 
             unchecked
             {
-                var start = 0;
-
                 var negative = false;
                 int scale = int.MinValue;
-
                 ulong buffer = 0;
 
                 if (str[0] == '-')
                 {
-                    start = 1;
                     negative = true;
+                    str = str[1..];
                 }
-
-                for (var i = start; i < str.Length; i++)
+                foreach (var ch in str)
                 {
-                    var ch = str[i];
                     scale++;
 
                     // Not a digit.
@@ -191,33 +182,17 @@ namespace SmartAss
                             scale = 0;
                             continue;
                         }
-
-                        return false;
+                        else return null;
                     }
-
-                    uint digit = (uint)(ch - '0');
 
                     buffer *= 10;
-                    buffer += digit;
+                    buffer += (ulong)(ch - '0');
 
-                    if ((buffer & 0x8000000000000000) != 0)
-                    {
-                        return false;
-                    }
+                    if ((buffer & 0x8000000000000000) != 0) return null;
                 }
 
-                n = buffer;
-                if (scale > 0)
-                {
-                    n /= Deviders[scale];
-                }
-
-                if (negative)
-                {
-                    n = -n;
-                }
-
-                return true;
+                var n = scale > 0 ? buffer / Deviders[scale] : buffer;
+                return negative ? -n : +n;
             }
         }
 

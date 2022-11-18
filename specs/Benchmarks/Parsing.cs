@@ -1,11 +1,9 @@
-﻿using System.Xml;
-
-namespace Benchmarks;
+﻿namespace Benchmarks;
 
 public class Parsing
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
-    private const int Zillions = 10_000;
+    private const int Zillions = 1_000;
     private string[] Decimals = Array.Empty<string>();
     private string[] Int32s = Array.Empty<string>();
     private string[] Int64s = Array.Empty<string>();
@@ -36,7 +34,6 @@ public class Parsing
     public long[] Long_Parse() => Int64s.Select(DotNet.Long).ToArray();
 
     [Benchmark(Description = "Parser.ToDecimal()")]
-
     public decimal[] Parser_ToDecimal() => Decimals.Select(SmartAssParser.Decimal).ToArray();
 
     [Benchmark(Description = "Parser.ToDouble()")]
@@ -84,12 +81,9 @@ public class Parsing
             Parser.ToDecimal(str, out decimal result);
             return result;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Double(string str)
-        {
-            Parser.ToDouble(str, out double result);
-            return result;
-        }
+        public static double Double(string str) => Parser.ToDouble(str).GetValueOrDefault();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Int(string str)

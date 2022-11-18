@@ -38,7 +38,7 @@ public class Parses
     [TestCase("81284722.68774923738")]
     public void Double(string str)
     {
-        Parser.ToDouble(str, out var parsed).Should().BeTrue();
+        var parsed = Parser.ToDouble(str);
         parsed.Should().Be(double.Parse(str, CultureInfo.InvariantCulture));
     }
 }

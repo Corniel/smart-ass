@@ -12,3 +12,12 @@ indent_size = 4
 [*.{csproj,props}]
 indent_style = space
 indent_size = 2
+
+# S100: Properties should be named in PascalCase
+dotnet_diagnostic.S100.severity = none
+
+# S101: Types should be named in PascalCase
+dotnet_diagnostic.S101.severity = none
+
+# S121: Control structures should use curly braces
+dotnet_diagnostic.S121.severity = none

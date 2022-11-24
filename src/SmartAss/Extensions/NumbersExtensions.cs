@@ -4,48 +4,59 @@
 // </copyright>
 
 using SmartAss;
-using System.Collections.Generic;
 
-namespace System
+namespace System;
+
+/// <summary>Extensions on collections of numbers.</summary>
+public static class NumbersExtensions
 {
-    /// <summary>Extensions on collections of numbers.</summary>
-    public static class NumbersExtensions
+    public static int Product(this IEnumerable<int> numbers)
     {
-        public static int Product(this IEnumerable<int> numbers)
+        Guard.NotNull(numbers, nameof(numbers));
+
+        var product = 1;
+        foreach (var number in numbers)
         {
-            Guard.NotNull(numbers, nameof(numbers));
-
-            var product = 1;
-            foreach (var number in numbers)
-            {
-                product *= number;
-            }
-            return product;
+            product *= number;
         }
+        return product;
+    }
 
-        public static long Product(this IEnumerable<long> numbers)
+    public static long Product(this IEnumerable<long> numbers)
+    {
+        Guard.NotNull(numbers, nameof(numbers));
+
+        long product = 1;
+        foreach (var number in numbers)
         {
-            Guard.NotNull(numbers, nameof(numbers));
-
-            long product = 1;
-            foreach (var number in numbers)
-            {
-                product *= number;
-            }
-            return product;
+            product *= number;
         }
+        return product;
+    }
 
-        public static ulong Sum(this IEnumerable<ulong> numbers)
+    public static ulong Sum(this IEnumerable<ulong> numbers)
+    {
+        Guard.NotNull(numbers, nameof(numbers));
+
+        ulong sum = 0;
+
+        foreach (var number in numbers)
         {
-            Guard.NotNull(numbers, nameof(numbers));
-
-            ulong sum = 0;
-
-            foreach (var number in numbers)
-            {
-                sum += number;
-            }
-            return sum;
+            sum += number;
         }
+        return sum;
+    }
+
+    public static int Sum(this IEnumerable<byte> numbers)
+    {
+        Guard.NotNull(numbers, nameof(numbers));
+
+        var sum = 0;
+
+        foreach (var number in numbers)
+        {
+            sum += number;
+        }
+        return sum;
     }
 }

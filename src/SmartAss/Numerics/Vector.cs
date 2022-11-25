@@ -52,7 +52,7 @@ namespace SmartAss.Numerics
 
         public Vector Sign() => new(X.Sign(), Y.Sign());
 
-        public Vector Rotate(DiscreteRotation rotation)
+        public Vector Rotate(DiscreteRotation rotation) 
             => ((int)rotation).Mod(4) switch
             {
                 1 => new Vector(+Y, -X),
@@ -60,6 +60,9 @@ namespace SmartAss.Numerics
                 3 => new Vector(-Y, +X),
                 _ => this,
             };
+
+        public Vector TurnLeft() => Rotate(DiscreteRotation.Deg090);
+        public Vector TurnRight() => Rotate(DiscreteRotation.Deg270);
 
         private Vector Add(Vector vector) => new(X + vector.X, Y + vector.Y);
         private Vector Subtract(Vector vector) => new(X - vector.X, Y - vector.Y);

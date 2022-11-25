@@ -31,5 +31,8 @@ namespace SmartAss.Navigation
                 CompassPoint.SW => Vector.SW,
                 _ => Vector.O,
             };
+
+        public static IEnumerable<Vector> ToVectors(this IEnumerable<CompassPoint> compassPoints)
+            => compassPoints.Select(ToVector);
     }
 }

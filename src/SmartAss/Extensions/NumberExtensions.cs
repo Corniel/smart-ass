@@ -7,6 +7,14 @@ namespace System;
 
 public static class NumberExtensions
 {
+    /// <summary>Gets the square of the number.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int Sqr(this int number) => number * number;
+
+    /// <summary>Gets the discreet value of the square root of the number.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int Sqrt(this int number) => (int)Math.Sqrt(number);
+
     public static IReadOnlyList<byte> Digits(this int number)
     {
         var digits = new byte[10];

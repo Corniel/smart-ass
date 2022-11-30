@@ -5,10 +5,6 @@
 #pragma warning disable S3900 // Arguments of public methods should be validated against null
 // intended for simple parsing
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace SmartAss.Parsing
 {
     public static class StringParsing
@@ -23,6 +19,9 @@ namespace SmartAss.Parsing
 
         public static string[] Seperate(this string str, params string[] splitters)
             => str.Split(splitters, SplitOptions);
+
+        public static string[] Seperate(this string str, params char[] splitters)
+          => str.Split(splitters, SplitOptions);
 
         public static IEnumerable<string> CommaSeperated(this string str)
             => str.Seperate(',');

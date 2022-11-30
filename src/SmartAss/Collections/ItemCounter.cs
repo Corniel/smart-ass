@@ -32,6 +32,9 @@ public class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>>
 
     public bool Any() => lookup.Values.Any(count => count != 0);
 
+    public ItemCount<TItem> Max() => this.OrderByDescending(item => item.Count).FirstOrDefault();
+    public ItemCount<TItem> Min() => this.OrderBy(item => item.Count).FirstOrDefault();
+
     /// <summary>Gets all items (so including records with a count of zero.</summary>
     public IEnumerable<ItemCount<TItem>> All()
         => lookup.Select(kvp => ItemCount.Create(kvp.Key, kvp.Value));

@@ -57,6 +57,9 @@ namespace SmartAss.Parsing
         public static IEnumerable<int> Digits(this string str) => new DigitsParser(str);
 
         /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
+        public static IEnumerable<int> Int32s(this IEnumerable<string> strs) => strs.SelectMany(Int32s);
+
+        /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
         public static IEnumerable<int> Int32s(this string str) => new Int32sParser(str);
 
         /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>

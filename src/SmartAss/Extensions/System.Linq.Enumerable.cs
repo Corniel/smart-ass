@@ -1,10 +1,12 @@
 ﻿using SmartAss;
-using System.Collections.Generic;
 
 namespace System.Linq;
 
 public static class SmartAssEnumerabelExtensions
 {
+    public static IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> sources, TSource except)
+        => sources.Where(s => !s.Equals(except));
+
     public static IEnumerable<TSource> WithStep<TSource>(this IEnumerable<TSource> source, int step)
         => source
         .Select((item, index) => new { item, index })

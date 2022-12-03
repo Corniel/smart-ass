@@ -11,32 +11,32 @@ namespace SmartAss.Parsing
     {
         private const StringSplitOptions SplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
 
-        public static string[] Seperate(this string str, char splitter)
+        public static string[] Separate(this string str, char splitter)
             => str.Split(new[] { splitter }, SplitOptions);
 
-        public static string[] Seperate(this string str, string splitter)
+        public static string[] Separate(this string str, string splitter)
             => str.Split(new[] { splitter }, SplitOptions);
 
-        public static string[] Seperate(this string str, params string[] splitters)
+        public static string[] Separate(this string str, params string[] splitters)
             => str.Split(splitters, SplitOptions);
 
-        public static string[] Seperate(this string str, params char[] splitters)
+        public static string[] Separate(this string str, params char[] splitters)
           => str.Split(splitters, SplitOptions);
 
-        public static IEnumerable<string> CommaSeperated(this string str)
-            => str.Seperate(',');
+        public static IReadOnlyList<string> CommaSeparated(this string str)
+            => str.Separate(',');
 
-        public static IEnumerable<T> CommaSeperated<T>(this string str, Func<string, int, T> selector)
-            => str.CommaSeperated().Select(selector);
+        public static IEnumerable<T> CommaSeparated<T>(this string str, Func<string, int, T> selector)
+            => str.CommaSeparated().Select(selector);
 
-        public static IEnumerable<T> CommaSeperated<T>(this string str, Func<string, T> selector)
-            => str.CommaSeperated().Select(selector);
+        public static IEnumerable<T> CommaSeparated<T>(this string str, Func<string, T> selector)
+            => str.CommaSeparated().Select(selector);
 
-        public static IEnumerable<T> SpaceSeperated<T>(this string str, Func<string, T> selector)
-            => str.SpaceSeperated().Select(selector);
+        public static IEnumerable<T> SpaceSeparated<T>(this string str, Func<string, T> selector)
+            => str.SpaceSeparated().Select(selector);
 
-        public static IEnumerable<string> SpaceSeperated(this string str)
-            => str.Seperate(' ');
+        public static IReadOnlyList<string> SpaceSeparated(this string str)
+            => str.Separate(' ');
 
         public static IReadOnlyList<string> Lines(this string str, StringSplitOptions options = SplitOptions)
             => str.Split(new[] { "\r\n", "\n", ";" }, options);

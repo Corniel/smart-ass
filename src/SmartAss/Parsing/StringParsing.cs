@@ -86,7 +86,7 @@ namespace SmartAss.Parsing
             return new string(buffer, 0, length);
         }
 
-        public static CharPixels CharPixels(this IEnumerable<string> lines) => string.Join('\n', lines).CharPixels();
+        public static CharPixels CharPixels(this IEnumerable<string> lines, bool ignoreSpace = true) => string.Join('\n', lines).CharPixels(ignoreSpace);
 
         public static CharPixels CharPixels(this string str, bool ignoreSpace = true) => Parsing.CharPixels.Parse(str, ignoreSpace);
     }

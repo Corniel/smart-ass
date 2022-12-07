@@ -38,5 +38,12 @@ namespace SmartAss.Numerics
                 }
             }
         }
+
+        public static Point Max(this IEnumerable<Point> points)
+        {
+            var x = points.Max(p => p.X);
+            var y = points.Max(p => p.Y);
+            return new(x, y);
+        }
     }
 }

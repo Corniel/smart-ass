@@ -28,12 +28,23 @@ public static class SmartAssEnumerabelExtensions
         foreach (var item in source)
         {
             group[index++] = item;
-            if(index == groupSize)
+            if (index == groupSize)
             {
                 yield return group;
                 index = 0;
                 group = new TSource[groupSize];
             }
         }
+    }
+
+    public static TValue Sum<TSource, TValue>(this IEnumerable<TSource> source, Func<TSource, TValue> selector)
+        where TValue : struct, Numerics.IAdditionOperators<TValue, TValue, TValue>
+    {
+        TValue sum = default;
+        foreach (var item in source.Select(selector))
+        {
+            sum += item;
+        }
+        return sum;
     }
 }

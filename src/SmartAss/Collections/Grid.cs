@@ -105,6 +105,10 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
     /// <summary>Returns true if the point is on the grid.</summary>
     public bool OnGrid(Point p) => p.X >= 0 && p.X < Cols && p.Y >= 0 && p.Y < Rows;
 
+    public bool OnEdge(Point p) 
+        => (p.X == 0 || p.Y == 0 || p.X == Cols - 1 || p.Y == Rows - 1) 
+        && OnGrid(p);
+
     public Grid<T> Rotate(DiscreteRotation rotation)
      => ((int)rotation).Mod(4) switch
      {

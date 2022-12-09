@@ -50,6 +50,9 @@ namespace SmartAss.Numerics
         /// <summary>Gets the angle.</summary>
         public double Angle => Math.Atan2(Y, X);
 
+        /// <summary>Gets the length².</summary>
+        public int Length2 => X.Sqr() + Y.Sqr();
+
         public Vector Sign() => new(X.Sign(), Y.Sign());
 
         public Vector Rotate(DiscreteRotation rotation) 

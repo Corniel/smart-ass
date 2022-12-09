@@ -17,6 +17,7 @@ public static class NumbersExtensions
         var product = 1;
         foreach (var number in numbers)
         {
+            if (number == 0) return 0;
             product *= number;
         }
         return product;

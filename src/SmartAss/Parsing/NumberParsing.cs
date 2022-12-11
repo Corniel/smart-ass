@@ -18,16 +18,19 @@ namespace SmartAss.Parsing
         private const StringSplitOptions SplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
         private static readonly string[] Splitters = new[] { " ", ",", "\r\n", "\n", "\t" };
 
-        /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
-        public static int Int32(this string str) => TryInt32(str, default);
 
         /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
-        public static int TryInt32(this string str, int? fallback)
+        public static int Int32(this string str) => str.Int32N() ?? 0;
+
+        /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
+        public static int? Int32N(this string str)
         {
-            if (int.TryParse(str, out var n)) { return n; }
-            else if (fallback.HasValue) { return fallback.Value; }
-            else { throw new FormatException($"'{str}' is not a number"); }
+            var interator = new Int32sParser(str);
+            return interator.MoveNext() ? interator.Current : null;
         }
+
+        /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
+        public static int TryInt32(this string str, int fallback) => str.Int32N() ?? fallback;
 
         /// <summary>Gets the <see cref="long"/> value of the <see cref="string"/>.</summary>
         public static long Int64(this string str, long? fallback = null)

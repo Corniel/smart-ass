@@ -20,6 +20,9 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
     private readonly T[][] elements;
 
     /// <summary>Initializes a new instance of the <see cref="Grid{T}"/> class.</summary>
+    public Grid(Point max) : this(max.X + 1, max.Y + 1) { }
+
+    /// <summary>Initializes a new instance of the <see cref="Grid{T}"/> class.</summary>
     public Grid(int cols, int rows)
     {
         Cols = cols;

@@ -8,16 +8,19 @@ public readonly struct Int32Range : IEquatable<Int32Range>
 {
     public static readonly Int32Range Empty;
 
-    public int Lower { get; }
-    public int Upper => _Upper + 1;
-    private readonly int _Upper;
-
     public Int32Range(int lower, int upper)
     {
         if(upper < lower ) throw new ArgumentOutOfRangeException(nameof(upper), "Upper bound should not be smaller than the lower bound.");
         Lower = lower;
         _Upper = upper -1;
     }
+
+    public int Lower { get; }
+    public int Upper => _Upper + 1;
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private readonly int _Upper;
+
+    public int Size => Upper - Lower;
 
     [Pure]
     public bool IsEmpty() => Equals(Empty);
@@ -31,6 +34,18 @@ public readonly struct Int32Range : IEquatable<Int32Range>
     }
 
     [Pure]
+    public Int32Range? Join(Int32Range other)
+    {
+        if (Overlaps(other))
+        {
+            var lower = Math.Min(Lower, other.Lower);
+            var upper = Math.Max(Upper, other.Upper);
+            return new(lower, upper);
+        }
+        return null;
+    }
+
+    [Pure]
     public bool Contains(int number) => Lower <= number && number <= Upper;
 
     [Pure]
@@ -38,6 +53,9 @@ public readonly struct Int32Range : IEquatable<Int32Range>
 
     [Pure]
     public bool Overlaps(Int32Range other) => !(this & other).IsEmpty();
+
+    [Pure]
+    public IEnumerable<int> Values() => Enumerable.Range(Lower, Size);
 
     /// <inheritdoc />
     public override bool Equals(object obj) => obj is Int32Range other && Equals(other);
@@ -57,7 +75,7 @@ public readonly struct Int32Range : IEquatable<Int32Range>
     public static Int32Range operator &(Int32Range left, Int32Range right) => left.Intersection(right);
 
     [Pure]
-    public override string ToString() => $"{Lower}-{Upper}";
+    public override string ToString() => IsEmpty() ? "{}" :  $"{{{Lower}..{Upper}}}";
 
     [Pure]
     public static Int32Range Parse(string str)

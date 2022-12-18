@@ -34,7 +34,6 @@ public readonly struct Point3D : IEquatable<Point3D>
     public int ManhattanDistance(Point3D other)
     => Math.Abs(X - other.X) + Math.Abs(Y - other.Y) + Math.Abs(Z - other.Z);
 
-
     private Point3D Add(Vector3D vector)
         => new(X + vector.X, Y + vector.Y, Z + vector.Z);
 

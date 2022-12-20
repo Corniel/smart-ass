@@ -5,11 +5,11 @@ using System.Text;
 
 namespace SmartAss.Specs.FluentAssertions;
 
-public class SmartAssCircleAssertions<T> where T : IEqualityOperators<T, T, bool>
+public class SmartAssLoopAssertions<T> where T : IEqualityOperators<T, T, bool>
 {
-    public SmartAssCircleAssertions(Circle<T> subject) => Subject = subject;
+    public SmartAssLoopAssertions(LoopNode<T> subject) => Subject = subject;
 
-    public Circle<T> Subject { get; }
+    public LoopNode<T> Subject { get; }
 
     public void HaveElements(params T[] values)
     {

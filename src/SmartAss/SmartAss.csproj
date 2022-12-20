@@ -5,6 +5,7 @@
     <Authors>Corniel Nobel</Authors>
     <Copyright>Copyright (c) 2018-2019 Corniel Nobel</Copyright>
     <CodeAnalysisRuleSet>..\..\smart-ass.ruleset</CodeAnalysisRuleSet>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

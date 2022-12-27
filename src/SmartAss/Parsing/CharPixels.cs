@@ -46,6 +46,7 @@ namespace SmartAss.Parsing
         public Grid<char> Grid()
         {
             var grid = new Grid<char>(Cols, Rows);
+            foreach (var p in grid.Positions) { grid[p] = ' '; }
             foreach (var pixel in this) { grid[pixel.Key] = pixel.Value; }
             return grid;
         }

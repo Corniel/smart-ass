@@ -19,20 +19,23 @@ namespace SmartAss.Navigation
             : compassPoint.ToString().ToLowerInvariant();
 
         public static Vector ToVector(this CompassPoint compassPoint)
-            => compassPoint switch
-            {
-                CompassPoint.N => Vector.N,
-                CompassPoint.E => Vector.E,
-                CompassPoint.S => Vector.S,
-                CompassPoint.W => Vector.W,
-                CompassPoint.NE => Vector.NE,
-                CompassPoint.NW => Vector.NW,
-                CompassPoint.SE => Vector.SE,
-                CompassPoint.SW => Vector.SW,
-                _ => Vector.O,
-            };
+            => Vectors.TryGetValue(compassPoint, out var vector)
+            ? vector
+            : default;
 
         public static IEnumerable<Vector> ToVectors(this IEnumerable<CompassPoint> compassPoints)
             => compassPoints.Select(ToVector);
+
+        internal static readonly IReadOnlyDictionary<CompassPoint, Vector> Vectors = new Dictionary<CompassPoint, Vector>()
+        {
+            [CompassPoint.N] = Vector.N,
+            [CompassPoint.E] = Vector.E,
+            [CompassPoint.S] = Vector.S,
+            [CompassPoint.W] = Vector.W,
+            [CompassPoint.NE] = Vector.NE,
+            [CompassPoint.NW] = Vector.NW,
+            [CompassPoint.SE] = Vector.SE,
+            [CompassPoint.SW] = Vector.SW,
+        };
     }
 }

@@ -3,6 +3,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using SmartAss.Navigation;
+
 namespace SmartAss.Numerics
 {
     public readonly struct Vector : IEquatable<Vector>
@@ -53,8 +55,10 @@ namespace SmartAss.Numerics
         /// <summary>Gets the length².</summary>
         public int Length2 => X.Sqr() + Y.Sqr();
 
+        [Pure]
         public Vector Sign() => new(X.Sign(), Y.Sign());
 
+        [Pure]
         public Vector Rotate(DiscreteRotation rotation) 
             => ((int)rotation).Mod(4) switch
             {
@@ -64,23 +68,40 @@ namespace SmartAss.Numerics
                 _ => this,
             };
 
+        [Pure]
         public Vector TurnLeft() => Rotate(DiscreteRotation.Deg090);
+
+        [Pure]
         public Vector TurnRight() => Rotate(DiscreteRotation.Deg270);
+
+        [Pure]
+        public Vector UTurn() => Rotate(DiscreteRotation.Deg180);
+
+        [Pure]
+        public CompassPoint CompassPoint()
+        {
+            var vector = this;
+            return CompassPoints.Vectors.FirstOrDefault(kvp => kvp.Value == vector).Key;
+        }
 
         private Vector Add(Vector vector) => new(X + vector.X, Y + vector.Y);
         private Vector Subtract(Vector vector) => new(X - vector.X, Y - vector.Y);
         private Vector Multiply(int factor) => new(X * factor, Y * factor);
 
         /// <inheritdoc />
+        [Pure]
         public override string ToString() => $"({X}, {Y})";
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is Vector other && Equals(other);
+        [Pure]
+        public override bool Equals(object? obj) => obj is Vector other && Equals(other);
 
         /// <inheritdoc />
+        [Pure]
         public bool Equals(Vector other) => X == other.X && Y == other.Y;
 
         /// <inheritdoc />
+        [Pure]
         public override int GetHashCode() => X ^ (Y << 16);
 
         /// <summary>Compares two vectors.</summary>

@@ -39,6 +39,13 @@ namespace SmartAss.Numerics
             }
         }
 
+        public static Point Min(this IEnumerable<Point> points)
+        {
+            var x = points.Min(p => p.X);
+            var y = points.Min(p => p.Y);
+            return new(x, y);
+        }
+
         public static Point Max(this IEnumerable<Point> points)
         {
             var x = points.Max(p => p.X);

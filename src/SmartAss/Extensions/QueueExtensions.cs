@@ -23,7 +23,7 @@ namespace System.Collections.Generic
             return queue;
         }
 
-        public static IEnumerable<T> DeuqueCurrent<T>(this Queue<T> queue)
+        public static IEnumerable<T> DequeueCurrent<T>(this Queue<T> queue)
         {
             Guard.NotNull(queue, nameof(queue));
             var count = queue.Count;

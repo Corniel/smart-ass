@@ -20,5 +20,5 @@ internal sealed class IntTile : Tile, IEquatable<IntTile>
     public bool Equals(IntTile other) => Id == other.Id;
     public override string ToString() => Id.ToString();
     public IEnumerable<Tile> GetNeighbors() => Array.Empty<Tile>();
-    public static implicit operator IntTile(int id) => new IntTile(id);
+    public static implicit operator IntTile(int id) => new(id);
 }

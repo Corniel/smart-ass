@@ -3,14 +3,19 @@ using System.ComponentModel;
 
 namespace SmartAss.Numerics;
 
-[TypeConverter(typeof(Conversion.Numerics.RangeTypeConverter))]
+[TypeConverter(typeof(Conversion.Numerics.Int32RangeTypeConverter))]
 public readonly struct Int32Range : IEquatable<Int32Range>
 {
     public static readonly Int32Range Empty;
 
+    public Int32Range(int number) : this(number, number) { }
+
     public Int32Range(int lower, int upper)
     {
-        if(upper < lower ) throw new ArgumentOutOfRangeException(nameof(upper), "Upper bound should not be smaller than the lower bound.");
+        if (upper < lower)
+        {
+            throw new ArgumentOutOfRangeException(nameof(upper), "Upper bound should not be smaller than the lower bound.");
+        }
         Lower = lower;
         _Upper = upper -1;
     }
@@ -22,8 +27,7 @@ public readonly struct Int32Range : IEquatable<Int32Range>
 
     public int Size => Upper - Lower;
 
-    [Pure]
-    public bool IsEmpty() => Equals(Empty);
+    public bool IsEmpty => Equals(Empty);
 
     [Pure]
     public Int32Range Intersection(Int32Range other)
@@ -52,7 +56,7 @@ public readonly struct Int32Range : IEquatable<Int32Range>
     public bool FullyContains(Int32Range other) => Intersection(other) == other;
 
     [Pure]
-    public bool Overlaps(Int32Range other) => !(this & other).IsEmpty();
+    public bool Overlaps(Int32Range other) => !(this & other).IsEmpty;
 
     [Pure]
     public IEnumerable<int> Values() => Enumerable.Range(Lower, Size);
@@ -75,7 +79,7 @@ public readonly struct Int32Range : IEquatable<Int32Range>
     public static Int32Range operator &(Int32Range left, Int32Range right) => left.Intersection(right);
 
     [Pure]
-    public override string ToString() => IsEmpty() ? "{}" :  $"{{{Lower}..{Upper}}}";
+    public override string ToString() => IsEmpty ? "{}" :  $"{{{Lower}..{Upper}}}";
 
     [Pure]
     public static Int32Range Parse(string str)

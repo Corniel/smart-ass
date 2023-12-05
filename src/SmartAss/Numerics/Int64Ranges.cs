@@ -1,12 +1,12 @@
 ﻿namespace SmartAss.Numerics
 {
-    public static class Int32Ranges
+    public static class Int64Ranges
     {
-        public static IReadOnlyList<Int32Range> Merge(this IEnumerable<Int32Range> ranges)
+        public static IReadOnlyList<Int64Range> Merge(this IEnumerable<Int64Range> ranges)
         {
             Guard.NotNull(ranges, nameof(ranges));
 
-            var list = new List<Int32Range>();
+            var list = new List<Int64Range>();
 
             foreach (var range in ranges.Where(r => !r.IsEmpty).OrderBy(r => r.Lower))
             {
@@ -26,11 +26,11 @@
         }
 
         [Pure]
-        public static List<Int32Range> Except(this IEnumerable<Int32Range> ranges, Int32Range except)
+        public static List<Int64Range> Except(this IEnumerable<Int64Range> ranges, Int64Range except)
         {
             Guard.NotNull(ranges, nameof(ranges));
 
-            var list = new List<Int32Range>();
+            var list = new List<Int64Range>();
 
             foreach (var range in ranges.Where(r => !r.IsEmpty))
             {

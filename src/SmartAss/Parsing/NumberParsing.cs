@@ -60,13 +60,16 @@ namespace SmartAss.Parsing
         public static IEnumerable<int> Digits(this string str) => new DigitsParser(str);
 
         /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
-        public static IEnumerable<int> Int32s(this IEnumerable<string> strs) => strs.SelectMany(Int32s);
+        public static IEnumerable<int> Int32s(this IEnumerable<string> strings) => strings.SelectMany(Int32s);
 
         /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
         public static IEnumerable<int> Int32s(this string str) => new Int32sParser(str);
 
         /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>
         public static IEnumerable<long> Int64s(this string str) => new Int64sParser(str);
+
+        /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>
+        public static IEnumerable<long> Int64s(this IEnumerable<string> strings) => strings.SelectMany(Int64s);
 
         /// <summary>Gets the <see cref="BigInteger"/> values of the <see cref="string"/>.</summary>
         public static IEnumerable<BigInteger> BigInts(this string str)

@@ -39,7 +39,9 @@ namespace SmartAss.Parsing
             => str.Separate(' ');
 
         public static IReadOnlyList<string> Lines(this string str, StringSplitOptions options = SplitOptions)
-            => str.Split(new[] { "\r\n", "\n", ";" }, options);
+            => str.Contains('\n')
+            ? str.Split(["\r\n", "\n"], options)
+            : str.Split(';', options);
 
         public static IEnumerable<T> Lines<T>(this string str, Func<string, T> selector)
            => str.Lines().Select(selector);

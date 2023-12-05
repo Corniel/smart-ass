@@ -34,15 +34,15 @@
 
             foreach (var range in ranges.Where(r => !r.IsEmpty))
             {
-                if (range.Intersection(except) is { IsEmpty: false } join)
+                if (range.Intersection(except) is { IsEmpty: false } select)
                 {
-                    if (range.Lower < join.Lower)
+                    if (range.Lower < select.Lower)
                     {
-                        list.Add(new(range.Lower, join.Lower - 1));
+                        list.Add(new(range.Lower, select.Lower - 1));
                     }
-                    if (range.Upper >= join.Upper && join.Upper < range.Upper)
+                    if (range.Upper >= select.Upper && select.Upper < range.Upper)
                     {
-                        list.Add(new(join.Upper + 1, range.Upper));
+                        list.Add(new(select.Upper + 1, range.Upper));
                     }
                 }
                 else

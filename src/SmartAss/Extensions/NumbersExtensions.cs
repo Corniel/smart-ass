@@ -4,55 +4,38 @@
 // </copyright>
 
 using SmartAss;
+using System.Numerics;
 
 namespace System;
 
 /// <summary>Extensions on collections of numbers.</summary>
 public static class NumbersExtensions
 {
-    public static int Product(this IEnumerable<int> numbers)
+    public static TNumber Product<TNumber>(this IEnumerable<TNumber> numbers) where TNumber : struct, INumberBase<TNumber>
     {
         Guard.NotNull(numbers, nameof(numbers));
 
-        var product = 1;
+        TNumber product = TNumber.One;
+
         foreach (var number in numbers)
         {
-            if (number == 0) return 0;
+            if (number == TNumber.Zero)
+            {
+                return TNumber.Zero;
+            }
             product *= number;
         }
         return product;
     }
 
-    public static long Product(this IEnumerable<long> numbers)
-    {
-        Guard.NotNull(numbers, nameof(numbers));
-
-        long product = 1;
-        foreach (var number in numbers)
-        {
-            product *= number;
-        }
-        return product;
-    }
+    public static TNumber Product<TSource, TNumber>(this IEnumerable<TSource> source, Func<TSource, TNumber> selector) where TNumber : struct, INumberBase<TNumber>
+        => source.Select(selector).Product();
 
     public static ulong Sum(this IEnumerable<ulong> numbers)
     {
         Guard.NotNull(numbers, nameof(numbers));
 
         ulong sum = 0;
-
-        foreach (var number in numbers)
-        {
-            sum += number;
-        }
-        return sum;
-    }
-
-    public static int Sum(this IEnumerable<byte> numbers)
-    {
-        Guard.NotNull(numbers, nameof(numbers));
-
-        var sum = 0;
 
         foreach (var number in numbers)
         {

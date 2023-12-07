@@ -16,4 +16,11 @@ public static class ComparableExtensions
         var compare = comparable.CompareTo(other);
         return compare == 0 ? null : compare;
     }
+
+    public static int? ComparesTo(this IComparable comparable, IComparable other)
+    {
+        if (comparable is null) { return other is null ? null : +1; }
+        var compare = comparable.CompareTo(other);
+        return compare == 0 ? null : compare;
+    }
 }

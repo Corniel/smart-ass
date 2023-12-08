@@ -18,13 +18,13 @@ public static class NumberExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Sign<T>(this T number) where T : struct, INumber<T>
     {
-        if(number == T.Zero) return 0;
+        if (number == T.Zero) return 0;
         else return number > T.Zero ? +1 : -1;
     }
 
     /// <summary>Gets the square of the number.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T Sqr<T>(this T number) where T: struct, INumberBase<T>
+    public static T Sqr<T>(this T number) where T : struct, INumberBase<T>
         => number * number;
 
     /// <summary>Gets the discreet value of the square root of the number.</summary>
@@ -47,18 +47,4 @@ public static class NumberExtensions
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Ceil(this double number) => (int)Math.Ceiling(number);
-
-    public static IReadOnlyList<byte> Digits(this int number)
-    {
-        var digits = new byte[10];
-        var pos = 10;
-        var remainder = number;
-
-        while (remainder != 0) 
-        {
-            digits[--pos] = unchecked((byte)(remainder % 10));
-            remainder = remainder / 10;
-        }
-        return digits[pos..];
-    }
 }

@@ -9,9 +9,9 @@ public sealed class Loop
     internal int Count;
 
     /// <summary>Creates a new loop.</summary>
-    public static LoopNode<T> New<T>(params T[] values) => New(Guard.NotNull(values, nameof(values)).AsEnumerable());
+    public static LoopNode<T> New<T>(params T[] values) => NewRange(Guard.NotNull(values, nameof(values)).AsEnumerable());
 
-    public static LoopNode<T> New<T>(IEnumerable<T> values)
+    public static LoopNode<T> NewRange<T>(IEnumerable<T> values)
     {
         Guard.NotNull(values, nameof(values));
 

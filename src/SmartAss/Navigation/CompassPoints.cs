@@ -9,9 +9,9 @@ namespace SmartAss.Navigation
 {
     public static class CompassPoints
     {
-        public static readonly CompassPoint[] All = new[] { CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W, CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW };
-        public static readonly CompassPoint[] Primary = new[] { CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W };
-        public static readonly CompassPoint[] Secondary = new[] { CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW };
+        public static readonly IReadOnlyList<CompassPoint> All = new[] { CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W, CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW };
+        public static readonly IReadOnlyList<CompassPoint> Primary = new[] { CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W };
+        public static readonly IReadOnlyList<CompassPoint> Secondary = new[] { CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW };
 
         public static string Short(this CompassPoint compassPoint)
             => compassPoint == CompassPoint.None
@@ -37,5 +37,7 @@ namespace SmartAss.Navigation
             [CompassPoint.SE] = Vector.SE,
             [CompassPoint.SW] = Vector.SW,
         };
+
+        public static CompassPoint Parse(string str) => Enum.Parse<CompassPoint>(str, true);
     }
 }

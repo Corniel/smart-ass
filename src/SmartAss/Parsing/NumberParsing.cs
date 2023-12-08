@@ -56,9 +56,6 @@ namespace SmartAss.Parsing
             else { throw new FormatException($"'{n}' is not a number"); }
         }
 
-        /// <summary>Gets the <see cref="int"/> values of all digit characters in the <see cref="string"/>.</summary>
-        public static IEnumerable<int> Digits(this string str) => new DigitsParser(str);
-
         /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
         public static IEnumerable<int> Int32s(this IEnumerable<string> strings) => strings.SelectMany(Int32s);
 
@@ -152,36 +149,6 @@ namespace SmartAss.Parsing
 
             public void Reset() => Do.Nothing();
             public IEnumerator<long> GetEnumerator() => this;
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-            public void Dispose() => Do.Nothing();
-        }
-
-        private struct DigitsParser : IEnumerator<int>, IEnumerable<int>
-        {
-            private readonly string str;
-            private int pos = -1;
-
-            public DigitsParser(string s)
-            {
-                str = s;
-                Current = 0;
-            }
-
-            public int Current { get; private set; }
-            object IEnumerator.Current => Current;
-
-            public bool MoveNext()
-            {
-                while (++pos < str.Length)
-                {
-                    Current = str[pos] - '0';
-                    if (Current >= 0 && Current <= 9) return true;
-                }
-                return false;
-            }
-
-            public void Reset() => Do.Nothing();
-            public IEnumerator<int> GetEnumerator() => this;
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
             public void Dispose() => Do.Nothing();
         }

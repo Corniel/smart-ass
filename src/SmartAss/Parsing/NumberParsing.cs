@@ -39,6 +39,15 @@ namespace SmartAss.Parsing
             else if (fallback.HasValue) { return fallback.Value; }
             else { throw new FormatException($"'{n}' is not a number"); }
         }
+        /// <summary>Gets the <see cref="long"/> value of the <see cref="string"/>.</summary>
+        public static long? Int64N(this string str)
+        {
+            var interator = new Int64sParser(str);
+            return interator.MoveNext() ? interator.Current : null;
+        }
+
+        /// <summary>Gets the <see cref="intlong/> value of the <see cref="string"/>.</summary>
+        public static long TryInt64(this string str, int fallback) => str.Int64N() ?? fallback;
 
         /// <summary>Gets the <see cref="long"/> value of the <see cref="string"/>.</summary>
         public static ulong UInt64(this string str, ulong? fallback = null)

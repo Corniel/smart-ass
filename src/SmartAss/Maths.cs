@@ -5,9 +5,12 @@
 
 namespace SmartAss
 {
-    /// <summary>Math operations not in <see cref="System.Math"/>.</summary>
+    /// <summary>Math operations not in <see cref="Math"/>.</summary>
     public static class Maths
     {
+       /// <inheritdoc cref="Gcd(long, long)" />
+        public static int Gcd(int a, int b) => unchecked((int)Gcd(a.Long(), b.Long()));
+
         /// <summary>Gets the Greatest Common Divisor.</summary>
         /// <remarks>
         /// See: https://en.wikipedia.org/wiki/Greatest_common_divisor.

@@ -4,6 +4,7 @@
 // </copyright>
 
 using SmartAss;
+using SmartAss.Collections;
 
 namespace System.Collections.Generic
 {
@@ -23,14 +24,38 @@ namespace System.Collections.Generic
             return queue;
         }
 
-        public static IEnumerable<T> DequeueCurrent<T>(this Queue<T> queue)
+        public static DequeuesAll<T> DequeueAll<T>(this Queue<T> queue) => new(Guard.NotNull(queue, nameof(queue)));
+
+        public static DequeuesCurrent<T> DequeueCurrent<T>(this Queue<T> queue) => new(Guard.NotNull(queue, nameof(queue)));
+    }
+
+    public struct DequeuesCurrent<T> : Iterator<T>
+    {
+        public DequeuesCurrent(Queue<T> queue)
         {
-            Guard.NotNull(queue, nameof(queue));
-            var count = queue.Count;
-            while (count-- > 0)
-            {
-                yield return queue.Dequeue();
-            }
+            Queue = queue;
+            Count = queue.Count;
         }
+        private readonly Queue<T> Queue;
+        private int Count;
+
+        public T Current => Queue.Dequeue();
+
+        public bool MoveNext() => Count-- > 0;
+
+        public void Dispose() { /* Nothing to dispose. */ }
+
+        public void Reset() => throw new NotSupportedException();
+    }
+
+    public readonly struct DequeuesAll<T>(Queue<T> queue) : Iterator<T>
+    {
+        public T Current => queue.Dequeue();
+
+        public bool MoveNext() => queue.Count != 0;
+
+        public void Dispose() { /* Nothing to dispose. */ }
+
+        public void Reset() => throw new NotSupportedException();
     }
 }

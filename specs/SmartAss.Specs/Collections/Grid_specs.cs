@@ -136,7 +136,8 @@ public class Positions
     {
         var grid = new Grid<object>(3, 2);
         grid[1, 1] = new object();
-        Assert.AreEqual(new[] { new Point(1, 1) }, grid.Positions);
+
+        grid.Positions().Should().BeEquivalentTo(new[] { new Point(1, 1) });
     }
 }
 public class Tiles
@@ -146,7 +147,7 @@ public class Tiles
     {
         var grid = new Grid<object>(3, 2);
         grid[1, 1] = new object();
-        Assert.AreEqual(1, grid.Tiles.Count());
+        grid.Tiles.Count().Should().Be(1);
     }
 }
 public class Size

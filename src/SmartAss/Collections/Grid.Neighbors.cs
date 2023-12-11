@@ -8,7 +8,7 @@ public partial class Grid<T>
     public Grid<T> SetNeighbors(Func<Grid<T>, Point, IReadOnlyCollection<CompassPoint>, Maps.GridNeighbors> selector, IReadOnlyCollection<CompassPoint> directions = null)
     {
         Neighbors = new Grid<Maps.GridNeighbors>(Cols, Rows);
-        foreach(var position in Positions)
+        foreach(var position in Points.Grid(Cols, Rows))
         {
             Neighbors[position] = new GridNeighbors(selector(this, position, directions ?? CompassPoints.Primary));
         }

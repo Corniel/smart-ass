@@ -93,12 +93,6 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         }
     }
 
-    /// <summary>Gets all points containing an value.</summary>
-    /// <remarks>
-    /// If <typeparamref name="T"/> is a struct, none is excluded.
-    /// </remarks>
-    public IEnumerable<Point> Positions => this.Select(e => e.Key);
-
     /// <summary>Gets all (not null) tiles.</summary>
     /// <remarks>
     /// If <typeparamref name="T"/> is a struct, none is excluded.

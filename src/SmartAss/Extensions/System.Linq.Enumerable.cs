@@ -36,15 +36,4 @@ public static class SmartAssEnumerabelExtensions
             }
         }
     }
-
-    public static TValue Sum<TSource, TValue>(this IEnumerable<TSource> source, Func<TSource, TValue> selector)
-        where TValue : struct, Numerics.IAdditionOperators<TValue, TValue, TValue>
-    {
-        TValue sum = default;
-        foreach (var item in source.Select(selector))
-        {
-            sum += item;
-        }
-        return sum;
-    }
 }

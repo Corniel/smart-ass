@@ -4,7 +4,6 @@
 // </copyright>
 
 using SmartAss;
-using System.Collections.Generic;
 
 namespace System
 {

@@ -3,9 +3,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-
 namespace SmartAss.Numerics
 {
     public static class Points
@@ -39,6 +36,10 @@ namespace SmartAss.Numerics
             }
         }
 
+        /// <summary>Gets the aggregated minimum.</summary>
+        public static Point Min(params Point[] points) => points.AsEnumerable().Min();
+
+        /// <summary>Gets the aggregated minimum.</summary>
         public static Point Min(this IEnumerable<Point> points)
         {
             var x = points.Min(p => p.X);
@@ -46,6 +47,10 @@ namespace SmartAss.Numerics
             return new(x, y);
         }
 
+        /// <summary>Gets the aggregated maximum.</summary>
+        public static Point Max(params Point[] points) => points.AsEnumerable().Max();
+
+        /// <summary>Gets the aggregated maximum.</summary>
         public static Point Max(this IEnumerable<Point> points)
         {
             var x = points.Max(p => p.X);

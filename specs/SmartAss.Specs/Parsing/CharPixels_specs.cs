@@ -20,9 +20,9 @@ namespace CharPixels_specs
         [TestCase('\t')]
         [TestCase(' ')]
         [TestCase('\r')]
-        public void ignores_whitespace(char whitespace)
+        public void ignores_whitespace_when_specified(char whitespace)
         {
-            var pixels = $"{whitespace}{whitespace}ABCD\r\nED{whitespace}FG\r\nHIJK{whitespace}\r\n{whitespace}\r\nMNOP\r\nQRST".CharPixels();
+            var pixels = $"{whitespace}{whitespace}ABCD\r\nED{whitespace}FG\r\nHIJK{whitespace}\r\n{whitespace}\r\nMNOP\r\nQRST".CharPixels(ignoreSpace: true);
 
             AssertThat("ABCD\nEDFG\nHIJK\nMNOP\nQRST",
                 cols: 4,

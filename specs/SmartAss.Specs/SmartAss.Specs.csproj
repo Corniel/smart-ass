@@ -10,16 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.*" />
-    <PackageReference Include="FluentAssertions.Analyzers" Version="0.*" />
+    <PackageReference Include="FluentAssertions.Analyzers" Version="*" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
     <PackageReference Include="NUnit" Version="3.*" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.*" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.*" />
-    <PackageReference Include="coverlet.collector" Version="3.*" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.*">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="NUnit3TestAdapter" Version="*" PrivateAssets="all" />
+    <PackageReference Include="NUnit.Analyzers" Version="3.*" PrivateAssets="all"  />
+    <PackageReference Include="coverlet.collector" Version="*"  PrivateAssets="all"  />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="*"  PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

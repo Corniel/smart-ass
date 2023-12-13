@@ -10,14 +10,17 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.*" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.*">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="*" PrivateAssets="all" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\src\SmartAss\SmartAss.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="nuget.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

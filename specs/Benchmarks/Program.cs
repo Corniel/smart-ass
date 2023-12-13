@@ -6,6 +6,6 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        _ = BenchmarkRunner.Run<Parsing>();
+        _ = BenchmarkRunner.Run<Choose>();
     }
 }

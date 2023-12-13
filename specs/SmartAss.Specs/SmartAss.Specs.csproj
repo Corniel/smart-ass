@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
     <PackageReference Include="NUnit" Version="3.*" />
     <PackageReference Include="NUnit3TestAdapter" Version="*" PrivateAssets="all" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.*" PrivateAssets="all"  />
+    <PackageReference Include="NUnit.Analyzers" Version="*" PrivateAssets="all"  />
     <PackageReference Include="coverlet.collector" Version="*"  PrivateAssets="all"  />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="*"  PrivateAssets="all" />
   </ItemGroup>

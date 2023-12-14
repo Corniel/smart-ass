@@ -19,6 +19,10 @@ public static class Humanizer
         return m < 0 ? m + modulo : m;
     }
 
+    [Pure]
+    public static int Mod(this int n, ModuloInt32 modulo)
+        => (n - modulo.Value).Mod(modulo.Divisor);
+
     /// <summary>Creates a <see cref="ModuloInt32"/>.</summary>
     public static ModuloInt32 Modulo(this int dividend, int divisor) => new(dividend, divisor);
 

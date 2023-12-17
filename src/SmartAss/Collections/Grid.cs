@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using SmartAss.Navigation;
 using SmartAss.Numerics;
 using SmartAss.Parsing;
 
@@ -81,6 +82,15 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         get => Get(location);
         set => Set(location, value);
     }
+
+    public Point Corner(CompassPoint corner) => corner switch
+    {
+        CompassPoint.NW => Point.O,
+        CompassPoint.NE => new(Cols - 1, 0),
+        CompassPoint.SW => new(/*...*/0, Rows - 1),
+        CompassPoint.SE => new(Cols - 1, Rows - 1),
+        _ => throw new ArgumentOutOfRangeException(nameof(corner), $"Compass point {0} does not correspond with a corner.")
+    };
 
     /// <summary>Gets the Neighbors of a point.</summary>
     public Grid<Maps.GridNeighbors> Neighbors { get; protected set; }

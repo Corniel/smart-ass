@@ -13,16 +13,33 @@ namespace SmartAss.Navigation
         public static readonly IReadOnlyList<CompassPoint> Primary = new[] { CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W };
         public static readonly IReadOnlyList<CompassPoint> Secondary = new[] { CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW };
 
+        [Pure]
         public static string Short(this CompassPoint compassPoint)
             => compassPoint == CompassPoint.None
             ? "?"
             : compassPoint.ToString().ToLowerInvariant();
 
+        [Pure]
         public static Vector ToVector(this CompassPoint compassPoint)
             => Vectors.TryGetValue(compassPoint, out var vector)
             ? vector
             : default;
 
+        [Pure]
+        public static CompassPoint Flip(this CompassPoint compassPoint) => compassPoint switch
+        {
+            CompassPoint.N  => CompassPoint.S,
+            CompassPoint.E  => CompassPoint.W,
+            CompassPoint.S  => CompassPoint.N,
+            CompassPoint.W  => CompassPoint.E,
+            CompassPoint.NE => CompassPoint.SW,
+            CompassPoint.NW => CompassPoint.SE,
+            CompassPoint.SE => CompassPoint.NW,
+            CompassPoint.SW => CompassPoint.NE,
+            _ => CompassPoint.None,
+        };
+
+        [Pure]
         public static IEnumerable<Vector> ToVectors(this IEnumerable<CompassPoint> compassPoints)
             => compassPoints.Select(ToVector);
 

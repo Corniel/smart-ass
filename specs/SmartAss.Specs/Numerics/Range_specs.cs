@@ -4,6 +4,30 @@ namespace Numerics.Range_specs;
 
 public class Int32
 {
+    public class Size
+    {
+        [Test]
+        public void Zero_for_empty() => Int32Range.Empty.Size.Should().Be(0);
+
+        [Test]
+        public void Lower_and_upper_inclusive() => new Int32Range(3, 10).Size.Should().Be(8);
+    }
+
+    public class Join
+    {
+        [Test]
+        public void empty_when_not_connected()
+            => new Int32Range(0, 4).Join(new Int32Range(6, 8)).Should().Be(Int32Range.Empty);
+
+        [Test]
+        public void Connected_when_adjacent()
+            => new Int32Range(0, 4).Join(new Int32Range(5, 8)).Should().Be(new Int32Range(0, 8));
+
+        [Test]
+        public void Connected_when_overlapping()
+            => new Int32Range(0, 4).Join(new Int32Range(3, 8)).Should().Be(new Int32Range(0, 8));
+    }
+
     public class Interects
     {
         [Test]
@@ -53,6 +77,30 @@ public class Int32
 
 public class Int64
 {
+    public class Size
+    {
+        [Test]
+        public void Zero_for_empty() => Int64Range.Empty.Size.Should().Be(0);
+
+        [Test]
+        public void Lower_and_upper_inclusive() => new Int64Range(3, 10).Size.Should().Be(8);
+    }
+
+    public class Join
+    {
+        [Test]
+        public void null_when_not_connected()
+            => new Int64Range(0, 4).Join(new Int64Range(6, 8)).Should().Be(Int64Range.Empty);
+
+        [Test]
+        public void Connected_when_adjacent()
+            => new Int64Range(0, 4).Join(new Int64Range(5, 8)).Should().Be(new Int64Range(0, 8));
+
+        [Test]
+        public void Connected_when_overlapping()
+            => new Int32Range(0, 4).Join(new Int32Range(3, 8)).Should().Be(new Int32Range(0, 8));
+    }
+
     public class Interects
     {
         [Test]

@@ -17,15 +17,15 @@ public readonly struct Int32Range : IEquatable<Int32Range>
             throw new ArgumentOutOfRangeException(nameof(upper), "Upper bound should not be smaller than the lower bound.");
         }
         Lower = lower;
-        _Upper = upper -1;
+        _Upper = upper + 1;
     }
 
     public int Lower { get; }
-    public int Upper => _Upper + 1;
+    public int Upper => _Upper - 1;
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly int _Upper;
 
-    public int Size => Upper - Lower;
+    public int Size => _Upper - Lower;
 
     public bool IsEmpty => Equals(Empty);
 
@@ -38,15 +38,17 @@ public readonly struct Int32Range : IEquatable<Int32Range>
     }
 
     [Pure]
-    public Int32Range? Join(Int32Range other)
+    public Int32Range Join(Int32Range other)
     {
-        if (Overlaps(other))
+        var l = this;
+        var r = other;
+        if (l.Lower > r.Lower) (l, r) = (r, l);
+
+        if (r.Lower - l.Upper <= 1)
         {
-            var lower = Math.Min(Lower, other.Lower);
-            var upper = Math.Max(Upper, other.Upper);
-            return new(lower, upper);
+            return new(l.Lower, r.Upper);
         }
-        return null;
+        else return Empty;
     }
 
     [Pure]
@@ -79,7 +81,7 @@ public readonly struct Int32Range : IEquatable<Int32Range>
     public static Int32Range operator &(Int32Range left, Int32Range right) => left.Intersection(right);
 
     [Pure]
-    public override string ToString() => IsEmpty ? "{}" :  $"{{{Lower}..{Upper}}}";
+    public override string ToString() => IsEmpty ? "{}" : $"{{{Lower}..{Upper}}}";
 
     [Pure]
     public static Int32Range Parse(string str)

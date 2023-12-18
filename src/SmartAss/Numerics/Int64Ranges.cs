@@ -13,7 +13,7 @@
                 var add = true;
                 for (var i = 0; i < list.Count && add; i++)
                 {
-                    if (list[i].Join(range) is { } join)
+                    if (list[i].Join(range) is {IsEmpty: false } join)
                     {
                         list[i] = join;
                         add = false;

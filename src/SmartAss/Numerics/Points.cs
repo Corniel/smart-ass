@@ -57,5 +57,29 @@ namespace SmartAss.Numerics
             var y = points.Max(p => p.Y);
             return new(x, y);
         }
+
+        public static decimal ShoelaceArea(this IEnumerable<Point> points)
+        {
+            var area = 0m;
+
+            Point? first = null;
+            Point last = default;
+
+            foreach (var point in points)
+            {
+                if (first is null) first = point;
+                else
+                {
+                    area += Prod(last, point);
+                }
+                last = point;
+            }
+
+            return first is { } f
+                ? Math.Abs(area + Prod(last, f)) / 2
+                : 0;
+
+            long Prod(Point l, Point r) => l.X * r.Y - r.X * l.Y;
+        }
     }
 }

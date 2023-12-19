@@ -55,6 +55,10 @@ namespace SmartAss.Numerics
         /// <summary>Gets the length².</summary>
         public int Length2 => X.Sqr() + Y.Sqr();
 
+        public bool IsHorizontal => X != 0 && Y == 0;
+        
+        public bool IsVertical => Y != 0 && X == 0;
+
         [Pure]
         public Vector Sign() => new(X.Sign(), Y.Sign());
 

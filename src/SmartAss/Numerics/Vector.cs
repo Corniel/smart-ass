@@ -59,7 +59,10 @@ namespace SmartAss.Numerics
         
         public bool IsVertical => Y != 0 && X == 0;
 
-        [Pure]
+        /// <summary>The gradient/slope of the vector (Y/X).</summary>
+        public double Gradient => Y == 0 ? double.NaN : 1d * Y / X;
+
+    [Pure]
         public Vector Sign() => new(X.Sign(), Y.Sign());
 
         [Pure]

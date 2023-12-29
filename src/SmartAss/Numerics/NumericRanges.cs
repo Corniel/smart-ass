@@ -22,9 +22,9 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
         get
         {
             var sum = TNumber.Zero;
-            foreach(var range in this)
+            foreach (var range in this)
             {
-                sum+= range.Size;
+                sum += range.Size;
             }
             return sum;
         }
@@ -38,7 +38,7 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
     }
 
     [Pure]
-    public NumericRanges <TNumber> Intersection(IEnumerable<NumericRange<TNumber>> other)
+    public NumericRanges<TNumber> Intersection(IEnumerable<NumericRange<TNumber>> other)
     {
         var list = new List<NumericRange<TNumber>>();
 
@@ -63,7 +63,7 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
     public NumericRanges<TNumber> Except(IEnumerable<NumericRange<TNumber>> other)
     {
         var filtered = this;
-        foreach(var except in other)
+        foreach (var except in other)
         {
             filtered = NumericRangeExtensions.Except(filtered, except);
         }

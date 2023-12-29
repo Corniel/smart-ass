@@ -41,8 +41,7 @@ public readonly struct ModuloInt32 : IEquatable<ModuloInt32>, IFormattable,
     private ModuloInt32 Add(ModuloInt32 other)
     {
         var value = Values().First(v => v % other.Divisor == other.Value);
-        var gcd = Maths.Gcd(Divisor, other.Divisor);
-        return new(value, Divisor * other.Divisor / gcd);
+        return new(value, Maths.Lcm(Divisor, other.Divisor));
     }
 
     /// <inheritdoc />

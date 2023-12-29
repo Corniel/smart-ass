@@ -3,7 +3,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System;
 using System.Numerics;
 
 namespace SmartAss
@@ -11,35 +10,61 @@ namespace SmartAss
     /// <summary>Math operations not in <see cref="Math"/>.</summary>
     public static class Maths
     {
-        public static long Pow(this long n, long power) => Math.Pow(n, power).Long();
-
-        /// <inheritdoc cref="Gcd(long, long)" />
-        public static int Gcd(int a, int b) => unchecked((int)Gcd(a.Long(), b.Long()));
-
         /// <summary>Gets the Greatest Common Divisor.</summary>
         /// <remarks>
         /// See: https://en.wikipedia.org/wiki/Greatest_common_divisor.
         /// </remarks>
-        public static long Gcd(long a, long b)
+        public static TNumber Gcd<TNumber>(TNumber a, TNumber b)
+            where TNumber : struct,
+            INumber<TNumber>,
+            IBitwiseOperators<TNumber, TNumber, TNumber>,
+            IShiftOperators<TNumber, int, TNumber>
         {
-            var even = 1;
-            long remainder;
-            // while both are even.
-            while ((a & 1) == 0 && (b & 1) == 0)
+            var even = TNumber.One;
+
+            while (a.IsEven() && b.IsEven())
             {
                 a >>= 1;
                 b >>= 1;
                 even <<= 1;
             }
-
-            while (b != 0)
+            while (b != TNumber.Zero)
             {
-                remainder = a % b;
-                a = b;
-                b = remainder;
+                (a, b) = (b, a % b);
+            }
+            return a * even;
+        }
+
+        /// <summary>Gets the Least Common Multiple .</summary>
+        public static TNumber Lcm<TNumber>(TNumber a, TNumber b)
+            where TNumber : struct,
+            INumber<TNumber>,
+            IBitwiseOperators<TNumber, TNumber, TNumber>,
+            IShiftOperators<TNumber, int, TNumber>
+
+            => a * b / Gcd(a, b);
+
+        /// <summary>Gets the Least Common Multiple .</summary>
+        public static TNumber Lcm<TNumber>(IEnumerable<TNumber> numbers)
+            where TNumber : struct,
+            INumber<TNumber>,
+            IBitwiseOperators<TNumber, TNumber, TNumber>,
+            IShiftOperators<TNumber, int, TNumber>
+        {
+            var iterator = numbers.GetEnumerator();
+
+            if (!iterator.MoveNext())
+            {
+                throw new ArgumentException("The sequence contains no items.", nameof(numbers));
             }
 
-            return a * even;
+            var lcm = iterator.Current;
+
+            while (iterator.MoveNext())
+            {
+                lcm = Lcm(lcm, iterator.Current);
+            }
+            return lcm;
         }
 
         /// <summary>Calculates all combinations when choosing k out n.</summary>
@@ -104,24 +129,6 @@ namespace SmartAss
                 return long.MaxValue;   // overflow
 
             return r * b;
-        }
-
-        public static long Challanger(long n, long k)
-        {
-            var n_k = n - k;
-
-            // swap as n over k equals n over (n - k)
-            if (n_k < k) { k = n_k; }
-
-            if (k == 0) { return 1; }
-            
-            var combinations = n--;
-
-            for (var i = 2; i < k + 1; i++, n--)
-            {
-                combinations = combinations * n / i;
-            }
-            return combinations;
         }
     }
 }

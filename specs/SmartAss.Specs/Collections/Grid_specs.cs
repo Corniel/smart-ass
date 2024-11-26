@@ -1,27 +1,27 @@
-﻿using SmartAss.Collections;
+using SmartAss.Collections;
 using SmartAss.Numerics;
 
 namespace Grid_specs;
 
 public class Can_be_created_from
 {
-    private static readonly KeyValuePair<Point, int>[] elements = new[]
-    {
+    private static readonly KeyValuePair<Point, int>[] elements =
+    [
         KeyValuePair.Create(new Point(0, 0), 1),
         KeyValuePair.Create(new Point(1, 0), 2),
         KeyValuePair.Create(new Point(2, 0), 3),
         KeyValuePair.Create(new Point(0, 1), 4),
         KeyValuePair.Create(new Point(1, 1), 5),
         KeyValuePair.Create(new Point(2, 1), 6),
-    };
+    ];
 
     [Test]
     public void jagged_array()
     {
         var jagged = new int[][]
         {
-            new[] { 1, 2, 3 },
-            new[] { 4, 5, 6 },
+            [1, 2, 3],
+            [4, 5, 6],
         };
         var grid = new Grid<int>(jagged);
         Assert.AreEqual(elements, grid);
@@ -52,22 +52,22 @@ public class Can_not_be_created_from
     [Test]
     public void jagged_array_with_different_array_lengths()
     {
-        Assert.Catch<ArgumentException>(() => new Grid<int>(new int[][]
-        {
-            new []{ 1 },
-            new [] { 1, 2 },
-        }));
+        Assert.Catch<ArgumentException>(() => new Grid<int>(
+        [
+            [1],
+            [1, 2],
+        ]));
     }
 
     [Test]
     public void jagged_array_with_null_array()
     {
-        Assert.Catch<ArgumentException>(() => new Grid<int>(new int[][]
-        {
-            new [] { 1, 3 },
+        Assert.Catch<ArgumentException>(() => new Grid<int>(
+        [
+            [1, 3],
             null,
-            new [] { 1, 2 },
-        }));
+            [1, 2],
+        ]));
     }
 }
 public class Elements
@@ -137,7 +137,7 @@ public class Positions
         var grid = new Grid<object>(3, 2);
         grid[1, 1] = new object();
 
-        grid.Positions().Should().BeEquivalentTo(new[] { new Point(1, 1) });
+        grid.Positions().Should().BeEquivalentTo([new Point(1, 1)]);
     }
 }
 public class Tiles
@@ -163,18 +163,18 @@ public class Rotation
     [Test]
     public void _90_deg_with_different_dimensions_swaps_rows_cols()
     {
-        var matrix = new Grid<int>(new int[][]
-        {
-            new[] { 1, 2 },
-            new[] { 3, 4 },
-            new[] { 5, 6 },
-        });
+        var matrix = new Grid<int>(
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ]);
 
-        var rotated = new Grid<int>(new int[][]
-        {
-            new[] { 2, 4, 6 },
-            new[] { 1, 3, 5 },
-        });
+        var rotated = new Grid<int>(
+        [
+            [2, 4, 6],
+            [1, 3, 5],
+        ]);
 
         Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg090));
     }
@@ -182,19 +182,19 @@ public class Rotation
     [Test]
     public void _180_deg_with_same_dimensions()
     {
-        var matrix = new Grid<int>(new int[][]
-        {
-            new[] { 1, 2 },
-            new[] { 3, 4 },
-            new[] { 5, 6 },
-        });
+        var matrix = new Grid<int>(
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ]);
 
-        var rotated = new Grid<int>(new int[][]
-        {
-            new[] { 6, 5 },
-            new[] { 4, 3 },
-            new[] { 2, 1 },
-        });
+        var rotated = new Grid<int>(
+        [
+            [6, 5],
+            [4, 3],
+            [2, 1],
+        ]);
 
         Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg180));
     }
@@ -202,18 +202,18 @@ public class Rotation
     [Test]
     public void _270_deg_with_different_dimensions_swaps_rows_cols()
     {
-        var matrix = new Grid<int>(new int[][]
-        {
-            new[] { 1, 2 },
-            new[] { 3, 4 },
-            new[] { 5, 6 },
-        });
+        var matrix = new Grid<int>(
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ]);
 
-        var rotated = new Grid<int>(new int[][]
-        {
-            new[] { 5, 3, 1 },
-            new[] { 6, 4, 2 },
-        });
+        var rotated = new Grid<int>(
+        [
+            [5, 3, 1],
+            [6, 4, 2],
+        ]);
 
         Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg270));
     }
@@ -221,12 +221,12 @@ public class Rotation
     [Test]
     public void _4_times_results_in_identical_values()
     {
-        var matrix = new Grid<int>(new int[][]
-        {
-            new[] { 1, 2 },
-            new[] { 3, 4 },
-            new[] { 5, 6 },
-        });
+        var matrix = new Grid<int>(
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ]);
 
         Assert.AreEqual(matrix, matrix
             .Rotate(DiscreteRotation.Deg090)
@@ -241,21 +241,21 @@ public class Flip
     [Test]
     public void horizontal_mirrors_x_coordinates()
     {
-        var matrix = new Grid<int>(new int[][]
-        {
-            new[] { 1, 2 },
-            new[] { 3, 4 },
-            new[] { 5, 6 },
-        });
+        var matrix = new Grid<int>(
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ]);
 
-        var flipped = new Grid<int>(new int[][]
-        {
-            new[] { 2, 1 },
-            new[] { 4, 3 },
-            new[] { 6, 5 },
-        });
+        var flipped = new Grid<int>(
+        [
+            [2, 1],
+            [4, 3],
+            [6, 5],
+        ]);
 
-        Assert.AreEqual(flipped, matrix.Flip(horizontal: true));
+        matrix.Flip(horizontal: true).Should().BeEquivalentTo(flipped);
     }
 
 }

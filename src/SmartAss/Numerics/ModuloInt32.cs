@@ -1,4 +1,4 @@
-﻿using Qowaiv.Hashing;
+using Qowaiv.Hashing;
 using SmartAss.Collections;
 using SmartAss.Conversion.Numerics;
 using System.ComponentModel;

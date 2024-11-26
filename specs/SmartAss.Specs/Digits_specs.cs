@@ -1,4 +1,4 @@
-﻿namespace Digits_specs;
+namespace Digits_specs;
 
 public class Splits_numbers
 {

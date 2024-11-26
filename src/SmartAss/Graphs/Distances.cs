@@ -1,4 +1,4 @@
-﻿namespace SmartAss.Graphs;
+namespace SmartAss.Graphs;
 
 public sealed class Distances<TNode>
 {

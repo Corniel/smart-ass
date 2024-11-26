@@ -1,4 +1,4 @@
-﻿namespace SmartAss.Collections;
+namespace SmartAss.Collections;
 
 public sealed class Loop
 {

@@ -1,4 +1,3 @@
-﻿using SmartAss;
 using SmartAss.Pairings;
 
 namespace System.Linq;

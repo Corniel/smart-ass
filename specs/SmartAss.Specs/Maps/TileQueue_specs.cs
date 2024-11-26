@@ -1,4 +1,4 @@
-﻿using SmartAss.Maps;
+using SmartAss.Maps;
 
 namespace TileQueue_specs;
 
@@ -19,6 +19,6 @@ internal sealed class IntTile : Tile, IEquatable<IntTile>
     public int Id { get; }
     public bool Equals(IntTile other) => Id == other.Id;
     public override string ToString() => Id.ToString();
-    public IEnumerable<Tile> GetNeighbors() => Array.Empty<Tile>();
+    public IEnumerable<Tile> GetNeighbors() => [];
     public static implicit operator IntTile(int id) => new(id);
 }

@@ -1,4 +1,4 @@
-﻿namespace Parsing.Parser_specs;
+namespace Parsing.Parser_specs;
 
 public class Parses
 {

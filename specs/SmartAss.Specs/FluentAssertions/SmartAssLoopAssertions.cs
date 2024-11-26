@@ -1,4 +1,4 @@
-﻿using FluentAssertions.Execution;
+using FluentAssertions.Execution;
 using SmartAss.Collections;
 using System.Numerics;
 using System.Text;
@@ -14,7 +14,7 @@ public class SmartAssLoopAssertions<T> where T : IEqualityOperators<T, T, bool>
     public void HaveElements(params T[] values)
     {
 
-        Subject.Take(Subject.Count).Should().HaveCount(values.Length);
+        Subject.Take(Subject.Count).Should().HaveCount(values!.Length);
 
         var curr = Subject.First();
 

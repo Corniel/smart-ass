@@ -1,4 +1,4 @@
-﻿namespace Numerics.Maths_specs;
+namespace Numerics.Maths_specs;
 
 public class Choose
 {

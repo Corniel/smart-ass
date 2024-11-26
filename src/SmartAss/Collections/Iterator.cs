@@ -1,4 +1,4 @@
-﻿namespace SmartAss.Collections;
+namespace SmartAss.Collections;
 
 public interface Iterator<T> : IEnumerable<T>, IEnumerator<T>
 {

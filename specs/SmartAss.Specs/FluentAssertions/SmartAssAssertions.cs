@@ -1,4 +1,4 @@
-﻿using SmartAss.Collections;
+using SmartAss.Collections;
 using SmartAss.Specs.FluentAssertions;
 using System.Numerics;
 

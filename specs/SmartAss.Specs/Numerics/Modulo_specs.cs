@@ -1,4 +1,4 @@
-﻿using SmartAss.Numerics;
+using SmartAss.Numerics;
 
 namespace Numerics.Modulo_specs;
 

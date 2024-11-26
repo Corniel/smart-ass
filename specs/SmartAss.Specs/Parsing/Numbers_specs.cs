@@ -1,4 +1,4 @@
-﻿using SmartAss.Parsing;
+using SmartAss.Parsing;
 
 namespace Parsing.Numbers_specs;
 

@@ -1,4 +1,4 @@
-﻿using Qowaiv.Conversion;
+using Qowaiv.Conversion;
 using SmartAss.Numerics;
 
 namespace SmartAss.Conversion.Numerics;

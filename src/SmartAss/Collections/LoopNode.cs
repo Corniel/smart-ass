@@ -1,6 +1,3 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Xml.Linq;
-
 namespace SmartAss.Collections;
 
 /// <summary>Represents a node in a <see cref="Loop{T}"/>.</summary>

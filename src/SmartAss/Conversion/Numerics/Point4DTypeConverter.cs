@@ -1,4 +1,4 @@
-﻿using SmartAss.Numerics;
+using SmartAss.Numerics;
 using System.ComponentModel;
 
 namespace SmartAss.Conversion.Numerics;

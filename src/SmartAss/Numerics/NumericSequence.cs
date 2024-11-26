@@ -1,4 +1,4 @@
-﻿namespace SmartAss.Numerics;
+namespace SmartAss.Numerics;
 
 public interface NumericSequence : IEnumerable<long>
 {

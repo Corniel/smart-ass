@@ -1,5 +1,3 @@
-﻿using System.Globalization;
-
 namespace SmartAss.Numerics;
 
 public static class Hexa

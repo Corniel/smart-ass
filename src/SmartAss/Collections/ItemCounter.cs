@@ -1,4 +1,4 @@
-﻿namespace SmartAss.Collections;
+namespace SmartAss.Collections;
 
 public static class ItemCounter
 {
@@ -36,7 +36,7 @@ public class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TItem : no
 
     public void Add(IEnumerable<TItem> items)
     {
-        foreach (var item in items ?? Array.Empty<TItem>())
+        foreach (var item in items ?? [])
         {
             this[item]++;
         }

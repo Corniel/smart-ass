@@ -1,4 +1,4 @@
-﻿using SmartAss.Collections;
+using SmartAss.Collections;
 
 namespace Collections.Loop_specs;
 

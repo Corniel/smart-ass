@@ -1,0 +1,18 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+    <Authors>Corniel Nobel</Authors>
+    <Copyright>Copyright (c) 2018-current Corniel Nobel</Copyright>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup Label="Analyzers">
+    <PackageReference Include="DotNetProjectFile.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

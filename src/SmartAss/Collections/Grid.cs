@@ -1,4 +1,4 @@
-﻿// <copyright file = "Grid.cs">
+// <copyright file = "Grid.cs">
 // Copyright (c) 2018-current, Corniel Nobel.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -97,7 +97,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
 
     public void Set(T value, IEnumerable<Point> locations)
     {
-        foreach (var location in locations ?? Array.Empty<Point>())
+        foreach (var location in locations ?? [])
         {
             Set(location, value);
         }

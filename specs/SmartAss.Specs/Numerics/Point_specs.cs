@@ -1,4 +1,4 @@
-﻿using SmartAss.Numerics;
+using SmartAss.Numerics;
 
 namespace Numerics.Point_specs;
 

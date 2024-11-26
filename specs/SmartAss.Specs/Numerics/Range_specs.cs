@@ -1,4 +1,4 @@
-﻿using SmartAss.Numerics;
+using SmartAss.Numerics;
 using IntRange = SmartAss.Numerics.NumericRange<int>;
 
 namespace Numerics.Range_specs;
@@ -57,7 +57,7 @@ public class Except
     {
         var range = new[] { new IntRange(0, 8) };
         var splitted = range.Except(new IntRange(3, 4));
-        splitted.Should().BeEquivalentTo(new[] { new IntRange(0, 2), new IntRange(5, 8) });
+        splitted.Should().BeEquivalentTo([new IntRange(0, 2), new IntRange(5, 8)]);
     }
 
     [Test]

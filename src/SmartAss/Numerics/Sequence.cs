@@ -1,5 +1,4 @@
-﻿using SmartAss.Collections;
-using System.Numerics;
+using SmartAss.Collections;
 
 namespace SmartAss.Numerics;
 

@@ -1,4 +1,4 @@
-﻿using SmartAss;
+using SmartAss;
 
 namespace System.Collections.Generic;
 

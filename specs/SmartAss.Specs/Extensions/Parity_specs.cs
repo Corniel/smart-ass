@@ -1,4 +1,4 @@
-﻿namespace Extensions.Parity_specs;
+namespace Extensions.Parity_specs;
 
 public class Is_even
 {

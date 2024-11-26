@@ -1,4 +1,4 @@
-﻿global using BenchmarkDotNet.Attributes;
+global using BenchmarkDotNet.Attributes;
 global using MathNet.Numerics.Random;
 global using SmartAss;
 global using System;

@@ -1,4 +1,4 @@
-﻿using SmartAss.Navigation;
+using SmartAss.Navigation;
 using SmartAss.Numerics;
 
 namespace SmartAss.Collections;
@@ -22,7 +22,7 @@ public partial class Grid<T>
         public GridNeighbors(Maps.GridNeighbors adhoc)
         {
             Lookup = adhoc.Directions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            Neighbors = Lookup.Values.ToArray();
+            Neighbors = [.. Lookup.Values];
         }
 
         private readonly Point[] Neighbors;

@@ -1,5 +1,3 @@
-﻿using FluentAssertions;
-
 namespace Bits_specs;
 
 public class Count

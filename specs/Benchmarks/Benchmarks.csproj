@@ -1,20 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <OutputType>exe</OutputType>
     <RootNamespace>Benchmarks</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.*" />
-    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="*" PrivateAssets="all" />
+    <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="MathNet.Numerics" />
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SmartAss\SmartAss.csproj" />
+    <ProjectReference Include="../../src/SmartAss/SmartAss.csproj" />
   </ItemGroup>
   
   <ItemGroup>

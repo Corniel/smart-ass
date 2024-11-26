@@ -1,23 +1,14 @@
 root = true
-[*]
-end_of_line=crlf
-insert_final_newline = true
 
-# Code files
+[*]
+end_of_line = crlf
+insert_final_newline = true
+charset = utf-8
+
 [*.{cs,cshtml,ts}]
 indent_style = space
 indent_size = 4
 
-# Project files
-[*.{csproj,props}]
+[*.{csproj,json,props,resx,xml}]
 indent_style = space
 indent_size = 2
-
-# S100: Properties should be named in PascalCase
-dotnet_diagnostic.S100.severity = none
-
-# S101: Types should be named in PascalCase
-dotnet_diagnostic.S101.severity = none
-
-# S121: Control structures should use curly braces
-dotnet_diagnostic.S121.severity = none

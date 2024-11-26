@@ -1,5 +1,3 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
 namespace SmartAss.Collections;
 
 public static class ItemCount

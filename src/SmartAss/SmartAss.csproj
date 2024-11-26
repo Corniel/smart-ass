@@ -1,27 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Authors>Corniel Nobel</Authors>
-    <Copyright>Copyright (c) 2018-2019 Corniel Nobel</Copyright>
-    <CodeAnalysisRuleSet>..\..\smart-ass.ruleset</CodeAnalysisRuleSet>
+    <Copyright>Copyright (c) 2018-current Corniel Nobel</Copyright>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Topology\**" />
-    <EmbeddedResource Remove="Topology\**" />
-    <None Remove="Topology\**" />
+    <Compile Remove="Topology/**" />
+    <EmbeddedResource Remove="Topology/**" />
+    <None Remove="Topology/**" />
   </ItemGroup>
 
   <ItemGroup>
-
-    <PackageReference Include="Qowaiv" Version="6.5.4" />
-    <PackageReference Include="System.Drawing.Common" Version="7.*" />
+    <PackageReference Include="Qowaiv" />
+    <PackageReference Include="System.Drawing.Common" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="*" PrivateAssets="all" />
+  <ItemGroup Label="Analyzers">
+    <PackageReference Include="Qowaiv.Analyzers.CSharp" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

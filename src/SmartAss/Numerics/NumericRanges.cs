@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 
 namespace SmartAss.Numerics;
 
@@ -72,7 +72,7 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
 
     public override string ToString() => string.Join("; ", collection);
 
-    public IEnumerator<NumericRange<TNumber>> GetEnumerator() => (collection ?? Array.Empty<NumericRange<TNumber>>()).GetEnumerator();
+    public IEnumerator<NumericRange<TNumber>> GetEnumerator() => (collection ?? []).GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

@@ -1,4 +1,4 @@
-﻿// <copyright file = "CountdownTimerEnumerator.cs">
+// <copyright file = "CountdownTimerEnumerator.cs">
 // Copyright (c) 2018-current, Corniel Nobel.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,60 +6,55 @@
 #pragma warning disable S3898 // Value types should implement "IEquatable<T>"
 // Of no value for an IEnumerator
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
+namespace SmartAss;
 
-namespace SmartAss
+/// <summary>Loops a collection until the countdown timer expires.</summary>
+/// <typeparam name="T">
+/// Type to enumerate over.
+/// </typeparam>
+internal struct CountdownTimerEnumerator<T>
+    : IEnumerable<T>, IEnumerator<T>
 {
-    /// <summary>Loops a collection until the countdown timer expires.</summary>
-    /// <typeparam name="T">
-    /// Type to enumerate over.
-    /// </typeparam>
-    internal struct CountdownTimerEnumerator<T>
-        : IEnumerable<T>, IEnumerator<T>
+    private readonly T[] array;
+    private readonly int max;
+    private readonly CountdownTimer timer;
+    private int index;
+
+    /// <summary>Initializes a new instance of the <see cref="CountdownTimerEnumerator{T}"/> struct.</summary>
+    public CountdownTimerEnumerator(T[] collection, CountdownTimer t)
     {
-        private readonly T[] array;
-        private readonly int max;
-        private readonly CountdownTimer timer;
-        private int index;
-
-        /// <summary>Initializes a new instance of the <see cref="CountdownTimerEnumerator{T}"/> struct.</summary>
-        public CountdownTimerEnumerator(T[] collection, CountdownTimer t)
-        {
-            array = collection;
-            max = array.Length - 1;
-            index = -1;
-            timer = t;
-        }
-
-        /// <inheritdoc />
-        public T Current => array[index];
-
-        /// <inheritdoc />
-        object IEnumerator.Current => Current;
-
-        /// <inheritdoc />
-        public bool MoveNext()
-        {
-            if (++index > max)
-            {
-                index = 0;
-            }
-
-            return !timer.Expired;
-        }
-
-        /// <inheritdoc />
-        public void Reset() => throw new NotSupportedException();
-
-        /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator() => this;
-
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        /// <inheritdoc />
-        public void Dispose() => Do.Nothing();
+        array = collection;
+        max = array.Length - 1;
+        index = -1;
+        timer = t;
     }
+
+    /// <inheritdoc />
+    public T Current => array[index];
+
+    /// <inheritdoc />
+    object IEnumerator.Current => Current;
+
+    /// <inheritdoc />
+    public bool MoveNext()
+    {
+        if (++index > max)
+        {
+            index = 0;
+        }
+
+        return !timer.Expired;
+    }
+
+    /// <inheritdoc />
+    public void Reset() => throw new NotSupportedException();
+
+    /// <inheritdoc />
+    public IEnumerator<T> GetEnumerator() => this;
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    /// <inheritdoc />
+    public void Dispose() => Do.Nothing();
 }

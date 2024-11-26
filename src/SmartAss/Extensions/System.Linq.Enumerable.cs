@@ -1,4 +1,4 @@
-﻿using SmartAss;
+using SmartAss;
 
 namespace System.Linq;
 
@@ -9,6 +9,7 @@ public static class SmartAssEnumerabelExtensions
         var @set = new HashSet<TSource>();
         return source.All(@set.Add);
     }
+
     public static IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> sources, TSource except)
         => sources.Where(s => !s.Equals(except));
 

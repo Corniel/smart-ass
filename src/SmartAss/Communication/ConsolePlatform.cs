@@ -56,6 +56,7 @@ public sealed class ConsolePlatform : IDisposable
         }
     }
 
+    [Impure]
     private object Process(object bot, object message)
     {
         if (applyMethods.TryGetValue(message.GetType(), out MethodInfo apply))
@@ -84,7 +85,7 @@ public sealed class ConsolePlatform : IDisposable
         }
     }
 
-    private readonly Dictionary<Type, MethodInfo> applyMethods = new Dictionary<Type, MethodInfo>();
+    private readonly Dictionary<Type, MethodInfo> applyMethods = new();
 
     /// <inheritdoc />
     public void Dispose()

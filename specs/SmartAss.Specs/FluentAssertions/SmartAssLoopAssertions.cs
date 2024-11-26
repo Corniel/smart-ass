@@ -20,7 +20,7 @@ public class SmartAssLoopAssertions<T> where T : IEqualityOperators<T, T, bool>
 
         var sb = new StringBuilder();
 
-        for(var i = 0; i < values.Length; i++) 
+        for (var i = 0; i < values.Length; i++)
         {
             var a_p = values[(i - 1).Mod(values.Length)];
             var a_c = values[i];

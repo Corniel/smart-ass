@@ -20,6 +20,7 @@ public static class Bits
     public static readonly BitsOperator<ulong> UInt64 = new BitsUInt64();
 
     /// <summary>Parses a pattern into a bit mask, ignoring all characters except 0 and.</summary>
+    [Pure]
     internal static ulong Parse(string pattern, string ones, string zeros)
     {
         if (string.IsNullOrEmpty(pattern))
@@ -42,6 +43,7 @@ public static class Bits
     }
 
     /// <summary>Represents the <see cref="byte[]"/> as binary string.</summary>
+    [Pure]
     public static string ToString(byte[] bytes)
     {
         if (bytes is null) { return string.Empty; }

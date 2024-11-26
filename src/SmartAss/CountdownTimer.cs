@@ -12,7 +12,7 @@ namespace SmartAss;
 /// The countdown timer can not be stopped, nor be reset.
 /// It just allows to ensure that certain tasks don't take longer than planned.
 /// </remarks>
-public class CountdownTimer
+public sealed class CountdownTimer
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly DateTime end;
@@ -33,9 +33,11 @@ public class CountdownTimer
     }
 
     /// <inheritdoc />
+    [Pure]
     public override string ToString() => $"{Left:G}";
 
     /// <summary>Creates a countdown timer that will expire after the specified duration.</summary>
+    [Pure]
     public static CountdownTimer Duration(TimeSpan span)
-        => new CountdownTimer(DateTime.UtcNow.Add(span));
+        => new(DateTime.UtcNow.Add(span));
 }

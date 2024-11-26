@@ -14,22 +14,31 @@ public readonly struct Distance : IEquatable<Distance>
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly int Value;
+
     private Distance(int value) => Value = value;
 
+    [Pure]
     public override string ToString() => DebuggerDisplay.ToString();
 
+    [Pure]
     public override bool Equals([NotNullWhen(true)] object obj) => obj is Distance other && Equals(other);
+
+    [Pure]
     public bool Equals(Distance other) => other.Value == Value;
+
+    [Pure]
     public override int GetHashCode() => Value;
 
+    [Pure]
     public int Int() => Value ^ Mask;
 
     public static bool operator ==(Distance left, Distance right) => left.Equals(right);
+
     public static bool operator !=(Distance left, Distance right) => !(left == right);
 
     public static Distance operator ++(Distance distance) => new(distance.Value - 1);
-    public static Distance operator +(Distance distance, int add) => new(distance.Value - add);
 
+    public static Distance operator +(Distance distance, int add) => new(distance.Value - add);
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private object DebuggerDisplay
@@ -41,5 +50,4 @@ public readonly struct Distance : IEquatable<Distance>
             return Value ^ Mask;
         }
     }
-
 }

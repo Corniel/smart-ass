@@ -27,7 +27,7 @@ public readonly struct Char2 : IEquatable<Char2>, IEquatable<string>
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly char _1;
 
-    public char this[int index] => index switch 
+    public char this[int index] => index switch
     {
         0 => _0,
         1 => _1,

@@ -52,5 +52,6 @@ public static class GridExtensions
         }
     }
 
+    [Pure]
     public static GridDistances Distances<T>(this Grid<T> grid) => new(grid.Cols, grid.Rows);
 }

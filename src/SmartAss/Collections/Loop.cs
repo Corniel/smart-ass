@@ -2,15 +2,16 @@ namespace SmartAss.Collections;
 
 public sealed class Loop
 {
-    /// <summary>Creates a new instance of a loop.</summary>
     internal Loop() { }
 
     /// <remarks>Keeps track of the size of the loop.</remarks>
     internal int Count;
 
     /// <summary>Creates a new loop.</summary>
+    [Pure]
     public static LoopNode<T> New<T>(params T[] values) => NewRange(Guard.NotNull(values, nameof(values)).AsEnumerable());
 
+    [Pure]
     public static LoopNode<T> NewRange<T>(IEnumerable<T> values)
     {
         Guard.NotNull(values, nameof(values));

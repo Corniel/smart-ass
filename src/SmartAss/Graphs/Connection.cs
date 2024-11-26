@@ -1,3 +1,3 @@
 namespace SmartAss.Graphs;
 
-public  sealed record Connection<TNode>(TNode From, TNode To, Distance Distance);
+public sealed record Connection<TNode>(TNode From, TNode To, Distance Distance);

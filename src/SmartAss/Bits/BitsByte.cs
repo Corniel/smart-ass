@@ -6,7 +6,7 @@
 namespace SmartAss;
 
 /// <summary>Implements <see cref="BitsOperator{T}"/> for <see cref="byte"/>.</summary>
-internal class BitsByte : BitsOperator<byte>
+internal sealed class BitsByte : BitsOperator<byte>
 {
     internal static readonly byte[] Counts = [0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8];
     internal static readonly int[] Sizes = [0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
@@ -18,24 +18,31 @@ internal class BitsByte : BitsOperator<byte>
     public int BitSize => 8;
 
     /// <inheritdoc />
+    [Pure]
     public int Count(byte bits) => Counts[bits];
 
     /// <inheritdoc />
+    [Pure]
     public int Size(byte bits) => Sizes[bits];
 
     /// <inheritdoc />
+    [Pure]
     public int First(byte bits) => Firsts[bits];
 
     /// <inheritdoc />
+    [Pure]
     public bool HasFlag(byte bits, int position) => (bits & Flags[position]) != 0;
 
     /// <inheritdoc />
+    [Pure]
     public byte Flag(byte bits, int position) => (byte)(bits | Flags[position]);
 
     /// <inheritdoc />
+    [Pure]
     public byte Unflag(byte bits, int position) => (byte)(bits & Unflags[position]);
 
     /// <inheritdoc />
+    [Pure]
     public byte Mirror(byte bits)
     {
         uint mirror = bits;
@@ -46,8 +53,10 @@ internal class BitsByte : BitsOperator<byte>
     }
 
     /// <inheritdoc />
+    [Pure]
     public byte Parse(string str, string ones, string zeros) => (byte)Bits.Parse(str, ones, zeros);
 
     /// <inheritdoc />
+    [Pure]
     public string ToString(byte bits) => Convert.ToString(bits, 2).PadLeft(8, '0');
 }

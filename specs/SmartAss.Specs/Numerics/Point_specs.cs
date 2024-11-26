@@ -33,7 +33,7 @@ public class ShoelaceArea
     [Test]
     public void calulates_area_0()
     {
-        Point[] points = 
+        Point[] points =
         [
             new(03, 04),
             new(05, 11),

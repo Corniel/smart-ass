@@ -29,6 +29,7 @@ public ref struct Reusable<T> where T : class
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private bool released;
 
+    [Pure]
     public override string ToString() => $"Resuable<{typeof(T)}>";
 
     /// <summary>Implicitly casts the reusable handle to the type it handles.</summary>

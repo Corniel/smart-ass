@@ -45,6 +45,7 @@ public static class Parser
     /// <returns>
     /// True if parsable, otherwise false.
     /// </returns>
+    [Pure]
     public static int? ToInt32(ReadOnlySpan<char> str)
     {
         if (str.Length == 0) return null;
@@ -58,7 +59,7 @@ public static class Parser
             negative = true;
         }
         foreach (var ch in str)
-        { 
+        {
             if (ch < '0' || ch > '9') return null;
 
             unchecked
@@ -82,6 +83,7 @@ public static class Parser
     /// <returns>
     /// True if parsable, otherwise false.
     /// </returns>
+    [Pure]
     public static long? ToInt64(ReadOnlySpan<char> str)
     {
         if (str.Length == 0) return null;
@@ -95,7 +97,7 @@ public static class Parser
             negative = true;
         }
 
-        foreach(var ch in str) 
+        foreach (var ch in str)
         {
             if (ch < '0' || ch > '9') return null;
             unchecked
@@ -118,6 +120,7 @@ public static class Parser
     /// <returns>
     /// True if parsable, otherwise false.
     /// </returns>
+    [Pure]
     public static double? ToDouble(ReadOnlySpan<char> str)
     {
         if (str.Length == 0) return null;
@@ -170,6 +173,7 @@ public static class Parser
     /// <returns>
     /// True if parsable, otherwise false.
     /// </returns>
+    [Pure]
     public static decimal? ToDecimal(ReadOnlySpan<char> str)
     {
         if (str.Length == 0) return null;
@@ -183,12 +187,12 @@ public static class Parser
 
             if (str[0] == '-')
             {
-                str= str[1..];
-                negative= true;
+                str = str[1..];
+                negative = true;
             }
 
-            foreach(var ch in str)
-            { 
+            foreach (var ch in str)
+            {
                 // Not a digit.
                 if (ch < '0' || ch > '9')
                 {

@@ -31,12 +31,15 @@ public sealed partial class LoopNode<T> : IEnumerable<LoopNode<T>>, ICollection
     public LoopNode<T> Next { get; private set; }
 
     /// <summary>Moves the current node forward in the loop.</summary>
+    [FluentSyntax]
     public LoopNode<T> Move(long count)
     {
         var prev = Prev;
         Remove();
         return prev.Skip(count).InsertAfter(this);
     }
+
+    [FluentSyntax]
     public LoopNode<T> Remove()
     {
         if (Count == 1) throw new InvalidOperationException("Can not remove the last node.");
@@ -50,6 +53,7 @@ public sealed partial class LoopNode<T> : IEnumerable<LoopNode<T>>, ICollection
         return this;
     }
 
+    [FluentSyntax]
     public LoopNode<T> InsertAfter(T value)
     {
         Loop.Count++;
@@ -60,6 +64,7 @@ public sealed partial class LoopNode<T> : IEnumerable<LoopNode<T>>, ICollection
         return self;
     }
 
+    [FluentSyntax]
     public LoopNode<T> InsertAfter(LoopNode<T> node)
     {
         Guard.NotNull(node, nameof(node));
@@ -77,6 +82,7 @@ public sealed partial class LoopNode<T> : IEnumerable<LoopNode<T>>, ICollection
         return this;
     }
 
+    [FluentSyntax]
     public LoopNode<T> Step(long steps)
     {
         var s = steps.Mod(Loop.Count);
@@ -117,5 +123,6 @@ public sealed partial class LoopNode<T> : IEnumerable<LoopNode<T>>, ICollection
         : $".. {Prev.Value}, {Value}, {Next.Value} .. ({Count})";
 
     /// <inheritdoc />
+    [Pure]
     public override string ToString() => Value?.ToString() ?? string.Empty;
 }

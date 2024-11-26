@@ -19,7 +19,7 @@ namespace SmartAss.Maps;
 /// </remarks>
 [DebuggerDisplay("{DebuggerDisplay}")]
 [DebuggerTypeProxy(typeof(CollectionDebugView))]
-public class TileQueue<T> : IEnumerable<T>
+public sealed class TileQueue<T> : IEnumerable<T>
     where T : class, Tile
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -46,6 +46,7 @@ public class TileQueue<T> : IEnumerable<T>
     public bool HasAny => head != tail;
 
     /// <summary>Enqueues a tile.</summary>
+    [FluentSyntax]
     public TileQueue<T> Enqueue(T tile)
     {
         queue[head++] = tile;
@@ -53,6 +54,7 @@ public class TileQueue<T> : IEnumerable<T>
     }
 
     /// <summary>Enqueues multiple tiles.</summary>
+    [FluentSyntax]
     public TileQueue<T> EnqueueRange(IEnumerable<T> tiles)
     {
         foreach (var tile in Guard.NotNull(tiles, nameof(tiles))) { Enqueue(tile); }
@@ -60,12 +62,14 @@ public class TileQueue<T> : IEnumerable<T>
     }
 
     /// <summary>Dequeues a tile.</summary>
+    [Impure]
     public T Dequeue() => queue[tail++];
 
     /// <summary>Dequeues all tiles currently in the queue.</summary>
     /// <remarks>
     /// If tiles are added during the dequeuing, those are not dequeued.
     /// </remarks>
+    [Impure]
     public IEnumerable<T> DequeueCurrent()
     {
         var count = Count;
@@ -80,9 +84,11 @@ public class TileQueue<T> : IEnumerable<T>
     }
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(queue, tail, Count);
 
     /// <inheritdoc />
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>Represents the map as a DEBUG <see cref="string"/>.</summary>

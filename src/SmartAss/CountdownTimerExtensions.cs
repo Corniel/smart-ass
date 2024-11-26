@@ -9,6 +9,7 @@ namespace SmartAss;
 public static class CountdownTimerExtensions
 {
     /// <summary>Loops through the collection while the timer didn't expire.</summary>
+    [Pure]
     public static IEnumerable<T> LoopWhileCountingDown<T>(this ICollection<T> collection, CountdownTimer timer)
     {
         var array = collection is T[] arr ? arr : [.. collection];

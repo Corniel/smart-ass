@@ -8,6 +8,7 @@ namespace SmartAss.Numerics;
 public static class Vectors
 {
     /// <summary>Sums all vectors together.</summary>
+    [Pure]
     public static Vector Sum(this IEnumerable<Vector> vectors)
     {
         Guard.NotNull(vectors, nameof(vectors));

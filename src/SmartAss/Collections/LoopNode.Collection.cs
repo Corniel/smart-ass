@@ -14,6 +14,7 @@ partial class LoopNode<T>
     public void CopyTo(Array array, int index) => ToArray().CopyTo(array, index);
 
     /// <summary>Bypasses the specified number of nodes in the loop.</summary>
+    [Pure]
     public LoopNode<T> Skip(long count)
     {
         var skip = count.Mod(Loop.Count);
@@ -40,20 +41,25 @@ partial class LoopNode<T>
     }
 
     /// <summary>Creates an array of the nodes in the loop.</summary>
+    [Pure]
     public LoopNode<T>[] ToArray() => GetEnumerator().Take(Count).ToArray();
 
     /// <summary>Creates an list of the nodes in the loop.</summary>
+    [Pure]
     public List<LoopNode<T>> ToList() => GetEnumerator().Take(Count).ToList();
 
     /// <summary>Enumerates through the loop (indefinitely).</summary>
+    [Pure]
     public Enumerator GetEnumerator() => new(this);
 
     /// <inheritdoc />
     [ExcludeFromCodeCoverage(Justification = "Equal to public GetEnumerator()")]
+    [Pure]
     IEnumerator<LoopNode<T>> IEnumerable<LoopNode<T>>.GetEnumerator() => GetEnumerator();
 
     /// <inheritdoc />
     [ExcludeFromCodeCoverage(Justification = "Equal to public GetEnumerator()")]
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public struct Enumerator : Iterator<LoopNode<T>>
@@ -70,6 +76,7 @@ partial class LoopNode<T>
         public LoopNode<T> Current { get; private set; }
 
         /// <inheritdoc />
+        [Impure]
         public bool MoveNext()
         {
             Current = Current.Next;

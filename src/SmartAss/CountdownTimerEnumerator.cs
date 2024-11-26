@@ -36,6 +36,7 @@ internal struct CountdownTimerEnumerator<T>
     object IEnumerator.Current => Current;
 
     /// <inheritdoc />
+    [Impure]
     public bool MoveNext()
     {
         if (++index > max)
@@ -50,9 +51,11 @@ internal struct CountdownTimerEnumerator<T>
     public void Reset() => throw new NotSupportedException();
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerator<T> GetEnumerator() => this;
 
     /// <inheritdoc />
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <inheritdoc />

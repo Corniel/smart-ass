@@ -11,12 +11,15 @@ namespace SmartAss.Maps;
 
 public static class Neighbors
 {
+    [Pure]
     public static GridNeighbors Grid<T>(Grid<T> grid, Point position, IReadOnlyCollection<CompassPoint> directions)
         => new AdHoc<T>(grid, position, directions, n => n);
 
+    [Pure]
     public static GridNeighbors Cilinder<T>(Grid<T> grid, Point position, IReadOnlyCollection<CompassPoint> directions)
         => new AdHoc<T>(grid, position, directions, n => new Point(n.X.Mod(grid.Cols), n.Y));
 
+    [Pure]
     public static GridNeighbors Sphere<T>(Grid<T> grid, Point position, IReadOnlyCollection<CompassPoint> directions)
         => new AdHoc<T>(grid, position, directions, n => new Point(n.X.Mod(grid.Cols), n.Y.Mod(grid.Rows)));
 
@@ -29,6 +32,7 @@ public static class Neighbors
             this.directions = directions;
             Selector = selector;
         }
+
         private readonly Grid<T> Grid;
         private readonly Point Position;
         private readonly IReadOnlyCollection<CompassPoint> directions;
@@ -40,6 +44,7 @@ public static class Neighbors
 
         public Point this[CompassPoint compass] => Directions.First(dir => dir.Key == compass).Value;
 
+        [Pure]
         public bool Contains(CompassPoint compass) => Directions.Any(dir => dir.Key == compass);
 
         public IEnumerable<KeyValuePair<CompassPoint, Point>> Directions
@@ -54,6 +59,7 @@ public static class Neighbors
             }
         }
 
+        [Pure]
         public IEnumerator<Point> GetEnumerator()
         {
             var grid = Grid;
@@ -63,6 +69,7 @@ public static class Neighbors
                 .GetEnumerator();
         }
 
+        [Pure]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

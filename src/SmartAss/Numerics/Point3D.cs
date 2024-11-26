@@ -31,28 +31,35 @@ public readonly struct Point3D : IEquatable<Point3D>
     /// <summary> Gets or sets the z-coordinate.</summary>
     public int Z { get; }
 
+    [Pure]
     public int ManhattanDistance(Point3D other)
-    => Math.Abs(X - other.X) + Math.Abs(Y - other.Y) + Math.Abs(Z - other.Z);
+        => (X - other.X).Abs() + (Y - other.Y).Abs() + (Z - other.Z).Abs();
 
+    [Pure]
     private Point3D Add(Vector3D vector)
         => new(X + vector.X, Y + vector.Y, Z + vector.Z);
 
-    private Point3D Subtract(Vector3D vector) 
+    [Pure]
+    private Point3D Subtract(Vector3D vector)
         => new(X - vector.X, Y - vector.Y, Z - vector.Z);
 
     /// <inheritdoc />
+    [Pure]
     public override string ToString() => $"({X}, {Y}, {Z})";
 
     /// <inheritdoc />
-    public override bool Equals(object obj) => obj is Point3D other && Equals(other);
+    [Pure]
+    public override bool Equals(object? obj) => obj is Point3D other && Equals(other);
 
     /// <inheritdoc />
+    [Pure]
     public bool Equals(Point3D other)
         => X == other.X
         && Y == other.Y
         && Z == other.Z;
 
     /// <inheritdoc />
+    [Pure]
     public override int GetHashCode() => X ^ (Y << 11) ^ (Z << 20);
 
     /// <summary>Compares two points.</summary>
@@ -63,8 +70,10 @@ public readonly struct Point3D : IEquatable<Point3D>
 
     /// <summary>Adds a vector to a point.</summary>
     public static Point3D operator +(Point3D point, Vector3D vector) => point.Add(vector);
+
     public static Point3D operator -(Point3D point, Vector3D vector) => point.Subtract(vector);
 
+    [Pure]
     public static Point3D Parse(string str)
     {
         var split = str.Split(',');

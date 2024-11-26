@@ -11,10 +11,12 @@ namespace System;
 public static class Parity
 {
     /// <summary>Returns true if the number is even.</summary>
+    [Pure]
     public static bool IsEven<TNumber>(this TNumber n) where TNumber : struct, INumber<TNumber>, IBitwiseOperators<TNumber, TNumber, TNumber>
         => (n & TNumber.One) == TNumber.Zero;
 
     /// <summary>Returns true if the number is odd.</summary>
+    [Pure]
     public static bool IsOdd<TNumber>(this TNumber n) where TNumber : struct, INumber<TNumber>, IBitwiseOperators<TNumber, TNumber, TNumber>
         => (n & TNumber.One) == TNumber.One;
 }

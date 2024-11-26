@@ -83,13 +83,14 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         set => Set(location, value);
     }
 
+    [Pure]
     public Point Corner(CompassPoint corner) => corner switch
     {
         CompassPoint.NW => Point.O,
         CompassPoint.NE => new(Cols - 1, 0),
         CompassPoint.SW => new(/*...*/0, Rows - 1),
         CompassPoint.SE => new(Cols - 1, Rows - 1),
-        _ => throw new ArgumentOutOfRangeException(nameof(corner), $"Compass point {0} does not correspond with a corner.")
+        _ => throw new ArgumentOutOfRangeException(nameof(corner), $"Compass point {0} does not correspond with a corner."),
     };
 
     /// <summary>Gets the Neighbors of a point.</summary>
@@ -110,12 +111,15 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
     public IEnumerable<T> Tiles => elements.SelectMany(row => row).Where(elm => elm is not null);
 
     /// <summary>Returns true if the point is on the grid.</summary>
+    [Pure]
     public bool OnGrid(Point p) => p.X >= 0 && p.X < Cols && p.Y >= 0 && p.Y < Rows;
 
-    public bool OnEdge(Point p) 
-        => (p.X == 0 || p.Y == 0 || p.X == Cols - 1 || p.Y == Rows - 1) 
+    [Pure]
+    public bool OnEdge(Point p)
+        => (p.X == 0 || p.Y == 0 || p.X == Cols - 1 || p.Y == Rows - 1)
         && OnGrid(p);
 
+    [Pure]
     public Grid<T> Rotate(DiscreteRotation rotation)
      => ((int)rotation).Mod(4) switch
      {
@@ -125,15 +129,18 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
          _ => this,
      };
 
+    [Pure]
     public Grid<T> Flip(bool horizontal) => horizontal ? FlipHorizontal() : FlipVertical();
 
+    [Pure]
     public string ToString(Func<T, char> transform) => CharPixels.From(this, transform).ToString();
 
     public void Clear()
     {
-        foreach(var pos in Points.Grid(Cols, Rows)) { this[pos] = default; }
+        foreach (var pos in Points.Grid(Cols, Rows)) { this[pos] = default; }
     }
 
+    [Pure]
     private T Get(Point p)
     {
         try
@@ -152,6 +159,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         catch (IndexOutOfRangeException) { throw new NotOnGrid(p); }
     }
 
+    [Pure]
     private Grid<T> RotateDeg090()
     {
         var rotated = new Grid<T>(Rows, Cols);
@@ -162,6 +170,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         return rotated;
     }
 
+    [Pure]
     private Grid<T> RotateDeg180()
     {
         var rotated = new Grid<T>(Cols, Rows);
@@ -172,6 +181,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         return rotated;
     }
 
+    [Pure]
     private Grid<T> RotateDeg270()
     {
         var rotated = new Grid<T>(Rows, Cols);
@@ -182,6 +192,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         return rotated;
     }
 
+    [Pure]
     private Grid<T> FlipHorizontal()
     {
         var flipped = new Grid<T>(Cols, Rows);
@@ -192,6 +203,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
         return flipped;
     }
 
+    [Pure]
     private Grid<T> FlipVertical()
     {
         var flipped = new Grid<T>(Cols, Rows);
@@ -203,15 +215,19 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
     }
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerator<KeyValuePair<Point, T>> GetEnumerator()
         => Points.Grid(Cols, Rows).Select(p => KeyValuePair.Create(p, this[p])).Where(e => e.Value is not null).GetEnumerator();
 
     /// <inheritdoc />
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    [Pure]
     public static Grid<T> FromPoints(IEnumerable<Point> points)
-        => new Grid<T>(points.Max(p => p.X) + 1, points.Max(p => p.Y) + 1);
+        => new(points.Max(p => p.X) + 1, points.Max(p => p.Y) + 1);
 
+    [Pure]
     public static Grid<T> FromPoints(IEnumerable<Point> points, T value)
     {
         var grid = FromPoints(points);

@@ -41,5 +41,6 @@ public class GridTile<T> : Tile<T> where T : GridTile<T>
     public SimpleList<T> Neighbors { get; }
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerable<Tile> GetNeighbors() => Neighbors;
 }

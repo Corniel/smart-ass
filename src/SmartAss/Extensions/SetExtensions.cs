@@ -9,6 +9,7 @@ namespace System.Linq;
 
 public static class SetExtensions
 {
+    [Pure]
     public static IEnumerable<TResult> IntersectMany<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, IEnumerable<TResult>> selector)
     {
         Guard.NotNull(source, nameof(source));
@@ -25,6 +26,7 @@ public static class SetExtensions
         return ret;
     }
 
+    [CollectionMutation]
     public static bool AddRange<T>(this ISet<T> set, IEnumerable<T> items)
     {
         Guard.NotNull(set, nameof(set));

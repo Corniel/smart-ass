@@ -9,5 +9,6 @@ namespace SmartAss.Communication;
 
 public interface IMessageReader
 {
+    [Pure]
     IEnumerable<object> Read(TextReader reader);
 }

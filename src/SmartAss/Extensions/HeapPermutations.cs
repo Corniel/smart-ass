@@ -10,10 +10,12 @@ namespace System;
 /// <summary>Gets permutations using the Heap's algorithm.</summary>
 public static class HeapPermutations
 {
+    [Pure]
     public static IEnumerable<T[]> Permutations<T>(this T[] values)
         => values.Permutations(Guard.NotNull(values, nameof(values)).Length, 0);
 
     /// <remarks>Heap's algorithm.</remarks>
+    [Pure]
     private static IEnumerable<T[]> Permutations<T>(this T[] array, int size, int n)
     {
         if (size == 1)
@@ -34,11 +36,10 @@ public static class HeapPermutations
 
     private static void Swap<T>(this T[] array, int index0, int index1)
     {
-        var value = array[index0];
-        array[index0] = array[index1];
-        array[index1] = value;
+        (array[index1], array[index0]) = (array[index0], array[index1]);
     }
 
+    [Pure]
     private static T[] Copy<T>(this T[] array)
     {
         var copy = new T[array.Length];

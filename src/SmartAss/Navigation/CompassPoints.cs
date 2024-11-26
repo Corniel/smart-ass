@@ -28,10 +28,10 @@ public static class CompassPoints
     [Pure]
     public static CompassPoint Flip(this CompassPoint compassPoint) => compassPoint switch
     {
-        CompassPoint.N  => CompassPoint.S,
-        CompassPoint.E  => CompassPoint.W,
-        CompassPoint.S  => CompassPoint.N,
-        CompassPoint.W  => CompassPoint.E,
+        CompassPoint.N => CompassPoint.S,
+        CompassPoint.E => CompassPoint.W,
+        CompassPoint.S => CompassPoint.N,
+        CompassPoint.W => CompassPoint.E,
         CompassPoint.NE => CompassPoint.SW,
         CompassPoint.NW => CompassPoint.SE,
         CompassPoint.SE => CompassPoint.NW,
@@ -55,5 +55,6 @@ public static class CompassPoints
         [CompassPoint.SW] = Vector.SW,
     };
 
+    [Pure]
     public static CompassPoint Parse(string str) => Enum.Parse<CompassPoint>(str, true);
 }

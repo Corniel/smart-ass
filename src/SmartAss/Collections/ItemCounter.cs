@@ -13,7 +13,7 @@ public static class ItemCounter
 
 [DebuggerTypeProxy(typeof(Diagnostics.CollectionDebugView))]
 [DebuggerDisplay("Count: {Count}, Total: {Total}")]
-public class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TItem : notnull
+public sealed class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TItem : notnull
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly Dictionary<TItem, long> lookup = new();
@@ -29,7 +29,7 @@ public class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TItem : no
     public int Count => lookup.Values.Count(count => count != 0);
 
     public IReadOnlyCollection<TItem> Items => lookup.Keys;
-    
+
     public IReadOnlyCollection<long> Counts => lookup.Values;
 
     public long Total => lookup.Values.Sum();
@@ -44,10 +44,12 @@ public class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TItem : no
 
     public void Clear() => lookup.Clear();
 
-    public bool Any() => lookup.Values.Any(count => count != 0);
+    public bool HasAny => lookup.Values.Any(count => count != 0);
 
+    [Pure]
     public ItemCount<TItem> Max() => this.OrderByDescending(item => item.Count).FirstOrDefault();
-    
+
+    [Pure]
     public ItemCount<TItem> Min() => this.OrderBy(item => item.Count).FirstOrDefault();
 
     /// <summary>Gets all items (so including records with a count of zero.</summary>
@@ -56,8 +58,8 @@ public class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TItem : no
         => lookup.Select(kvp => ItemCount.Create(kvp.Key, kvp.Value));
 
     [Pure]
-    public IEnumerator<ItemCount<TItem>> GetEnumerator() 
-        => All().Where(item => item.Any()).GetEnumerator();
+    public IEnumerator<ItemCount<TItem>> GetEnumerator()
+        => All().Where(item => item.HasAny).GetEnumerator();
 
     [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

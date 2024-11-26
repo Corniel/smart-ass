@@ -13,16 +13,16 @@ public readonly struct Vector : IEquatable<Vector>
     public static readonly Vector O;
 
     /// <summary>North (0, -1).</summary>
-    public static readonly Vector N = new Vector(+0, -1);
+    public static readonly Vector N = new(+0, -1);
 
     /// <summary>East (1, 0).</summary>
-    public static readonly Vector E = new Vector(+1, +0);
+    public static readonly Vector E = new(+1, +0);
 
     /// <summary>South (0, 1).</summary>
-    public static readonly Vector S = new Vector(+0, +1);
+    public static readonly Vector S = new(+0, +1);
 
     /// <summary>West (-1, 0).</summary>
-    public static readonly Vector W = new Vector(-1, +0);
+    public static readonly Vector W = new(-1, +0);
 
     /// <summary>Northeast (1, -1).</summary>
     public static readonly Vector NE = N + E;
@@ -56,17 +56,17 @@ public readonly struct Vector : IEquatable<Vector>
     public int Length2 => X.Sqr() + Y.Sqr();
 
     public bool IsHorizontal => X != 0 && Y == 0;
-    
+
     public bool IsVertical => Y != 0 && X == 0;
 
     /// <summary>The gradient/slope of the vector (Y/X).</summary>
     public double Gradient => Y == 0 ? double.NaN : 1d * Y / X;
 
-[Pure]
+    [Pure]
     public Vector Sign() => new(X.Sign(), Y.Sign());
 
     [Pure]
-    public Vector Rotate(DiscreteRotation rotation) 
+    public Vector Rotate(DiscreteRotation rotation)
         => ((int)rotation).Mod(4) switch
         {
             1 => new Vector(+Y, -X),
@@ -91,8 +91,13 @@ public readonly struct Vector : IEquatable<Vector>
         return CompassPoints.Vectors.FirstOrDefault(kvp => kvp.Value == vector).Key;
     }
 
+    [Pure]
     private Vector Add(Vector vector) => new(X + vector.X, Y + vector.Y);
+
+    [Pure]
     private Vector Subtract(Vector vector) => new(X - vector.X, Y - vector.Y);
+
+    [Pure]
     private Vector Multiply(int factor) => new(X * factor, Y * factor);
 
     /// <inheritdoc />

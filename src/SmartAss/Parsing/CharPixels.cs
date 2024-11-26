@@ -105,6 +105,7 @@ public readonly struct CharPixels : IEnumerable<CharPixel>, IEquatable<CharPixel
         && Enumerable.SequenceEqual(items, other.items);
 
     /// <summary>Parses <see cref="CharPixel"/>'s.</summary>
+    [Pure]
     public static CharPixels Parse(string input, bool ignoreSpace)
     {
         Guard.NotNull(input, nameof(input));
@@ -138,6 +139,7 @@ public readonly struct CharPixels : IEnumerable<CharPixel>, IEquatable<CharPixel
         return new CharPixels(buffer, cols, rows + 1, hasMissingColumns);
     }
 
+    [Pure]
     public static CharPixels From<T>(Grid<T> grid, Func<T, char> transform)
     {
         var pixels = new CharPixels(grid.Select(tile => new CharPixel(tile.Key, transform(tile.Value))), grid.Cols, grid.Rows, false);
@@ -145,10 +147,12 @@ public readonly struct CharPixels : IEnumerable<CharPixel>, IEquatable<CharPixel
     }
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerator<CharPixel> GetEnumerator()
         => (items ?? []).GetEnumerator();
 
     /// <inheritdoc />
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]

@@ -2,6 +2,8 @@ namespace SmartAss;
 
 public static class ComparableExtensions
 {
+    [Pure]
+
     public static int? ComparesTo<T>(this T? comparable, T? other) where T : struct, IComparable<T>
     {
         if (comparable is { } c && other is { } o) return c.ComparesTo(o);
@@ -10,6 +12,7 @@ public static class ComparableExtensions
         else { return default; }
     }
 
+    [Pure]
     public static int? ComparesTo<T>(this T comparable, T other) where T : IComparable<T>
     {
         if (comparable is null) { return other is null ? null : +1; }
@@ -17,6 +20,7 @@ public static class ComparableExtensions
         return compare == 0 ? null : compare;
     }
 
+    [Pure]
     public static int? ComparesTo(this IComparable comparable, IComparable other)
     {
         if (comparable is null) { return other is null ? null : +1; }

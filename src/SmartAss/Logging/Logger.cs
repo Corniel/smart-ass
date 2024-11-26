@@ -98,6 +98,6 @@ public static class Logger
         heatmap[index]++;
     }
 
-    public static readonly Dictionary<Type, int> CtorCalls = new Dictionary<Type, int>();
-    public static readonly Dictionary<string, int> ActionCalls = new Dictionary<string, int>();
+    public static readonly Dictionary<Type, int> CtorCalls = new();
+    public static readonly Dictionary<string, int> ActionCalls = new();
 }

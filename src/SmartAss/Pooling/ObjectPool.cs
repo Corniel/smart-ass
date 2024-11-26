@@ -12,7 +12,7 @@ namespace SmartAss.Pooling;
 /// <summary>Contains multiple objects that can be reused.</summary>
 [DebuggerDisplay("{DebuggerDisplay}")]
 [DebuggerTypeProxy(typeof(CollectionDebugView))]
-public class ObjectPool<T> : IEnumerable<T> where T : class
+public sealed class ObjectPool<T> : IEnumerable<T> where T : class
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly T[] pool;
@@ -33,6 +33,7 @@ public class ObjectPool<T> : IEnumerable<T> where T : class
     /// <remarks>
     /// Creates a new item, if the object pool is empty.
     /// </remarks>
+    [Impure]
     public T Get(Func<T> create)
     {
         T item;
@@ -50,7 +51,8 @@ public class ObjectPool<T> : IEnumerable<T> where T : class
     /// <remarks>
     /// Creates a new item, if the object pool is empty.
     /// </remarks>
-    public Reusable<T> Reusable(Func<T> create) => new Reusable<T>(Get(create), this);
+    [Pure]
+    public Reusable<T> Reusable(Func<T> create) => new(Get(create), this);
 
     /// <summary>Releases the item for reuse.</summary>
     public void Release(T item)
@@ -90,6 +92,7 @@ public class ObjectPool<T> : IEnumerable<T> where T : class
     }
 
     /// <summary>Populates the full object pool.</summary>
+    [FluentSyntax]
     public ObjectPool<T> Populate(Func<T> create, int count)
     {
         lock (locker)
@@ -103,9 +106,11 @@ public class ObjectPool<T> : IEnumerable<T> where T : class
     }
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(pool, Count);
 
     /// <inheritdoc />
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>Represents the buffer as a DEBUG <see cref="string"/>.</summary>

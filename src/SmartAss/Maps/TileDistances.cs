@@ -35,18 +35,23 @@ public class TileDistances : IEnumerable<object>
         set => distances[index] = value ^ Mask;
     }
 
+    [Pure]
     public bool IsKnown(int index) => distances[index] != Unknown;
 
+    [Pure]
     public bool IsUnknown(int index) => distances[index] == Unknown;
 
     public void SetInfinite(int index) => distances[index] = Infinite;
 
     public void Clear() => Array.Clear(distances, 0, distances.Length);
 
+    [Pure]
     public IEnumerator<object> GetEnumerator() => distances.Select(Debug).GetEnumerator();
 
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    [Pure]
     private static object Debug(int n)
     {
         if (n == Unknown) { return "?"; }

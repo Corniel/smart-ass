@@ -15,4 +15,8 @@
     <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup Label="Code generators">
+    <PackageReference Include="Qowaiv.Diagnostics.Contracts" PrivateAssets="all" />
+  </ItemGroup>
+
 </Project>

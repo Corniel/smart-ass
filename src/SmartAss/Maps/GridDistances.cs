@@ -20,14 +20,11 @@ public class GridDistances : IEnumerable<string>
 
     private readonly Grid<int> distances;
 
-    public GridDistances(int cols, int rows)
-    {
-        distances = new(cols, rows);
-    }
+    public GridDistances(int cols, int rows) => distances = new(cols, rows);
 
     public int Size => distances.Size;
 
-    public int Known => distances.Count(d => d .Value!= Unknown);
+    public int Known => distances.Count(d => d.Value != Unknown);
 
     public int this[Point location]
     {
@@ -35,18 +32,23 @@ public class GridDistances : IEnumerable<string>
         set => distances[location] = value ^ Mask;
     }
 
+    [Pure]
     public bool IsKnown(Point location) => distances[location] != Unknown;
 
+    [Pure]
     public bool IsUnknown(Point location) => distances[location] == Unknown;
 
     public void SetInfinite(Point location) => distances[location] = Infinite;
 
     public void Clear() => distances.Clear();
 
+    [Pure]
     public IEnumerator<string> GetEnumerator() => distances.Select(Debug).GetEnumerator();
 
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    [Pure]
     private static string Debug(KeyValuePair<Point, int> kvp) => kvp.Value switch
     {
         Unknown => $"({kvp.Key}) ?",

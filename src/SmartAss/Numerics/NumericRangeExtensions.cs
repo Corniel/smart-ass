@@ -4,6 +4,7 @@ namespace SmartAss.Numerics;
 
 public static class NumericRangeExtensions
 {
+    [Pure]
     public static NumericRanges<TNumber> Merge<TNumber>(this IEnumerable<NumericRange<TNumber>> ranges)
          where TNumber : struct, INumber<TNumber>
     {
@@ -18,7 +19,7 @@ public static class NumericRangeExtensions
             var add = true;
             for (var i = 0; i < list.Count && add; i++)
             {
-                if (list[i].Join(range) is {IsEmpty: false } join)
+                if (list[i].Join(range) is { IsEmpty: false } join)
                 {
                     list[i] = join;
                     add = false;

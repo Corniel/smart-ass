@@ -10,7 +10,7 @@
 namespace SmartAss.Diagnostics;
 
 /// <summary>Allows the debugger to display collections.</summary>
-public class CollectionDebugView
+public sealed class CollectionDebugView
 {
     /// <summary>A reference to the enumeration to display.</summary>
     private readonly IEnumerable enumeration;

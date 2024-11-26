@@ -14,6 +14,7 @@ public interface Tile
     int Id { get; }
 
     /// <summary>The neighbors of the tile.</summary>
+    [Pure]
     IEnumerable<Tile> GetNeighbors();
 }
 

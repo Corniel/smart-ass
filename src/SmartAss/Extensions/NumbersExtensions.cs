@@ -11,6 +11,7 @@ namespace System;
 /// <summary>Extensions on collections of numbers.</summary>
 public static class NumbersExtensions
 {
+    [Pure]
     public static TNumber Product<TNumber>(this IEnumerable<TNumber> numbers) where TNumber : struct, INumberBase<TNumber>
     {
         Guard.NotNull(numbers, nameof(numbers));
@@ -28,9 +29,11 @@ public static class NumbersExtensions
         return product;
     }
 
+    [Pure]
     public static TNumber Product<TSource, TNumber>(this IEnumerable<TSource> source, Func<TSource, TNumber> selector) where TNumber : struct, INumberBase<TNumber>
         => source.Select(selector).Product();
 
+    [Pure]
     public static ulong Sum(this IEnumerable<ulong> numbers)
     {
         Guard.NotNull(numbers, nameof(numbers));

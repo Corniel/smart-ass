@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SmartAss.Logging;
 
-public class FileLogger : TextWriter
+public sealed class FileLogger : TextWriter
 {
     public FileLogger(string directory)
     {

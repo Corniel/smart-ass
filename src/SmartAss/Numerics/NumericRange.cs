@@ -5,7 +5,7 @@ namespace SmartAss.Numerics;
 
 [TypeConverter(typeof(Conversion.Numerics.NumericRangeTypeConverter))]
 public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
-    
+
     where TNumber : struct, INumber<TNumber>
 {
     public static readonly NumericRange<TNumber> Empty;
@@ -23,8 +23,9 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
     }
 
     public TNumber Lower { get; }
-    
+
     public TNumber Upper => _Upper - TNumber.One;
+
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private readonly TNumber _Upper;
 
@@ -64,12 +65,15 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
     public bool Overlaps(NumericRange<TNumber> other) => !(this & other).IsEmpty;
 
     /// <inheritdoc />
-    public override bool Equals(object obj) => obj is NumericRange<TNumber> other && Equals(other);
+    [Pure]
+    public override bool Equals(object? obj) => obj is NumericRange<TNumber> other && Equals(other);
 
     /// <inheritdoc />
+    [Pure]
     public bool Equals(NumericRange<TNumber> other) => Lower == other.Lower && Upper == other.Upper;
 
     /// <inheritdoc />
+    [Pure]
     public override int GetHashCode() => HashCode.Combine(Lower, Upper);
 
     /// <summary>Compares two Ranges.</summary>
@@ -81,16 +85,19 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
     public static NumericRange<TNumber> operator &(NumericRange<TNumber> left, NumericRange<TNumber> right) => left.Intersection(right);
 
     [Pure]
-    public override string ToString() => IsEmpty ? "{}" :  $"{{{Lower}..{Upper}}}";
+    public override string ToString() => IsEmpty ? "{}" : $"{{{Lower}..{Upper}}}";
 
     [Pure]
     public static NumericRange<TNumber> Parse(string str)
     {
         var ns = str.Split("..");
-        if(ns.Length != 2) ns = str.Split('-');
+        if (ns.Length != 2) ns = str.Split('-');
         return new(TNumber.Parse(ns[0], null), TNumber.Parse(ns[1], null));
     }
 
+    [Pure]
     static TNumber Min(TNumber l, TNumber r) => l < r ? l : r;
+
+    [Pure]
     static TNumber Max(TNumber l, TNumber r) => l > r ? l : r;
 }

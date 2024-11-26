@@ -14,11 +14,12 @@ public static class NumberParsing
     private const StringSplitOptions SplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
     private static readonly string[] Splitters = [" ", ",", "\r\n", "\n", "\t"];
 
-
     /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static int Int32(this string str) => str.Int32N() ?? 0;
 
     /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static int? Int32N(this string str)
     {
         var interator = new Int32sParser(str);
@@ -26,16 +27,20 @@ public static class NumberParsing
     }
 
     /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static int TryInt32(this string str, int fallback) => str.Int32N() ?? fallback;
 
     /// <summary>Gets the <see cref="long"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static long Int64(this string str, long? fallback = null)
     {
         if (long.TryParse(str, out var n)) { return n; }
         else if (fallback.HasValue) { return fallback.Value; }
         else { throw new FormatException($"'{n}' is not a number"); }
     }
+
     /// <summary>Gets the <see cref="long"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static long? Int64N(this string str)
     {
         var interator = new Int64sParser(str);
@@ -43,9 +48,11 @@ public static class NumberParsing
     }
 
     /// <summary>Gets the <see cref="intlong/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static long TryInt64(this string str, int fallback) => str.Int64N() ?? fallback;
 
     /// <summary>Gets the <see cref="long"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static ulong UInt64(this string str, ulong? fallback = null)
     {
         if (ulong.TryParse(str, out var n)) { return n; }
@@ -54,6 +61,7 @@ public static class NumberParsing
     }
 
     /// <summary>Gets the <see cref="BigInteger"/> value of the <see cref="string"/>.</summary>
+    [Pure]
     public static BigInteger BigInt(this string str, BigInteger? fallback = null)
     {
         if (BigInteger.TryParse(str, out var n)) { return n; }
@@ -62,18 +70,23 @@ public static class NumberParsing
     }
 
     /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
+    [Pure]
     public static IEnumerable<int> Int32s(this IEnumerable<string> strings) => strings.SelectMany(Int32s);
 
     /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
+    [Pure]
     public static IEnumerable<int> Int32s(this string str) => new Int32sParser(str);
 
     /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>
+    [Pure]
     public static IEnumerable<long> Int64s(this string str) => new Int64sParser(str);
 
     /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>
+    [Pure]
     public static IEnumerable<long> Int64s(this IEnumerable<string> strings) => strings.SelectMany(Int64s);
 
     /// <summary>Gets the <see cref="BigInteger"/> values of the <see cref="string"/>.</summary>
+    [Pure]
     public static IEnumerable<BigInteger> BigInts(this string str)
         => str.Split(Splitters, SplitOptions)
         .Select(n => BigInt(n));
@@ -90,8 +103,10 @@ public static class NumberParsing
         }
 
         public int Current { get; private set; }
+
         object IEnumerator.Current => Current;
 
+        [Impure]
         public bool MoveNext()
         {
             var any = false;
@@ -113,8 +128,13 @@ public static class NumberParsing
         }
 
         public void Reset() => Do.Nothing();
+
+        [Pure]
         public IEnumerator<int> GetEnumerator() => this;
+
+        [Pure]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public void Dispose() => Do.Nothing();
     }
 
@@ -130,8 +150,10 @@ public static class NumberParsing
         }
 
         public long Current { get; private set; }
+
         object IEnumerator.Current => Current;
 
+        [Impure]
         public bool MoveNext()
         {
             var any = false;
@@ -153,8 +175,13 @@ public static class NumberParsing
         }
 
         public void Reset() => Do.Nothing();
+
+        [Pure]
         public IEnumerator<long> GetEnumerator() => this;
+
+        [Pure]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public void Dispose() => Do.Nothing();
     }
 }

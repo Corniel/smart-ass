@@ -6,7 +6,7 @@
 namespace SmartAss;
 
 /// <summary>Implements <see cref="BitsOperator{T}"/> for <see cref="ulong"/>.</summary>
-internal class BitsUInt64 : BitsOperator<ulong>
+internal sealed class BitsUInt64 : BitsOperator<ulong>
 {
     internal static readonly ulong[] Flags =
     [
@@ -154,12 +154,15 @@ internal class BitsUInt64 : BitsOperator<ulong>
     public int BitSize => 64;
 
     /// <inheritdoc />
+    [Pure]
     public int Count(ulong bits) => System.Numerics.BitOperations.PopCount(bits);
 
     /// <inheritdoc />
+    [Pure]
     public int Size(ulong bits) => 64 - System.Numerics.BitOperations.LeadingZeroCount(bits);
 
     /// <inheritdoc />
+    [Pure]
     public int First(ulong bits)
     {
         unchecked
@@ -184,15 +187,19 @@ internal class BitsUInt64 : BitsOperator<ulong>
     }
 
     /// <inheritdoc />
+    [Pure]
     public bool HasFlag(ulong bits, int position) => (bits & Flags[position]) != 0;
 
     /// <inheritdoc />
+    [Pure]
     public ulong Flag(ulong bits, int position) => bits | Flags[position];
 
     /// <inheritdoc />
+    [Pure]
     public ulong Unflag(ulong bits, int position) => bits & Unflags[position];
 
     /// <inheritdoc />
+    [Pure]
     public ulong Mirror(ulong bits)
     {
         var mirror = bits;
@@ -206,8 +213,10 @@ internal class BitsUInt64 : BitsOperator<ulong>
     }
 
     /// <inheritdoc />
+    [Pure]
     public ulong Parse(string str, string ones, string zeros) => Bits.Parse(str, ones, zeros);
 
     /// <inheritdoc />
+    [Pure]
     public string ToString(ulong bits) => Bits.ToString(BitConverter.GetBytes(bits));
 }

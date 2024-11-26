@@ -36,7 +36,7 @@ public class Object_pool
 
     public class ExampleItem
     {
-        public static readonly ObjectPool<ExampleItem> pool = new ObjectPool<ExampleItem>(16);
+        public static readonly ObjectPool<ExampleItem> pool = new(16);
 
         private ExampleItem() { }
 

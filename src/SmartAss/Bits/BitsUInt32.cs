@@ -6,7 +6,7 @@
 namespace SmartAss;
 
 /// <summary>Implements <see cref="BitsOperator{T}"/> for <see cref="uint"/>.</summary>
-internal class BitsUInt32 : BitsOperator<uint>
+internal sealed class BitsUInt32 : BitsOperator<uint>
 {
     internal static readonly uint[] Flags =
     [
@@ -90,12 +90,15 @@ internal class BitsUInt32 : BitsOperator<uint>
     public int BitSize => 32;
 
     /// <inheritdoc />
+    [Pure]
     public int Count(uint bits) => System.Numerics.BitOperations.PopCount(bits);
 
     /// <inheritdoc />
+    [Pure]
     public int Size(uint bits) => 32 - System.Numerics.BitOperations.LeadingZeroCount(bits);
 
     /// <inheritdoc />
+    [Pure]
     public int First(uint bits)
     {
         unchecked
@@ -112,15 +115,19 @@ internal class BitsUInt32 : BitsOperator<uint>
     }
 
     /// <inheritdoc />
+    [Pure]
     public bool HasFlag(uint bits, int position) => (bits & Flags[position]) != 0;
 
     /// <inheritdoc />
+    [Pure]
     public uint Flag(uint bits, int position) => bits | Flags[position];
 
     /// <inheritdoc />
+    [Pure]
     public uint Unflag(uint bits, int position) => bits & Unflags[position];
 
     /// <inheritdoc />
+    [Pure]
     public uint Mirror(uint bits)
     {
         var mirror = bits;
@@ -133,8 +140,10 @@ internal class BitsUInt32 : BitsOperator<uint>
     }
 
     /// <inheritdoc />
+    [Pure]
     public uint Parse(string str, string ones, string zeros) => (uint)Bits.Parse(str, ones, zeros);
 
     /// <inheritdoc />
+    [Pure]
     public string ToString(uint bits) => Bits.ToString(BitConverter.GetBytes(bits));
 }

@@ -8,6 +8,7 @@ namespace SmartAss.Numerics;
 public static class Points3D
 {
     /// <summary>Gets the range within the two corner points.</summary>
+    [Pure]
     public static IEnumerable<Point3D> Range(Point3D corner1, Point3D corner2)
     {
         var x_min = Math.Min(corner1.X, corner2.X);

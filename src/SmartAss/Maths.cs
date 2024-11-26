@@ -14,6 +14,7 @@ public static class Maths
     /// <remarks>
     /// See: https://en.wikipedia.org/wiki/Greatest_common_divisor.
     /// </remarks>
+    [Pure]
     public static TNumber Gcd<TNumber>(TNumber a, TNumber b)
         where TNumber : struct,
         INumber<TNumber>,
@@ -36,6 +37,7 @@ public static class Maths
     }
 
     /// <summary>Gets the Least Common Multiple .</summary>
+    [Pure]
     public static TNumber Lcm<TNumber>(TNumber a, TNumber b)
         where TNumber : struct,
         INumber<TNumber>,
@@ -45,6 +47,7 @@ public static class Maths
         => a * b / Gcd(a, b);
 
     /// <summary>Gets the Least Common Multiple .</summary>
+    [Pure]
     public static TNumber Lcm<TNumber>(IEnumerable<TNumber> numbers)
         where TNumber : struct,
         INumber<TNumber>,
@@ -71,6 +74,7 @@ public static class Maths
     /// <remarks>
     /// Making the most use of the standard algorithm from Knuth's book "The Art of Computer Programming, 3rd Edition, Volume 2: Seminumerical Algorithms":
     /// </remarks>
+    [Pure]
     public static long Choose(long n, long k)
     {
         var n_k = n - k;

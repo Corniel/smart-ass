@@ -4,15 +4,17 @@
 // </copyright>
 
 using SmartAss;
-using SmartAss.Collections; 
+using SmartAss.Collections;
 
 namespace System.Collections.Generic;
 
 public static class StackExtensions
 {
+    [Pure]
     public static Stack<T> Copy<T>(this Stack<T> queue)
         => new Stack<T>(Guard.NotNull(queue, nameof(queue)).Count).PushRange(queue);
 
+    [FluentSyntax]
     public static Stack<T> PushRange<T>(this Stack<T> stack, IEnumerable<T> items)
     {
         Guard.NotNull(stack, nameof(stack));
@@ -24,6 +26,7 @@ public static class StackExtensions
         return stack;
     }
 
+    [Pure]
     public static PopsAll<T> PopAll<T>(this Stack<T> stack) => new(Guard.NotNull(stack, nameof(stack)));
 }
 
@@ -31,6 +34,7 @@ public readonly struct PopsAll<T>(Stack<T> stack) : Iterator<T>
 {
     public T Current => stack.Pop();
 
+    [Impure]
     public bool MoveNext() => stack.Count != 0;
 
     public void Dispose() { /* Nothing to dispose. */ }

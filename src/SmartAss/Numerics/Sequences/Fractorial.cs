@@ -6,8 +6,10 @@ public sealed class Fractorial : NumericSequence
 {
     public long this[int n] => n < 20 ? First[n] : this.Skip(n).First();
 
+    [Pure]
     public IEnumerator<long> GetEnumerator() => new Numbers();
 
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private readonly long[] First =
@@ -35,19 +37,22 @@ public sealed class Fractorial : NumericSequence
         2432902008176640000,
     ];
 
-    class Numbers : Iterator<long>
+    sealed class Numbers : Iterator<long>
     {
         public long N { get; private set; } = -1;
+
         public long Current { get; private set; } = 1;
 
+        [Impure]
         public bool MoveNext()
         {
             N++;
             if (N > 0) { Current *= N; }
             return true;
         }
-        
+
         public void Dispose() => Do.Nothing();
+
         public void Reset() => throw new NotSupportedException();
     }
 }

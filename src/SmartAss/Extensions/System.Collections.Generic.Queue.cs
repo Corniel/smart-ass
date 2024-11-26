@@ -4,15 +4,17 @@
 // </copyright>
 
 using SmartAss;
-using SmartAss.Collections; 
+using SmartAss.Collections;
 
 namespace System.Collections.Generic;
 
 public static class QueueExtensions
 {
+    [Pure]
     public static Queue<T> Copy<T>(this Queue<T> queue)
         => new Queue<T>(Guard.NotNull(queue, nameof(queue)).Count).EnqueueRange(queue);
 
+    [Pure]
     public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> items)
     {
         Guard.NotNull(queue, nameof(queue));
@@ -24,8 +26,10 @@ public static class QueueExtensions
         return queue;
     }
 
+    [Pure]
     public static DequeuesAll<T> DequeueAll<T>(this Queue<T> queue) => new(Guard.NotNull(queue, nameof(queue)));
 
+    [Pure]
     public static DequeuesCurrent<T> DequeueCurrent<T>(this Queue<T> queue) => new(Guard.NotNull(queue, nameof(queue)));
 }
 
@@ -36,11 +40,13 @@ public struct DequeuesCurrent<T> : Iterator<T>
         Queue = queue;
         Count = queue.Count;
     }
+
     private readonly Queue<T> Queue;
     private int Count;
 
     public T Current => Queue.Dequeue();
 
+    [Impure]
     public bool MoveNext() => Count-- > 0;
 
     public void Dispose() { /* Nothing to dispose. */ }
@@ -52,6 +58,7 @@ public readonly struct DequeuesAll<T>(Queue<T> queue) : Iterator<T>
 {
     public T Current => queue.Dequeue();
 
+    [Impure]
     public bool MoveNext() => queue.Count != 0;
 
     public void Dispose() { /* Nothing to dispose. */ }

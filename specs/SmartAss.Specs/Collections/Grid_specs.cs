@@ -130,7 +130,7 @@ public class Elements
     }
 }
 public class Positions
-{ 
+{
     [Test]
     public void are_skipped_when_null()
     {

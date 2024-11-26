@@ -27,6 +27,7 @@ public readonly struct ModuloInt32 : IEquatable<ModuloInt32>, IFormattable,
     public int Value { get; }
 
     /// <summary>Gets all values.</summary>
+    [Pure]
     public IEnumerable<int> Values() => new Iterator(this);
 
     /// <summary>The divisor (or divider).</summary>
@@ -38,6 +39,7 @@ public readonly struct ModuloInt32 : IEquatable<ModuloInt32>, IFormattable,
 
     public bool IsZero => Value == 0;
 
+    [Pure]
     private ModuloInt32 Add(ModuloInt32 other)
     {
         var value = Values().First(v => v % other.Divisor == other.Value);
@@ -80,10 +82,12 @@ public readonly struct ModuloInt32 : IEquatable<ModuloInt32>, IFormattable,
     [Pure]
     public override int GetHashCode() => Hash.Code(Value).And(Divisor);
 
+    [Pure]
     public static ModuloInt32 Parse(string? s)
         => TryParse(s)
         ?? throw new FormatException("No valid modoli");
 
+    [Pure]
     public static ModuloInt32? TryParse(string? s)
         => s?.Split(' ') is { Length: 3 } parts
             && int.TryParse(parts[0], CultureInfo.InvariantCulture, out var value)
@@ -101,9 +105,10 @@ public readonly struct ModuloInt32 : IEquatable<ModuloInt32>, IFormattable,
         }
 
         public int Current { get; private set; }
-        private readonly int Step;
-        
 
+        private readonly int Step;
+
+        [Impure]
         public bool MoveNext()
         {
             Current += Step;

@@ -12,6 +12,7 @@ public static class Jagged
     /// <typeparam name="T">
     /// Type of the jagged array.
     /// </typeparam>
+    [Pure]
     public static T[][] Array<T>(int m, int n)
     {
         var array = new T[m][];
@@ -26,6 +27,7 @@ public static class Jagged
     /// <typeparam name="T">
     /// Type of the jagged array.
     /// </typeparam>
+    [Pure]
     public static T[][][] Array<T>(int m, int n, int o)
     {
         var array = new T[m][][];
@@ -40,6 +42,7 @@ public static class Jagged
     /// <typeparam name="T">
     /// Type of the jagged array.
     /// </typeparam>
+    [Pure]
     public static T[][][][] Array<T>(int m, int n, int o, int p)
     {
         var array = new T[m][][][];
@@ -56,6 +59,7 @@ public static class Jagged
     /// <typeparam name="T">
     /// Type of the jagged array.
     /// </typeparam>
+    [Pure]
     public static T[][][][][] Array<T>(int m, int n, int o, int p, int q)
     {
         var array = new T[m][][][][];

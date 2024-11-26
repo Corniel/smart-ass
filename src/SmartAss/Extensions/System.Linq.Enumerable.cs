@@ -4,15 +4,18 @@ namespace System.Linq;
 
 public static class SmartAssEnumerabelExtensions
 {
+    [Pure]
     public static bool AllDistinct<TSource>(this IEnumerable<TSource> source)
     {
         var @set = new HashSet<TSource>();
         return source.All(@set.Add);
     }
 
+    [Pure]
     public static IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> sources, TSource except)
         => sources.Where(s => !s.Equals(except));
 
+    [Pure]
     public static IEnumerable<TSource> WithStep<TSource>(this IEnumerable<TSource> source, int step)
         => source
         .Select((item, index) => new { item, index })
@@ -20,6 +23,7 @@ public static class SmartAssEnumerabelExtensions
         .Select(pair => pair.item);
 
     /// <remarks>Only returns full chunks.</remarks>
+    [Pure]
     public static IEnumerable<IReadOnlyList<TSource>> ChunkBy<TSource>(this IEnumerable<TSource> source, int groupSize)
     {
         Guard.NotNull(source, nameof(source));

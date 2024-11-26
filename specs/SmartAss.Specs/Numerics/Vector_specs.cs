@@ -16,7 +16,7 @@ public class Rotating_with
     [Test]
     public void one_step_rotates_counter_clock_whise()
     {
-         Vector.N.Rotate(DiscreteRotation.Deg090).Should().Be(Vector.W);
+        Vector.N.Rotate(DiscreteRotation.Deg090).Should().Be(Vector.W);
     }
 
     [Test]

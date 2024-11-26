@@ -94,7 +94,7 @@ public class Mirror
     [TestCase(0x51C8_7AB8U, 0x1D5E_138AU)]
     public void UInt32(uint bits, uint mirrored)
         => Bits.UInt32.Mirror(bits).Should().HaveBits(mirrored);
-    
+
     [TestCase(0x0000_0000_0001_0000UL, 0x0000_8000_0000_0000UL)]
     [TestCase(0x0000_0000_0200_0400UL, 0x0020_0040_0000_0000UL)]
     [TestCase(0x000C_0080_3456_0670UL, 0x0E60_6A2C_0100_3000UL)]

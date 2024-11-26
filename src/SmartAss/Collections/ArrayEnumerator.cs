@@ -37,6 +37,7 @@ public struct ArrayEnumerator<T> : Iterator<T>
     public T Current => array[index];
 
     /// <inheritdoc />
+    [Impure]
     public bool MoveNext() => ++index < end;
 
     /// <inheritdoc />

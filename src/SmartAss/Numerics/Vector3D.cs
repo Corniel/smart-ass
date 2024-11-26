@@ -32,26 +32,31 @@ public readonly struct Vector3D : IEquatable<Vector3D>
     public int this[int index] => index switch
     {
         0 => X,
-        1 => Y, 
+        1 => Y,
         2 => Z,
         _ => throw new IndexOutOfRangeException()
     };
 
-    public Vector3D Adjust(int x = 0, int y = 0, int z = 0) => new Vector3D(X + x, Y + y, Z + z);
+    [Pure]
+    public Vector3D Adjust(int x = 0, int y = 0, int z = 0) => new(X + x, Y + y, Z + z);
 
     /// <inheritdoc />
+    [Pure]
     public override string ToString() => $"({X}, {Y}, {Z})";
 
     /// <inheritdoc />
-    public override bool Equals(object obj) => obj is Vector3D other && Equals(other);
+    [Pure]
+    public override bool Equals(object? obj) => obj is Vector3D other && Equals(other);
 
     /// <inheritdoc />
+    [Pure]
     public bool Equals(Vector3D other)
         => X == other.X
         && Y == other.Y
         && Z == other.Z;
 
     /// <inheritdoc />
+    [Pure]
     public override int GetHashCode() => X ^ (Y << 11) ^ (Z << 22);
 
     /// <summary>Compares two vectors.</summary>
@@ -60,6 +65,7 @@ public readonly struct Vector3D : IEquatable<Vector3D>
     /// <summary>Compares two vectors.</summary>
     public static bool operator !=(Vector3D a, Vector3D b) => !(a == b);
 
+    [Pure]
     public static Vector3D Parse(string str)
     {
         var split = str.Split(',');

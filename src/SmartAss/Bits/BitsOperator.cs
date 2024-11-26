@@ -16,15 +16,15 @@ public interface BitsOperator<TInteger>
     int BitSize { get; }
 
     /// <summary>Counts the number of bits with the value 1.</summary>
-    [Pure] 
+    [Pure]
     int Count(TInteger bits);
 
     /// <summary>Gets the number of bits needed to represent the number.</summary>
-    [Pure] 
+    [Pure]
     int Size(TInteger bits);
 
     /// <summary>Gets the index of the first bit needed to represent the number.</summary>
-    [Pure] 
+    [Pure]
     int First(TInteger bits);
 
     /// <summary>Returns true if the bit is '1' at the specified position.</summary>

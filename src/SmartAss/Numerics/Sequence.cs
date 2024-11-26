@@ -4,7 +4,7 @@ namespace SmartAss.Numerics;
 
 public static class Sequence
 {
-    public static readonly Fractorial Fractorial = new Fractorial();
+    public static readonly Fractorial Fractorial = new();
 
     /// <summary>Creates an ad-hoc sequence.</summary>
     /// <typeparam name="T">
@@ -23,13 +23,14 @@ public static class Sequence
     private sealed class Progressor<T>(T initial, Func<T, T> next) : Iterator<T>
     {
         private readonly Func<T, T> Next = next;
-        
+
         private bool First = true;
 
         /// <inheritdoc />
         public T Current { get; private set; } = initial;
 
         /// <inheritdoc />
+        [Impure]
         public bool MoveNext()
         {
             if (!First)

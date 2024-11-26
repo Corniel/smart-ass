@@ -8,6 +8,7 @@ namespace SmartAss.Numerics;
 public static class Points
 {
     /// <summary>Gets all points of the specified grid (row per row).</summary>
+    [Pure]
     public static IEnumerable<Point> Grid(int cols, int rows)
     {
         for (var row = 0; row < rows; row++)
@@ -20,6 +21,7 @@ public static class Points
     }
 
     /// <summary>Gets the range within the two corner points.</summary>
+    [Pure]
     public static IEnumerable<Point> Range(Point corner1, Point corner2)
     {
         var x_min = Math.Min(corner1.X, corner2.X);
@@ -37,9 +39,11 @@ public static class Points
     }
 
     /// <summary>Gets the aggregated minimum.</summary>
+    [Pure]
     public static Point Min(params Point[] points) => points.AsEnumerable().Min();
 
     /// <summary>Gets the aggregated minimum.</summary>
+    [Pure]
     public static Point Min(this IEnumerable<Point> points)
     {
         var x = points.Min(p => p.X);
@@ -48,9 +52,11 @@ public static class Points
     }
 
     /// <summary>Gets the aggregated maximum.</summary>
+    [Pure]
     public static Point Max(params Point[] points) => points.AsEnumerable().Max();
 
     /// <summary>Gets the aggregated maximum.</summary>
+    [Pure]
     public static Point Max(this IEnumerable<Point> points)
     {
         var x = points.Max(p => p.X);
@@ -58,6 +64,7 @@ public static class Points
         return new(x, y);
     }
 
+    [Pure]
     public static decimal ShoelaceArea(this IEnumerable<Point> points)
     {
         var area = 0m;

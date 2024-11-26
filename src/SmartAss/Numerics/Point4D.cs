@@ -31,23 +31,27 @@ public readonly struct Point4D : IEquatable<Point4D>
 
     /// <summary> Gets or sets the z-coordinate.</summary>
     public int Z { get; }
-    
+
     /// <summary> Gets or sets the t-coordinate.</summary>
     public int T { get; }
 
+    [Pure]
     public int ManhattanDistance(Point4D other)
-        => Math.Abs(X - other.X) 
-        + Math.Abs(Y - other.Y) 
-        + Math.Abs(Z - other.Z)
-        + Math.Abs(T - other.T);
+        => (X - other.X).Abs()
+        + (Y - other.Y).Abs()
+        + (Z - other.Z).Abs()
+        + (T - other.T).Abs();
 
     /// <inheritdoc />
+    [Pure]
     public override string ToString() => $"({X}, {Y}, {Z}, {T})";
 
     /// <inheritdoc />
+    [Pure]
     public override bool Equals(object obj) => obj is Point4D other && Equals(other);
 
     /// <inheritdoc />
+    [Pure]
     public bool Equals(Point4D other)
         => X == other.X
         && Y == other.Y
@@ -55,6 +59,7 @@ public readonly struct Point4D : IEquatable<Point4D>
         && T == other.T;
 
     /// <inheritdoc />
+    [Pure]
     public override int GetHashCode() => X ^ (Y << 8) ^ (Z << 16) ^ (Z << 24);
 
     /// <summary>Compares two points.</summary>
@@ -63,6 +68,7 @@ public readonly struct Point4D : IEquatable<Point4D>
     /// <summary>Compares two points.</summary>
     public static bool operator !=(Point4D a, Point4D b) => !(a == b);
 
+    [Pure]
     public static Point4D Parse(string str)
     {
         var split = str.Split(',');

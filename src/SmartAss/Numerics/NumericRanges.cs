@@ -70,15 +70,21 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
         return filtered.Merge();
     }
 
+    [Pure]
     public override string ToString() => string.Join("; ", collection);
 
+    [Pure]
     public IEnumerator<NumericRange<TNumber>> GetEnumerator() => (collection ?? []).GetEnumerator();
 
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    [Pure]
     public static NumericRanges<TNumber> New(NumericRange<TNumber> range) => new([range]);
 
+    [Pure]
     public static NumericRanges<TNumber> New(params NumericRange<TNumber>[] ranges) => New(ranges.AsEnumerable());
 
+    [Pure]
     public static NumericRanges<TNumber> New(IEnumerable<NumericRange<TNumber>> ranges) => new(ranges.Merge());
 }

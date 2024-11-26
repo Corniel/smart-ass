@@ -26,7 +26,7 @@ internal static partial class Guard
     /// The guarded parameter.
     /// </returns>
     [DebuggerStepThrough]
-    public static T NotNull<T>([ValidatedNotNull]T parameter, string paramName)
+    public static T NotNull<T>([ValidatedNotNull] T parameter, string paramName)
         where T : class
     {
         if (parameter is null)
@@ -184,7 +184,7 @@ internal static partial class Guard
     /// The guarded parameter.
     /// </returns>
     [DebuggerStepThrough]
-    public static T HasAny<T>([ValidatedNotNull]T parameter, string paramName)
+    public static T HasAny<T>([ValidatedNotNull] T parameter, string paramName)
         where T : class, ICollection
     {
         NotNull(parameter, paramName);
@@ -204,7 +204,7 @@ internal static partial class Guard
     /// The guarded parameter.
     /// </returns>
     [DebuggerStepThrough]
-    public static IEnumerable<T> HasAny<T>([ValidatedNotNull]IEnumerable<T> parameter, string paramName)
+    public static IEnumerable<T> HasAny<T>([ValidatedNotNull] IEnumerable<T> parameter, string paramName)
     {
         NotNull(parameter, paramName);
         if (!parameter.Any())
@@ -222,7 +222,7 @@ internal static partial class Guard
     /// The guarded parameter.
     /// </returns>
     [DebuggerStepThrough]
-    public static string NotNullOrEmpty([ValidatedNotNull]string parameter, string paramName)
+    public static string NotNullOrEmpty([ValidatedNotNull] string parameter, string paramName)
     {
         NotNull(parameter, paramName);
         if (parameter == string.Empty)

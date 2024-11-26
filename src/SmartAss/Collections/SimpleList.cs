@@ -38,15 +38,19 @@ public class SimpleList<T> : ICollection<T>
     public bool IsReadOnly => false;
 
     /// <summary>Returns true if the simple list is empty.</summary>
+    [Pure]
     public bool IsEmpty() => Count == 0;
 
     /// <summary>Returns true if the simple list has any items.</summary>
+    [Pure]
     public bool HasAny() => Count != 0;
 
     /// <summary>Returns true if the simple list contains one item.</summary>
+    [Pure]
     public bool HasSingle() => Count == 1;
 
     /// <summary>Returns true if the simple list contains multiple items.</summary>
+    [Pure]
     public bool HasMultiple() => Count > 1;
 
     /// <inheritdoc />
@@ -70,6 +74,7 @@ public class SimpleList<T> : ICollection<T>
     /// <returns>
     /// Minus one if not found, else the index.
     /// </returns>
+    [Pure]
     public int IndexOf(T item)
     {
         for (var index = 0; index < Count; index++)
@@ -84,9 +89,11 @@ public class SimpleList<T> : ICollection<T>
     }
 
     /// <inheritdoc />
+    [Pure]
     public virtual bool Contains(T item) => IndexOf(item) != -1;
 
     /// <inheritdoc />
+    [CollectionMutation]
     public virtual bool Remove(T item)
     {
         var index = IndexOf(item);
@@ -114,9 +121,11 @@ public class SimpleList<T> : ICollection<T>
     public virtual void Clear() => Count = 0;
 
     /// <inheritdoc />
+    [Pure]
     public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(array, Count);
 
     /// <inheritdoc />
+    [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>Represents the simple list as a DEBUG <see cref="string"/>.</summary>

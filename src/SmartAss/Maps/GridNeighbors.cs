@@ -6,7 +6,9 @@ namespace SmartAss.Maps;
 public interface GridNeighbors : IReadOnlyList<Point>
 {
     Point this[CompassPoint compass] { get; }
+
+    [Pure]
     bool Contains(CompassPoint compass);
 
-    IEnumerable<KeyValuePair<CompassPoint, Point>> Directions {get; }
+    IEnumerable<KeyValuePair<CompassPoint, Point>> Directions { get; }
 }

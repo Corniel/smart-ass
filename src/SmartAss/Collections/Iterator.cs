@@ -1,6 +1,6 @@
 namespace SmartAss.Collections;
 
-public interface Iterator<T> : IEnumerable<T>, IEnumerator<T>
+public interface Iterator<out T> : IEnumerable<T>, IEnumerator<T>
 {
     [Pure]
     IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;

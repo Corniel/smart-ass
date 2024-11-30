@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SmartAss.Collections;
 
-partial class LoopNode<T>
+public partial class LoopNode<T>
 {
     /// <inheritdoc />
     bool ICollection.IsSynchronized => false;
@@ -20,7 +20,6 @@ partial class LoopNode<T>
         var skip = count.Mod(Loop.Count);
 
         if (skip == 0) { return this; }
-
         else if (skip * 2 > Loop.Count)
         {
             skip -= Loop.Count; // Move the shortest way.

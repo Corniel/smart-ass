@@ -34,7 +34,7 @@ public readonly struct Vector3D : IEquatable<Vector3D>
         0 => X,
         1 => Y,
         2 => Z,
-        _ => throw new IndexOutOfRangeException()
+        _ => throw new IndexOutOfRangeException(),
     };
 
     [Pure]

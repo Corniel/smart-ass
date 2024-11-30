@@ -12,20 +12,18 @@ public sealed class FileLogger : TextWriter
 {
     public FileLogger(string directory)
     {
-        file = new FileInfo($"{directory}/{DateTime.Now:yyyy-MM-dd_HH_mm_ss}.log");
+        file = new FileInfo($"{directory}/{Qowaiv.Clock.UtcNow():yyyy-MM-dd_HH_mm_ss}.log");
     }
 
     private readonly FileInfo file;
 
     public override Encoding Encoding => Encoding.UTF8;
 
-    public override void WriteLine(string value)
+    public override void WriteLine(string? value)
     {
-        if (!file.Directory.Exists) { file.Directory.Create(); }
+        if (file.Directory?.Exists is false) { file.Directory.Create(); }
 
-        using (var writer = file.AppendText())
-        {
-            writer.WriteLine(value);
-        }
+        using var writer = file.AppendText();
+        writer.WriteLine(value);
     }
 }

@@ -90,7 +90,6 @@ public sealed partial class LoopNode<T> : IEnumerable<LoopNode<T>>, ICollection
         {
             return this;
         }
-
         else if (s * 2 > Loop.Count)
         {
             s -= Loop.Count; // Move the shortest way.

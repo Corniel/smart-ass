@@ -1,4 +1,3 @@
-
 namespace SmartAss.Pairings;
 
 public static class Pair

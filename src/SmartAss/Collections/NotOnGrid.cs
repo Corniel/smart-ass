@@ -4,7 +4,6 @@
 // </copyright>
 
 using SmartAss.Numerics;
-using System.Runtime.Serialization;
 
 namespace SmartAss.Collections;
 
@@ -22,7 +21,4 @@ public class NotOnGrid : InvalidOperationException
 
     public NotOnGrid(string message, Exception innerException)
         : base(message, innerException) => Do.Nothing();
-
-    protected NotOnGrid(SerializationInfo info, StreamingContext context)
-        : base(info, context) => Do.Nothing();
 }

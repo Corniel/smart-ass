@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Authors>Corniel Nobel</Authors>
-    <Copyright>Copyright (c) 2018-current Corniel Nobel</Copyright>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

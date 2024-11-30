@@ -96,8 +96,8 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
     }
 
     [Pure]
-    static TNumber Min(TNumber l, TNumber r) => l < r ? l : r;
+    private static TNumber Min(TNumber l, TNumber r) => l < r ? l : r;
 
     [Pure]
-    static TNumber Max(TNumber l, TNumber r) => l > r ? l : r;
+    private static TNumber Max(TNumber l, TNumber r) => l > r ? l : r;
 }

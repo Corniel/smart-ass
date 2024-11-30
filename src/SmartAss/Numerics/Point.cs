@@ -104,6 +104,7 @@ public readonly struct Point : IEquatable<Point>
 
     /// <summary>Adds a vector to a point.</summary>
     public static Point operator +(Point point, Vector vector) => point.Add(vector);
+
     /// <summary>Subtracts a vector from a point.</summary>
     public static Point operator -(Point point, Vector vector) => point.Subtract(vector);
 

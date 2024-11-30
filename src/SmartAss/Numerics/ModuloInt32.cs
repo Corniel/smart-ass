@@ -63,7 +63,7 @@ public readonly struct ModuloInt32 : IEquatable<ModuloInt32>, IFormattable,
 
     /// <inheritdoc />
     [Pure]
-    public override string ToString() => ToString("", CultureInfo.InvariantCulture);
+    public override string ToString() => ToString(string.Empty, CultureInfo.InvariantCulture);
 
     /// <inheritdoc />
     [Pure]

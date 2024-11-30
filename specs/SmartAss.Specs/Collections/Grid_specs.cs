@@ -65,7 +65,7 @@ public class Can_not_be_created_from
         Assert.Catch<ArgumentException>(() => new Grid<int>(
         [
             [1, 3],
-            null,
+            null!,
             [1, 2],
         ]));
     }

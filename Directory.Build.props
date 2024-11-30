@@ -1,13 +1,15 @@
 <Project>
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <LangVersion>preview</LangVersion>
     <Authors>Corniel Nobel</Authors>
     <Copyright>Copyright (c) 2018-current Corniel Nobel</Copyright>
     <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <OutputType>library</OutputType>
   </PropertyGroup>
 
   <ItemGroup Label="Analyzers">
@@ -17,6 +19,10 @@
 
   <ItemGroup Label="Code generators">
     <PackageReference Include="Qowaiv.Diagnostics.Contracts" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <AdditionalFiles Include="*.csproj" />
   </ItemGroup>
 
 </Project>

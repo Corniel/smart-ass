@@ -72,7 +72,7 @@ public static class Maths
 
     /// <summary>Calculates all combinations when choosing k out n.</summary>
     /// <remarks>
-    /// Making the most use of the standard algorithm from Knuth's book "The Art of Computer Programming, 3rd Edition, Volume 2: Seminumerical Algorithms":
+    /// Making the most use of the standard algorithm from Knuth's book "The Art of Computer Programming, 3rd Edition, Volume 2: Seminumerical Algorithms".
     /// </remarks>
     [Pure]
     public static long Choose(long n, long k)

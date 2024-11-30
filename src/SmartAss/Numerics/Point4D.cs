@@ -48,7 +48,7 @@ public readonly struct Point4D : IEquatable<Point4D>
 
     /// <inheritdoc />
     [Pure]
-    public override bool Equals(object obj) => obj is Point4D other && Equals(other);
+    public override bool Equals(object? obj) => obj is Point4D other && Equals(other);
 
     /// <inheritdoc />
     [Pure]
@@ -71,6 +71,7 @@ public readonly struct Point4D : IEquatable<Point4D>
     [Pure]
     public static Point4D Parse(string str)
     {
+        Guard.NotNullOrEmpty(str, nameof(str));
         var split = str.Split(',');
         return new Point4D(split[0].Int32(), split[1].Int32(), split[2].Int32(), split[3].Int32());
     }

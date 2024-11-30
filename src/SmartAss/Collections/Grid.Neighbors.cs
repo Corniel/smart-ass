@@ -6,7 +6,9 @@ namespace SmartAss.Collections;
 public partial class Grid<T>
 {
     [FluentSyntax]
-    public Grid<T> SetNeighbors(Func<Grid<T>, Point, IReadOnlyCollection<CompassPoint>, Maps.GridNeighbors> selector, IReadOnlyCollection<CompassPoint> directions = null)
+    public Grid<T> SetNeighbors(
+        Func<Grid<T>, Point, IReadOnlyCollection<CompassPoint>, Maps.GridNeighbors> selector,
+        IReadOnlyCollection<CompassPoint>? directions = null)
     {
         Neighbors = new Grid<Maps.GridNeighbors>(Cols, Rows);
         foreach (var position in Points.Grid(Cols, Rows))

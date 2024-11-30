@@ -1,19 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0</TargetFrameworks>
-    <IsPackable>false</IsPackable>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="FluentAssertions.Analyzers" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
-    <PackageReference Include="NUnit.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup Label="Build extensions">
     <PackageReference Include="coverlet.collector" PrivateAssets="all" />
-    <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
+    <PackageReference Include="NUnit3TestAdapter" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup Label="Analyzers">
+    <PackageReference Include="FluentAssertions.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="NUnit.Analyzers" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

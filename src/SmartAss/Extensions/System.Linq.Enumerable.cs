@@ -13,7 +13,7 @@ public static class SmartAssEnumerabelExtensions
 
     [Pure]
     public static IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> sources, TSource except)
-        => sources.Where(s => !s.Equals(except));
+        => sources.Where(s => !s!.Equals(except));
 
     [Pure]
     public static IEnumerable<TSource> WithStep<TSource>(this IEnumerable<TSource> source, int step)
@@ -22,6 +22,9 @@ public static class SmartAssEnumerabelExtensions
         .Where(pair => pair.index % step == 0)
         .Select(pair => pair.item);
 
+    /// <summary>
+    /// Chops the source into chunks of the specified size.
+    /// </summary>
     /// <remarks>Only returns full chunks.</remarks>
     [Pure]
     public static IEnumerable<IReadOnlyList<TSource>> ChunkBy<TSource>(this IEnumerable<TSource> source, int groupSize)

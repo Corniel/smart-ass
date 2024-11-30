@@ -18,10 +18,10 @@ public readonly struct Distance : IEquatable<Distance>
     private Distance(int value) => Value = value;
 
     [Pure]
-    public override string ToString() => DebuggerDisplay.ToString();
+    public override string ToString() => DebuggerDisplay.ToString() ?? string.Empty;
 
     [Pure]
-    public override bool Equals([NotNullWhen(true)] object obj) => obj is Distance other && Equals(other);
+    public override bool Equals(object? obj) => obj is Distance other && Equals(other);
 
     [Pure]
     public bool Equals(Distance other) => other.Value == Value;

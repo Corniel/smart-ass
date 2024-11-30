@@ -57,9 +57,9 @@ public sealed class ConsolePlatform : IDisposable
     }
 
     [Impure]
-    private object Process(object bot, object message)
+    private object? Process(object bot, object message)
     {
-        if (applyMethods.TryGetValue(message.GetType(), out MethodInfo apply))
+        if (applyMethods.TryGetValue(message.GetType(), out MethodInfo? apply))
         {
             try
             {
@@ -67,7 +67,7 @@ public sealed class ConsolePlatform : IDisposable
             }
             catch (TargetInvocationException x)
             {
-                throw x.InnerException;
+                throw x.InnerException ?? x;
             }
         }
 

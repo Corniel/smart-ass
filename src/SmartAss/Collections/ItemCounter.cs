@@ -3,11 +3,7 @@ namespace SmartAss.Collections;
 public static class ItemCounter
 {
     [Pure]
-    public static ItemCounter<TItem> New<TItem>(TItem item) where TItem : notnull
-        => New([item]);
-
-    [Pure]
-    public static ItemCounter<TItem> New<TItem>(IEnumerable<TItem> items) where TItem : notnull
+    public static ItemCounter<TItem> New<TItem>(params IEnumerable<TItem> items) where TItem : notnull
         => new() { items };
 }
 

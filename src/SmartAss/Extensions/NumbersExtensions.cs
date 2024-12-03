@@ -17,16 +17,18 @@ public static class NumbersExtensions
         Guard.NotNull(numbers, nameof(numbers));
 
         TNumber product = TNumber.One;
+        var any = false;
 
         foreach (var number in numbers)
         {
+            any = true;
             if (number == TNumber.Zero)
             {
                 return TNumber.Zero;
             }
             product *= number;
         }
-        return product;
+        return any ? product : TNumber.Zero;
     }
 
     [Pure]

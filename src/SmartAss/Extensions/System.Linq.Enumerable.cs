@@ -1,4 +1,5 @@
 using SmartAss;
+using SmartAss.Collections;
 
 namespace System.Linq;
 
@@ -26,6 +27,12 @@ public static class SmartAssEnumerabelExtensions
     /// Chops the source into chunks of the specified size.
     /// </summary>
     /// <remarks>Only returns full chunks.</remarks>
+    [Pure]
+    public static IEnumerable<Slice<TSource>> ChunkBy<TSource>(this IReadOnlyList<TSource> source, int groupSize)
+        => new Chucker<TSource>(Guard.NotNull(source, nameof(source)), groupSize);
+
+    /// <inheritdoc cref="ChunkBy{TSource}(IReadOnlyCollection{TSource}, int)" />
+    [OverloadResolutionPriority(-1)]
     [Pure]
     public static IEnumerable<IReadOnlyList<TSource>> ChunkBy<TSource>(this IEnumerable<TSource> source, int groupSize)
     {

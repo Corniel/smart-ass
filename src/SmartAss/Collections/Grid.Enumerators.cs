@@ -11,13 +11,19 @@ public partial class Grid<T>
     [Pure]
     public IEnumerable<Point> Positions() => Positions(p => p is not null);
 
+    /// <summary>Gets all points containing matching the predicate.</summary>
     [Pure]
     public IEnumerable<Point> Positions(Predicate<Point> predicate)
         => this.AsEnumerable().Where(tile => predicate(tile.Key)).Select(tile => tile.Key);
 
+    /// <summary>Gets all points containing matching the predicate.</summary>
     [Pure]
     public IEnumerable<Point> Positions(Predicate<T> predicate)
         => this.AsEnumerable().Where(tile => predicate(tile.Value)).Select(tile => tile.Key);
+
+    /// <summary>Gets the first points matching the predicate.</summary>
+    [Pure]
+    public Point Position(Predicate<T> predicate) => Positions(predicate).First();
 
     [Pure]
     public IEnumerable<KeyValuePair<Point, T>> Row(int row)

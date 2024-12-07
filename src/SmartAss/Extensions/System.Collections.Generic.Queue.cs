@@ -15,7 +15,7 @@ public static class QueueExtensions
         => new Queue<T>(Guard.NotNull(queue, nameof(queue)).Count).EnqueueRange(queue);
 
     [Pure]
-    public static Queue<T> EnqueueRange<T>(this Queue<T> queue, IEnumerable<T> items)
+    public static Queue<T> EnqueueRange<T>(this Queue<T> queue, params IEnumerable<T> items)
     {
         Guard.NotNull(queue, nameof(queue));
         Guard.NotNull(items, nameof(items));

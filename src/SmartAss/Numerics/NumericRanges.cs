@@ -57,10 +57,7 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
     }
 
     [Pure]
-    public NumericRanges<TNumber> Except(NumericRange<TNumber> except) => Except([except]);
-
-    [Pure]
-    public NumericRanges<TNumber> Except(IEnumerable<NumericRange<TNumber>> other)
+    public NumericRanges<TNumber> Except(params IEnumerable<NumericRange<TNumber>> other)
     {
         var filtered = this;
         foreach (var except in other)
@@ -80,11 +77,5 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     [Pure]
-    public static NumericRanges<TNumber> New(NumericRange<TNumber> range) => new([range]);
-
-    [Pure]
-    public static NumericRanges<TNumber> New(params NumericRange<TNumber>[] ranges) => New(ranges.AsEnumerable());
-
-    [Pure]
-    public static NumericRanges<TNumber> New(IEnumerable<NumericRange<TNumber>> ranges) => new(ranges.Merge());
+    public static NumericRanges<TNumber> New(params IEnumerable<NumericRange<TNumber>> ranges) => new(ranges.Merge());
 }

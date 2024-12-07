@@ -40,6 +40,10 @@ public readonly struct Vector3D : IEquatable<Vector3D>
     [Pure]
     public Vector3D Adjust(int x = 0, int y = 0, int z = 0) => new(X + x, Y + y, Z + z);
 
+    [Pure]
+    public int ManhattanDistance(Vector3D other)
+        => (X - other.X).Abs() + (Y - other.Y).Abs() + (Z - other.Z).Abs();
+
     /// <inheritdoc />
     [Pure]
     public override string ToString() => $"({X}, {Y}, {Z})";
@@ -64,6 +68,12 @@ public readonly struct Vector3D : IEquatable<Vector3D>
 
     /// <summary>Compares two vectors.</summary>
     public static bool operator !=(Vector3D a, Vector3D b) => !(a == b);
+
+    /// <summary>Adds two vectors.</summary>
+    public static Vector3D operator +(Vector3D l, Vector3D r) => new(l.X + r.X, l.Y + r.Y, l.Z + r.Z);
+
+    /// <summary>Subtracts two vectors.</summary>
+    public static Vector3D operator -(Vector3D l, Vector3D r) => new(l.X - r.X, l.Y - r.Y, l.Z - r.Z);
 
     [Pure]
     public static Vector3D Parse(string str)

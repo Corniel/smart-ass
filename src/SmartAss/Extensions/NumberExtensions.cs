@@ -30,6 +30,16 @@ public static class NumberExtensions
     public static T Sqr<T>(this T number) where T : struct, INumberBase<T>
         => number * number;
 
+    /// <summary>Gets a specific power of the number.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Pure]
+    public static T Pow<T>(this T number, int power) where T : struct, INumberBase<T>
+    {
+        T pow = T.One;
+        for (var i = 0; i < power; i++) pow *= number;
+        return pow;
+    }
+
     /// <summary>Gets the discreet value of the square root of the number.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Pure]

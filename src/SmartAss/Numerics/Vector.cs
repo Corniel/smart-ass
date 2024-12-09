@@ -125,6 +125,11 @@ public readonly struct Vector : IEquatable<Vector>
     /// <summary>Adds two vectors.</summary>
     public static Vector operator +(Vector a, Vector b) => a.Add(b);
 
+    /// <summary>Negates the vector.</summary>
+    public static Vector operator -(Vector vector) => new(-vector.X, -vector.Y);
+
+    public static Vector operator +(Vector vector) => vector;
+
     /// <summary>Subtracts two vectors.</summary>
     public static Vector operator -(Vector a, Vector b) => a.Subtract(b);
 

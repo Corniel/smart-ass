@@ -11,6 +11,12 @@ namespace System;
 public static class HeapPermutations
 {
     [Pure]
+    [OverloadResolutionPriority(-1)]
+    public static IEnumerable<T[]> Permutations<T>(this IEnumerable<T> values)
+        => Permutations([..values]);
+
+    [Pure]
+    [OverloadResolutionPriority(1)]
     public static IEnumerable<T[]> Permutations<T>(this T[] values)
         => values.Permutations(Guard.NotNull(values, nameof(values)).Length, 0);
 
@@ -34,10 +40,8 @@ public static class HeapPermutations
         }
     }
 
-    private static void Swap<T>(this T[] array, int index0, int index1)
-    {
-        (array[index1], array[index0]) = (array[index0], array[index1]);
-    }
+    private static void Swap<T>(this T[] array, int index0, int index1) 
+        => (array[index1], array[index0]) = (array[index0], array[index1]);
 
     [Pure]
     private static T[] Copy<T>(this T[] array)

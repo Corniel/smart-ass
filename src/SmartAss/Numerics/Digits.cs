@@ -1,7 +1,31 @@
+using System.Numerics;
+
 namespace SmartAss.Numerics;
 
 public static class Digits
 {
+    /// <summary>Gets the number of digits for base 10.</summary>
+    [Pure]
+    public static int DigitCount(this int number) => DigitCount(number, 10);
+
+    /// <summary>Gets the number of digits for base 10.</summary>
+    [Pure]
+    public static int DigitCount(this long number) => DigitCount(number, 10);
+
+    /// <summary>Gets the number of digits for the specified base.</summary>
+    [Pure]
+    public static int DigitCount<TNumber>(this TNumber number, TNumber @base) where TNumber : struct, INumber<TNumber>
+    {
+        var digits = 0;
+        do
+        {
+            digits++;
+            number /= @base;
+        }
+        while (number > TNumber.Zero);
+        return digits;
+    }
+
     [Pure]
     public static long ToInt64(IEnumerable<int> digits)
     {

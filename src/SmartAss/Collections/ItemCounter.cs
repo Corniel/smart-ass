@@ -4,7 +4,11 @@ public static class ItemCounter
 {
     [Pure]
     public static ItemCounter<TItem> New<TItem>(params IEnumerable<TItem> items) where TItem : notnull
-        => new() { items };
+    {
+        var counter = new ItemCounter<TItem>();
+        foreach (var item in items) counter.Add(item);
+        return counter;
+    }
 }
 
 [DebuggerTypeProxy(typeof(Diagnostics.CollectionDebugView))]
@@ -20,8 +24,6 @@ public sealed class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TIt
         set => lookup[key] = value;
     }
 
-    public ICollection<TItem> Keys => lookup.Keys;
-
     public int Count => lookup.Values.Count(count => count != 0);
 
     public IReadOnlyCollection<TItem> Items => lookup.Keys;
@@ -30,13 +32,7 @@ public sealed class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TIt
 
     public long Total => lookup.Values.Sum();
 
-    public void Add(IEnumerable<TItem> items)
-    {
-        foreach (var item in items ?? [])
-        {
-            this[item]++;
-        }
-    }
+    public void Add(TItem item) => this[item]++;
 
     public void Clear() => lookup.Clear();
 

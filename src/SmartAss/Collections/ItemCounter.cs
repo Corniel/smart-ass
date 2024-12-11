@@ -34,7 +34,12 @@ public sealed class ItemCounter<TItem> : IEnumerable<ItemCount<TItem>> where TIt
 
     public void Add(TItem item) => this[item]++;
 
-    public void Clear() => lookup.Clear();
+    [Impure]
+    public ItemCounter<TItem> Clear()
+    {
+        lookup.Clear();
+        return this;
+    }
 
     public bool HasAny => lookup.Values.Any(count => count != 0);
 

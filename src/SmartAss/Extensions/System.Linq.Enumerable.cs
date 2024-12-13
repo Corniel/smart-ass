@@ -28,8 +28,8 @@ public static class SmartAssEnumerabelExtensions
     /// </summary>
     /// <remarks>Only returns full chunks.</remarks>
     [Pure]
-    public static IEnumerable<Slice<TSource>> ChunkBy<TSource>(this IReadOnlyList<TSource> source, int groupSize)
-        => new Chucker<TSource>(Guard.NotNull(source, nameof(source)), groupSize);
+    public static Chunker<TSource> ChunkBy<TSource>(this IReadOnlyList<TSource> source, int groupSize)
+        => new(Guard.NotNull(source, nameof(source)), groupSize);
 
     /// <inheritdoc cref="ChunkBy{TSource}(IReadOnlyCollection{TSource}, int)" />
     [OverloadResolutionPriority(-1)]

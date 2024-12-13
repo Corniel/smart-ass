@@ -2,9 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SmartAss.Collections;
 
-public struct Chucker<TSource> : IEnumerator<Slice<TSource>>, IEnumerable<Slice<TSource>>
+public struct Chunker<TSource> : IEnumerator<Slice<TSource>>, IEnumerable<Slice<TSource>>
 {
-    public Chucker(IReadOnlyList<TSource> source, int groupSize)
+    public Chunker(IReadOnlyList<TSource> source, int groupSize)
     {
         Source = source;
         GroupSize = groupSize;

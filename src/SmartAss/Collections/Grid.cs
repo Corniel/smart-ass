@@ -137,7 +137,7 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
 
     public void Clear()
     {
-        foreach (var pos in Points.Grid(Cols, Rows)) { this[pos] = default; }
+        for (var r = 0; r < Rows; r++) Array.Clear(elements[r]);
     }
 
     [Pure]

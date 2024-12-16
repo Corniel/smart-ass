@@ -27,6 +27,13 @@ public readonly struct ItemCount<TItem> : IEquatable<ItemCount<TItem>>
 
     public bool HasAny => Count != 0;
 
+    /// <summary>Deconstructs the item count.</summary>
+    public void Deconstruct(out TItem item, out long count)
+    {
+        item = Item;
+        count = Count;
+    }
+
     [Pure]
     public override bool Equals(object? obj) => obj is ItemCount<TItem> other && Equals(other);
 

@@ -35,6 +35,16 @@ public readonly struct Point4D : IEquatable<Point4D>
     /// <summary> Gets or sets the t-coordinate.</summary>
     public int T { get; }
 
+    /// <summary>Deconstructs the point.</summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Deconstruct(out int x, out int y, out int z, out int t)
+    {
+        x = X;
+        y = Y;
+        z = Z;
+        t = T;
+    }
+
     [Pure]
     public int ManhattanDistance(Point4D other)
         => (X - other.X).Abs()

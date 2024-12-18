@@ -31,6 +31,15 @@ public readonly struct Point3D : IEquatable<Point3D>
     /// <summary> Gets or sets the z-coordinate.</summary>
     public int Z { get; }
 
+    /// <summary>Deconstructs the point.</summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Deconstruct(out int x, out int y, out int z)
+    {
+        x = X;
+        y = Y;
+        z = Z;
+    }
+
     [Pure]
     public int ManhattanDistance(Point3D other)
         => (X - other.X).Abs() + (Y - other.Y).Abs() + (Z - other.Z).Abs();

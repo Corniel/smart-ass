@@ -35,6 +35,14 @@ public readonly struct Point : IEquatable<Point>
         _ => throw new IndexOutOfRangeException(),
     };
 
+    /// <summary>Deconstructs the point.</summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Deconstruct(out int x, out int y)
+    {
+        x = X;
+        y = Y;
+    }
+
     /// <summary>Gets all projections on the transforms.</summary>
     [Pure]
     public IEnumerable<Point> Projections(IEnumerable<Vector> transforms)

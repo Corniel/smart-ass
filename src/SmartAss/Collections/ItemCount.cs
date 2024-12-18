@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace SmartAss.Collections;
 
 public static class ItemCount
@@ -28,6 +30,7 @@ public readonly struct ItemCount<TItem> : IEquatable<ItemCount<TItem>>
     public bool HasAny => Count != 0;
 
     /// <summary>Deconstructs the item count.</summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public void Deconstruct(out TItem item, out long count)
     {
         item = Item;

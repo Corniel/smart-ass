@@ -96,12 +96,11 @@ public partial class Grid<T> : IEnumerable<KeyValuePair<Point, T>>
     /// <summary>Gets the Neighbors of a point.</summary>
     public Grid<Maps.GridNeighbors> Neighbors { get; protected set; }
 
-    public void Set(T value, IEnumerable<Point> locations)
+    [FluentSyntax]
+    public Grid<T> Set(T value, params IEnumerable<Point> locations)
     {
-        foreach (var location in locations ?? [])
-        {
-            Set(location, value);
-        }
+        foreach (var location in locations) Set(location, value);
+        return this;
     }
 
     /// <summary>Gets all (not null) tiles.</summary>

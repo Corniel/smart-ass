@@ -28,6 +28,47 @@ public class Flip_y
        => point.FlipY(2).Should().Be(flipped);
 }
 
+public class on_Manhattan_distance()
+{
+    [Test]
+    public void eight_for_2()
+    {
+        var point = new Point(0, 0);
+        point.OnManhattanDistance(2).Should().BeEquivalentTo(
+        [
+           new Point(+0, -2),
+           new Point(+1, -1),
+           new Point(+2, +0),
+           new Point(+1, +1),
+           new Point(+0, +2),
+           new Point(-1, +1),
+           new Point(-2, +0),
+           new Point(-1, -1),
+        ]);
+    }
+
+    [Test]
+    public void twelve_for_3()
+    {
+        var point = new Point(0, 0);
+        point.OnManhattanDistance(3).Should().BeEquivalentTo(
+        [
+            new Point(+0, -3),
+            new Point(+1, -2),
+            new Point(+2, -1),
+            new Point(+3, +0),
+            new Point(+2, +1),
+            new Point(+1, +2),
+            new Point(+0, +3),
+            new Point(-1, +2),
+            new Point(-2, +1),
+            new Point(-3, +0),
+            new Point(-2, -1),
+            new Point(-1, -2),
+        ]);
+    }
+}
+
 public class ShoelaceArea
 {
     [Test]

@@ -4,7 +4,9 @@
 // </copyright>
 
 using SmartAss.Collections;
+using SmartAss.Graphs;
 using SmartAss.Parsing;
+using System;
 using System.ComponentModel;
 
 namespace SmartAss.Numerics;
@@ -52,8 +54,8 @@ public readonly struct Point : IEquatable<Point>
     }
 
     [Pure]
-    public IEnumerable<Point> Repeat(Vector transform, bool includeCurrent = false)
-        => new Repeater(includeCurrent ? this - transform : this, transform);
+    public Repeater Repeat(Vector transform, bool includeCurrent = false)
+        => new(includeCurrent ? this - transform : this, transform);
 
     /// <summary>Represents the point as a vector.</summary>
     [Pure]
@@ -77,7 +79,14 @@ public readonly struct Point : IEquatable<Point>
 
     [Pure]
     public int ManhattanDistance(Point other)
-      => Math.Abs(X - other.X) + Math.Abs(Y - other.Y);
+        => Math.Abs(X - other.X) + Math.Abs(Y - other.Y);
+
+    /// <summary>
+    /// Gets all points that have exactly the specified Manhattan distance to
+    /// this point.
+    /// </summary>
+    [Pure]
+    public ManhattanDistances OnManhattanDistance(int distance) => new(this, distance);
 
     /// <inheritdoc />
     [Pure]
@@ -126,9 +135,65 @@ public readonly struct Point : IEquatable<Point>
         return new Point(split[0].Int32(), split[1].Int32());
     }
 
-    private struct Repeater : Iterator<Point>
+    /// <summary>Represents all points on a specified Manhattan distance.</summary>
+    /// <remarks>
+    /// Distance: 3
+    ///
+    /// ....0.....
+    /// ...b.1....
+    /// ..a...2...
+    /// .9..#..3..
+    /// ..8...4...
+    /// ...7.5....
+    /// ....6.....
+    /// </remarks>
+    public struct ManhattanDistances : Iterator<Point>, IReadOnlyCollection<Point>
     {
-        public Repeater(Point point, Vector transform)
+        internal ManhattanDistances(Point point, int distance)
+        {
+            Point = point;
+            Distance = distance;
+            Count = distance << 2;
+            Half = distance << 1;
+            i = -1;
+        }
+
+        /// <inheritdoc />
+        public int Count { get; }
+
+        private readonly Point Point;
+        private readonly int Distance;
+        private readonly int Half;
+        private int i;
+
+        /// <inheritdoc />
+        public Point Current => new(Point.X + Delta(i), Point.Y + Delta((i + Distance) % Count));
+
+        /// <inheritdoc />
+        [Impure]
+        public bool MoveNext() => ++i < Count;
+
+        /// <inheritdoc />
+        public void Reset() => throw new NotSupportedException();
+
+        /// <summary>Gets the delta to apply.</summary>
+        /// remarks>
+        /// 0, 1, .., n-1, n, n-1, .., 1, 0, -1, .. -n, .., -1, 0.
+        /// </remarks>
+        [Pure]
+        private int Delta(int p)
+        {
+            var d = p <= Half ? p : Count - p;
+            return d - Distance;
+        }
+
+        /// <inheritdoc />
+        public void Dispose() { /* Nothing to dispose */ }
+    }
+
+    public struct Repeater : Iterator<Point>
+    {
+        internal Repeater(Point point, Vector transform)
         {
             Current = point;
             Transform = transform;

@@ -4,9 +4,7 @@
 // </copyright>
 
 using SmartAss.Collections;
-using SmartAss.Graphs;
 using SmartAss.Parsing;
-using System;
 using System.ComponentModel;
 
 namespace SmartAss.Numerics;
@@ -127,6 +125,12 @@ public readonly struct Point : IEquatable<Point>
 
     /// <summary>Calulates the vector distantce between two points.</summary>
     public static Vector operator -(Point point, Point other) => point.Subtract(other);
+
+    /// <summary>Implicitly casts from a tuple to a point.</summary>
+    /// <remarks>
+    /// Allows: Point p = (0, 3).
+    /// </remarks>
+    public static implicit operator Point((int X, int Y) t) => new(t.X, t.Y);
 
     [Pure]
     public static Point Parse(string str)

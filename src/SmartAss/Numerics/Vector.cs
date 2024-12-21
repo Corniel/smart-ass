@@ -4,6 +4,7 @@
 // </copyright>
 
 using SmartAss.Navigation;
+using System.ComponentModel;
 
 namespace SmartAss.Numerics;
 
@@ -61,6 +62,14 @@ public readonly struct Vector : IEquatable<Vector>
 
     /// <summary>The gradient/slope of the vector (Y/X).</summary>
     public double Gradient => Y == 0 ? double.NaN : 1d * Y / X;
+
+    /// <summary>Deconstructs the vector.</summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Deconstruct(out int x, out int y)
+    {
+        x = X;
+        y = Y;
+    }
 
     [Pure]
     public Vector Sign() => new(X.Sign(), Y.Sign());
@@ -135,4 +144,11 @@ public readonly struct Vector : IEquatable<Vector>
 
     /// <summary>Multiplies a vector by a factor.</summary>
     public static Vector operator *(Vector vector, int factor) => vector.Multiply(factor);
+
+    /// <summary>Implicitly casts from a tuple to a vector.</summary>
+    /// <remarks>
+    /// Allows: Vector v = (0, 3).
+    /// </remarks>
+    public static implicit operator Vector((int X, int Y) t) => new(t.X, t.Y);
+
 }

@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace SmartAss.Pairings;
 
 public static class Pair
@@ -25,6 +27,15 @@ public readonly struct Pair<T>(T first, T second) : IEquatable<Pair<T>>
 {
     public readonly T First = first;
     public readonly T Second = second;
+
+
+    /// <summary>Deconstructs the pair.</summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Deconstruct(out T first, out T second)
+    {
+        first = First;
+        second = Second;
+    }
 
     /// <inheritdoc />
     [Pure]

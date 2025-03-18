@@ -4,6 +4,14 @@ public class DotNet
 {
     public class Maths
     {
+        public class Sign
+        {
+            public static class Imp
+            {
+                public static int Current(int value) => Math.Sign(value);
+            }
+        }
+
         public class Abs
         {
             private const int Count = 1_000_000;
@@ -16,6 +24,15 @@ public class DotNet
                 for (int i = 0; i < Count; i++)
                 {
                     I[i] = rnd.Next(-8000, 8001) * rnd.Next(8000);
+                }
+            }
+
+            [Benchmark(Baseline = true)]
+            public void Math_Abs()
+            {
+                for (var i = 0; i < I.Length; i++)
+                {
+                    O[i] = Imp.Current(I[i]);
                 }
             }
 
@@ -33,7 +50,16 @@ public class DotNet
             {
                 for (var i = 0; i < Count; i++)
                 {
-                    O[i] = Imp.LT0(I[i]);
+                    O[i] = Imp.NotIntMinValue(I[i]);
+                }
+            }
+
+            [Benchmark]
+            public void Unchecked()
+            {
+                for (var i = 0; i < Count; i++)
+                {
+                    O[i] = Imp.Unchecked(I[i]);
                 }
             }
 
@@ -43,25 +69,6 @@ public class DotNet
                 for (var i = 0; i < Count; i++)
                 {
                     O[i] = Imp.NoInlining(I[i]);
-                }
-            }
-
-            [Benchmark]
-            public void CMov()
-            {
-                for (var i = 0; i < Count; i++)
-                {
-                    O[i] = Imp.CMov(I[i]);
-                }
-            }
-
-
-            [Benchmark(Baseline = true)]
-            public void Math_Abs()
-            {
-                for (var i = 0; i < I.Length; i++)
-                {
-                    O[i] = Imp.Current(I[i]);
                 }
             }
 
@@ -92,6 +99,18 @@ public class DotNet
                 }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public static int Unchecked(int value)
+                {
+                    value = unchecked((value + (value >>= 31)) ^ value);
+
+                    if (value == int.MinValue)
+                    {
+                        throw new OverflowException("Some message");
+                    }
+                    return value;
+                }
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public static int Current(int value)
                 {
                     if (value < 0)
@@ -107,19 +126,6 @@ public class DotNet
 
                 [MethodImpl(MethodImplOptions.NoInlining)]
                 public static int NoInlining(int value)
-                {
-                    value = value < 0 ? -value : value;
-
-                    if (value == int.MinValue)
-                    {
-                        throw new OverflowException("Some message");
-                    }
-
-                    return value;
-                }
-
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static int CMov(int value)
                 {
                     value = value < 0 ? -value : value;
 

@@ -10,7 +10,7 @@ public class Object_pool
         var buffer = new ObjectPool<TestItem>(16);
         buffer.Populate(() => new TestItem(), 16);
 
-        Assert.AreEqual(16, buffer.Count);
+        buffer.Should().HaveCount(16);
     }
 
 
@@ -23,8 +23,8 @@ public class Object_pool
             example.Value = 17;
         }
 
-        Assert.AreEqual(1, ExampleItem.pool.Count);
-        Assert.AreEqual(0, ExampleItem.New().Item.Value);
+        ExampleItem.pool.Should().HaveCount(1);
+        ExampleItem.New().Item.Value.Should().Be(0);
     }
 
 

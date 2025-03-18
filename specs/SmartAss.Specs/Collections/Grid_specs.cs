@@ -23,8 +23,8 @@ public class Can_be_created_from
             [1, 2, 3],
             [4, 5, 6],
         };
-        var grid = new Grid<int>(jagged);
-        Assert.AreEqual(elements, grid);
+
+        new Grid<int>(jagged).Should().BeEquivalentTo(elements);
     }
 
     [Test]
@@ -35,16 +35,19 @@ public class Can_be_created_from
             { 1, 2, 3 },
             { 4, 5, 6 },
         };
-        var grid = new Grid<int>(jagged);
-        Assert.AreEqual(elements, grid);
+        new Grid<int>(jagged).Should().BeEquivalentTo(elements);
     }
 
     [Test]
     public void its_dimensions()
     {
         var grid = new Grid<int>(3, 2);
-        Assert.AreEqual(3, grid.Cols);
-        Assert.AreEqual(2, grid.Rows);
+
+        grid.Should().BeEquivalentTo(new
+        {
+            Rows = 2,
+            Cols = 3,
+        });
     }
 }
 public class Can_not_be_created_from
@@ -77,7 +80,7 @@ public class Elements
     {
         var grid = new Grid<int>(3, 2);
         grid[new Point(1, 1)] = 3;
-        Assert.IsTrue(grid.Any(kvp => kvp.Key == new Point(1, 1) && kvp.Value == 3));
+        grid.Any(kvp => kvp.Key == new Point(1, 1) && kvp.Value == 3).Should().BeTrue();
     }
 
     [Test]
@@ -85,7 +88,7 @@ public class Elements
     {
         var grid = new Grid<int>(3, 2);
         grid[1, 1] = 3;
-        Assert.IsTrue(grid.Any(kvp => kvp.Key == new Point(1, 1) && kvp.Value == 3));
+        grid.Any(kvp => kvp.Key == new Point(1, 1) && kvp.Value == 3).Should().BeTrue();
     }
 
     [Test]
@@ -93,7 +96,7 @@ public class Elements
     {
         var grid = new Grid<int>(3, 2);
         grid[1, 1] = 3;
-        Assert.AreEqual(3, grid[new Point(1, 1)]);
+        grid[new Point(1, 1)].Should().Be(3);
     }
 
     [Test]
@@ -101,7 +104,7 @@ public class Elements
     {
         var grid = new Grid<int>(3, 2);
         grid[new Point(1, 1)] = 3;
-        Assert.AreEqual(3, grid[1, 1]);
+        grid[new Point(1, 1)].Should().Be(3);
     }
 
     [TestCase(-1, +0)]
@@ -155,7 +158,7 @@ public class Size
     [Test]
     public void is_product_of_cols_and_rows()
     {
-        Assert.AreEqual(6, new Grid<int>(2, 3).Size);
+        new Grid<int>(2, 3).Size.Should().Be(6);
     }
 }
 public class Rotation
@@ -176,7 +179,7 @@ public class Rotation
             [1, 3, 5],
         ]);
 
-        Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg090));
+        matrix.Rotate(DiscreteRotation.Deg090).Should().BeEquivalentTo(rotated);
     }
 
     [Test]
@@ -196,7 +199,7 @@ public class Rotation
             [2, 1],
         ]);
 
-        Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg180));
+        matrix.Rotate(DiscreteRotation.Deg180).Should().BeEquivalentTo(rotated);
     }
 
     [Test]
@@ -215,7 +218,7 @@ public class Rotation
             [6, 4, 2],
         ]);
 
-        Assert.AreEqual(rotated, matrix.Rotate(DiscreteRotation.Deg270));
+        matrix.Rotate(DiscreteRotation.Deg270).Should().BeEquivalentTo(rotated);
     }
 
     [Test]
@@ -228,11 +231,12 @@ public class Rotation
             [5, 6],
         ]);
 
-        Assert.AreEqual(matrix, matrix
+         matrix
             .Rotate(DiscreteRotation.Deg090)
             .Rotate(DiscreteRotation.Deg090)
             .Rotate(DiscreteRotation.Deg090)
-            .Rotate(DiscreteRotation.Deg090));
+            .Rotate(DiscreteRotation.Deg090)
+            .Should().BeEquivalentTo(matrix);
     }
 }
 

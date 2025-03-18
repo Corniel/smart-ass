@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="NUnit" />
   </ItemGroup>
 
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Analyzers">
-    <PackageReference Include="FluentAssertions.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="AwesomeAssertions.Analyzers" PrivateAssets="all" />
     <PackageReference Include="NUnit.Analyzers" PrivateAssets="all" />
   </ItemGroup>
 

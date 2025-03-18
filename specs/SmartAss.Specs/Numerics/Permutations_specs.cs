@@ -6,28 +6,28 @@ public class Heaps_algorithm
     public void _2_has_2_unique_permuations()
     {
         var permuations = new[] { 0, 1, }.Permutations();
-        var expected = new[]
+
+        permuations.Should().BeEquivalentTo(new int[][]
         {
-            new[]{ 0, 1 },
+            [0, 1],
             [1, 0],
-        };
-        Assert.AreEqual(expected, permuations);
+        });
     }
 
     [Test]
     public void _3_has_6_unique_permuations()
     {
         var permuations = new[] { 0, 1, 2, }.Permutations();
-        var expected = new[]
+
+        permuations.Should().BeEquivalentTo(new int[][]
         {
-            new[]{ 0, 1, 2 },
+            [0, 1, 2],
             [1, 0, 2],
             [2, 0, 1],
             [0, 2, 1],
             [1, 2, 0],
             [2, 1, 0],
-        };
-        Assert.AreEqual(expected, permuations);
+        });
     }
 
     [Test]

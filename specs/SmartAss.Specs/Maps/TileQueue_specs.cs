@@ -8,17 +8,15 @@ public class None_empty_queue
     public void dequeue_returns_tail()
     {
         var queueu = new TileQueue<IntTile>(2).Enqueue(1).Enqueue(2);
-        Assert.AreEqual(new IntTile(1), queueu.Dequeue());
-        Assert.AreEqual(new IntTile[] { 2 }, queueu.ToArray());
+        
+        queueu.Dequeue().Should().Be(new IntTile(1));
+
+        queueu.Should().BeEquivalentTo(new IntTile[] { 2 });
     }
 }
 
-internal sealed class IntTile : Tile, IEquatable<IntTile>
+internal sealed record IntTile(int Id) : Tile, IEquatable<IntTile>
 {
-    public IntTile(int id) => Id = id;
-    public int Id { get; }
-    public bool Equals(IntTile? other) => Id == other?.Id;
-    public override string ToString() => Id.ToString();
     public IEnumerable<Tile> GetNeighbors() => [];
     public static implicit operator IntTile(int id) => new(id);
 }

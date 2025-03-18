@@ -8,15 +8,15 @@ namespace SmartAss.Numerics;
 /// <summary>Represents discrete rotations (counterclockwise).</summary>
 public enum DiscreteRotation
 {
-    /// <summary>0° (degrees)</summary>
+    /// <summary>0° (degrees).</summary>
     Deg000 = 0,
 
-    /// <summary>90° (degrees)</summary>
+    /// <summary>90° (degrees).</summary>
     Deg090 = 1,
 
-    /// <summary>180° (degrees)</summary>
+    /// <summary>180° (degrees).</summary>
     Deg180 = 2,
 
-    /// <summary>270° (degrees)</summary>
+    /// <summary>270° (degrees).</summary>
     Deg270 = 3,
 }

@@ -8,19 +8,20 @@ public class Fully_Initializes
     public void Two_dimensional_array()
     {
         var array = Jagged.Array<int>(2, 3);
-        var exp = new int[][]
+
+        array.Should().BeEquivalentTo(new int[][]
         {
             [0, 0, 0],
             [0, 0, 0],
-        };
-        CollectionAssert.AreEqual(exp, array);
+        });
     }
 
     [Test]
     public void Three_dimensional_array()
     {
         var array = Jagged.Array<int>(2, 3, 4);
-        var exp = new int[][][]
+
+        array.Should().BeEquivalentTo(new int[][][]
         {
             [
                 [0, 0, 0, 0],
@@ -32,15 +33,15 @@ public class Fully_Initializes
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
             ],
-        };
-        CollectionAssert.AreEqual(exp, array);
+        });
     }
 
     [Test]
     public void Four_dimensional_array()
     {
         var array = Jagged.Array<int>(2, 3, 4, 1);
-        var exp = new int[][][][]
+
+        array.Should().BeEquivalentTo(new int[][][][]
         {
             [
                 [[0], [0], [0], [0]],
@@ -52,7 +53,6 @@ public class Fully_Initializes
                 [[0], [0], [0], [0]],
                 [[0], [0], [0], [0]],
             ],
-        };
-        CollectionAssert.AreEqual(exp, array);
+        });
     }
 }

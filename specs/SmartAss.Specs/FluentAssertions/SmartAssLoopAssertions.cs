@@ -33,7 +33,7 @@ public class SmartAssLoopAssertions<T> where T : IEqualityOperators<T, T, bool>
             curr = curr.Next;
         }
 
-        Execute.Assertion
+        AssertionChain.GetOrCreate()
             .ForCondition(sb.Length == 0)
             .FailWith(sb.ToString());
     }

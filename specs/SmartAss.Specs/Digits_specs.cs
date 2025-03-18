@@ -8,4 +8,6 @@ public class Splits_numbers
     [TestCase(2147483647, 2, 1, 4, 7, 4, 8, 3, 6, 4, 7)]
     public void into_array_of_digits(int number, params int[] digits)
         => number.Digits().Should().BeEquivalentTo(digits);
+
+    public static int Abs(int value) => unchecked((value + (value >>= 31)) ^ value);
 }

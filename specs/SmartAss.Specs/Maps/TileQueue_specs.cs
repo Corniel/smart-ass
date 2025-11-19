@@ -8,7 +8,7 @@ public class None_empty_queue
     public void dequeue_returns_tail()
     {
         var queueu = new TileQueue<IntTile>(2).Enqueue(1).Enqueue(2);
-        
+
         queueu.Dequeue().Should().Be(new IntTile(1));
 
         queueu.Should().BeEquivalentTo(new IntTile[] { 2 });

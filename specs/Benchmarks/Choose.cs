@@ -9,7 +9,7 @@ public class Choose
 
     [Benchmark]
     public long Int128() => BigNumbers(Reference.Int128);
-    
+
     [Benchmark]
     public long Fastest() => BigNumbers(Maths.Choose);
 

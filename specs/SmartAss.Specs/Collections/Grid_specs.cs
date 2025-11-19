@@ -231,12 +231,12 @@ public class Rotation
             [5, 6],
         ]);
 
-         matrix
-            .Rotate(DiscreteRotation.Deg090)
-            .Rotate(DiscreteRotation.Deg090)
-            .Rotate(DiscreteRotation.Deg090)
-            .Rotate(DiscreteRotation.Deg090)
-            .Should().BeEquivalentTo(matrix);
+        matrix
+           .Rotate(DiscreteRotation.Deg090)
+           .Rotate(DiscreteRotation.Deg090)
+           .Rotate(DiscreteRotation.Deg090)
+           .Rotate(DiscreteRotation.Deg090)
+           .Should().BeEquivalentTo(matrix);
     }
 }
 

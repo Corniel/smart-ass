@@ -1,28 +1,16 @@
 <Project>
 
   <PropertyGroup>
-    <LangVersion>preview</LangVersion>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>14.0</LangVersion>
     <Authors>Corniel Nobel</Authors>
     <Copyright>Copyright (c) 2018-current Corniel Nobel</Copyright>
     <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <NuGetAuditMode>all</NuGetAuditMode>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
-    <ImplicitUsings>disable</ImplicitUsings>
     <OutputType>library</OutputType>
   </PropertyGroup>
-
-  <ItemGroup Label="Analyzers">
-    <PackageReference Include="DotNetProjectFile.Analyzers" PrivateAssets="all" />
-    <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup Label="Code generators">
-    <PackageReference Include="Qowaiv.Diagnostics.Contracts" PrivateAssets="all" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <AdditionalFiles Include="*.csproj" />
-  </ItemGroup>
 
 </Project>

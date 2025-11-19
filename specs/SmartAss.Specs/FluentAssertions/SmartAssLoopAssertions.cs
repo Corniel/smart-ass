@@ -1,9 +1,9 @@
-using FluentAssertions.Execution;
+using AwesomeAssertions.Execution;
 using SmartAss.Collections;
 using System.Numerics;
 using System.Text;
 
-namespace SmartAss.Specs.FluentAssertions;
+namespace SmartAss.Specs.AwesomeAssertions;
 
 public class SmartAssLoopAssertions<T> where T : IEqualityOperators<T, T, bool>
 {

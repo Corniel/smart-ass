@@ -1,6 +1,6 @@
-using FluentAssertions.Numeric;
+using AwesomeAssertions.Numeric;
 
-namespace FluentAssertions;
+namespace AwesomeAssertions;
 
 public static class SmartAssNumericAssertions
 {

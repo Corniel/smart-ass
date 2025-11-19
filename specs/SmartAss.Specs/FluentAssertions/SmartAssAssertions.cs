@@ -1,8 +1,8 @@
 using SmartAss.Collections;
-using SmartAss.Specs.FluentAssertions;
+using SmartAss.Specs.AwesomeAssertions;
 using System.Numerics;
 
-namespace FluentAssertions;
+namespace AwesomeAssertions;
 
 public static class SmartAssAssertions
 {

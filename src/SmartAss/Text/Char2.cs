@@ -12,7 +12,7 @@ public readonly struct Char2 : IEquatable<Char2>, IEquatable<string>
         else
         {
             _0 = str[0];
-            _1 = str[0];
+            _1 = str[1];
         }
     }
 

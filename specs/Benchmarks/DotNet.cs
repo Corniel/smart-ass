@@ -29,7 +29,7 @@ public class DotNet
             public Abs()
             {
                 var rnd = new Random(42);
-                
+
                 for (int i = 0; i < Count; i++)
                 {
                     var factor = rnd.NextDouble() > 0.99 ? -1 : +1;

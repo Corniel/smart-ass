@@ -48,10 +48,13 @@ public static class StringParsing
         => str.Separate(' ');
 
     [Pure]
-    public static IReadOnlyList<string> Lines(this string str, StringSplitOptions options = SplitOptions)
-        => str.Contains('\n')
-        ? str.Split(["\r\n", "\n"], options)
-        : str.Split(';', options);
+    public static IReadOnlyList<string> Lines(this string str, StringSplitOptions options = SplitOptions) => str switch
+    {
+        _ when str.Contains('\n') => str.Split(["\r\n", "\n"], options),
+        _ when str.Contains(';') => str.Split(';', options),
+        _ when str.Contains(',') => str.Split(',', options),
+        _ => [str],
+    };
 
     [Pure]
     public static IEnumerable<T> Lines<T>(this string str, Func<string, T> selector)

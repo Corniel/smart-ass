@@ -5,22 +5,24 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="AwesomeAssertions" Version="8.0.2" />
-    <PackageVersion Include="AwesomeAssertions.Analyzers" Version="0.34.2" />
-    <PackageVersion Include="BenchmarkDotNet" Version="0.*" />
-    <PackageVersion Include="coverlet.collector" Version="*" />
-    <PackageVersion Include="DotNetProjectFile.Analyzers" Version="*" />
-    <PackageVersion Include="DotNetProjectFile.Analyzers.Sdk" Version="*" />
+    <PackageVersion Include="AwesomeAssertions" Version="9.3.0" />
+    <PackageVersion Include="AwesomeAssertions.Analyzers" Version="9.0.8" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.6" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="DotNetProjectFile.Analyzers.Sdk" Version="1.8.0" />
     <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="*" />
-    <PackageVersion Include="NUnit" Version="4.3.2" />
-    <PackageVersion Include="NUnit.Analyzers" Version="*" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="*" />
-    <PackageVersion Include="Qowaiv" Version="7.2.3" />
-    <PackageVersion Include="Qowaiv.Analyzers.CSharp" Version="*" />
-    <PackageVersion Include="Qowaiv.Diagnostics.Contracts" Version="2.0.4" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="*" />
-    <PackageVersion Include="StyleCop.Analyzers" Version="*-*" />
-    <PackageVersion Include="System.Drawing.Common" Version="9.0.3" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="NUnit" Version="4.4.0" />
+    <PackageVersion Include="NUnit.Analyzers" Version="4.11.2" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageVersion Include="Qowaiv" Version="7.4.5" />
+    <PackageVersion Include="Qowaiv.Analyzers.CSharp" Version="2.0.6" />
+    <PackageVersion Include="StyleCop.Analyzers.Unstable" Version="1.2.0.556" />
+    <PackageVersion Include="System.Drawing.Common" Version="10.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <GlobalPackageReference Include="DotNetProjectFile.Analyzers" Version="1.8.0" />
+    <GlobalPackageReference Include="Qowaiv.Diagnostics.Contracts" Version="2.0.6" />
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
   </ItemGroup>
 </Project>

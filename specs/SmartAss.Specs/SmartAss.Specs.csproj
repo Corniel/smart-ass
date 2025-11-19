@@ -1,9 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <IsTestProject>false</IsTestProject>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/SmartAss/SmartAss.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AwesomeAssertions" />
@@ -19,10 +22,6 @@
   <ItemGroup Label="Analyzers">
     <PackageReference Include="AwesomeAssertions.Analyzers" PrivateAssets="all" />
     <PackageReference Include="NUnit.Analyzers" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="../../src/SmartAss/SmartAss.csproj" />
   </ItemGroup>
 
 </Project>

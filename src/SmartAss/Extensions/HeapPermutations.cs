@@ -36,7 +36,7 @@ public static class HeapPermutations
                 yield return result;
             }
 
-            array.Swap(size.IsEven() ? i : 0, size - 1);
+            array.Swap(size.IsEven ? i : 0, size - 1);
         }
     }
 

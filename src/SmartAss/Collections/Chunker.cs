@@ -31,11 +31,11 @@ public struct Chunker<TSource> : IEnumerator<Slice<TSource>>, IEnumerable<Slice<
 
     /// <inheritdoc />
     [Pure]
-    public IEnumerator<Slice<TSource>> GetEnumerator() => this;
+    public readonly IEnumerator<Slice<TSource>> GetEnumerator() => this;
 
     /// <inheritdoc />
     [Pure]
-    IEnumerator IEnumerable.GetEnumerator() => this;
+    readonly IEnumerator IEnumerable.GetEnumerator() => this;
 
     /// <inheritdoc />
     public readonly void Dispose() { /* Nothing to dispose. */ }

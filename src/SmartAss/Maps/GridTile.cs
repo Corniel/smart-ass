@@ -15,6 +15,7 @@ public delegate T GridTileCtor<T>(int id, Point position) where T : GridTile<T>;
 /// <typeparam name="T">
 /// The type of the tile.
 /// </typeparam>
+[Mutable]
 public class GridTile<T> : Tile<T> where T : GridTile<T>
 {
     /// <summary>Initializes a new instance of the <see cref="GridTile{T}"/> class.</summary>

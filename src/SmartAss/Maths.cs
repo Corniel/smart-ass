@@ -23,7 +23,7 @@ public static class Maths
     {
         var even = TNumber.One;
 
-        while (a.IsEven() && b.IsEven())
+        while (a.IsEven && b.IsEven)
         {
             a >>= 1;
             b >>= 1;

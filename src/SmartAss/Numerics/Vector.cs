@@ -150,5 +150,4 @@ public readonly struct Vector : IEquatable<Vector>
     /// Allows: Vector v = (0, 3).
     /// </remarks>
     public static implicit operator Vector((int X, int Y) t) => new(t.X, t.Y);
-
 }

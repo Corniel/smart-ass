@@ -14,7 +14,7 @@ public static class QueueExtensions
     public static Queue<T> Copy<T>(this Queue<T> queue)
         => new Queue<T>(Guard.NotNull(queue, nameof(queue)).Count).EnqueueRange(queue);
 
-    [Pure]
+    [CollectionMutation]
     public static Queue<T> EnqueueRange<T>(this Queue<T> queue, params IEnumerable<T> items)
     {
         Guard.NotNull(queue, nameof(queue));

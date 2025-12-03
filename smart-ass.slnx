@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path=".net.csproj" />
+  <Project Path="specs/Benchmarks/Benchmarks.csproj" />
+  <Project Path="specs/SmartAss.Specs/SmartAss.Specs.csproj" />
+  <Project Path="src/SmartAss/SmartAss.csproj" />
+</Solution>

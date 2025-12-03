@@ -34,7 +34,9 @@ public readonly struct Vector3D : IEquatable<Vector3D>
         0 => X,
         1 => Y,
         2 => Z,
+#pragma warning disable S112 // General or reserved exceptions should never be thrown
         _ => throw new IndexOutOfRangeException(),
+#pragma warning restore S112 // General or reserved exceptions should never be thrown
     };
 
     [Pure]

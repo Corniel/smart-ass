@@ -10,13 +10,14 @@ namespace System;
 /// <summary>In mathematics, parity is the property of an integer of whether it is even or odd.</summary>
 public static class Parity
 {
-    /// <summary>Returns true if the number is even.</summary>
-    [Pure]
-    public static bool IsEven<TNumber>(this TNumber n) where TNumber : struct, INumber<TNumber>, IBitwiseOperators<TNumber, TNumber, TNumber>
-        => (n & TNumber.One) == TNumber.Zero;
+    extension<TNumber>(TNumber n) where TNumber : struct, INumber<TNumber>, IBitwiseOperators<TNumber, TNumber, TNumber>
+    {
+        /// <summary>Returns true if the number is even.</summary>
+        [Pure]
+        public bool IsEven => (n & TNumber.One) == TNumber.Zero;
 
-    /// <summary>Returns true if the number is odd.</summary>
-    [Pure]
-    public static bool IsOdd<TNumber>(this TNumber n) where TNumber : struct, INumber<TNumber>, IBitwiseOperators<TNumber, TNumber, TNumber>
-        => (n & TNumber.One) == TNumber.One;
+        /// <summary>Returns true if the number is odd.</summary>
+        [Pure]
+        public bool IsOdd => (n & TNumber.One) == TNumber.One;
+    }
 }

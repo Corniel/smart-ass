@@ -167,9 +167,6 @@ public static class Parser
     /// <param name="str">
     /// The input string.
     /// </param>
-    /// <param name="dec">
-    /// The parsed decimal.
-    /// </param>
     /// <returns>
     /// True if parsable, otherwise false.
     /// </returns>

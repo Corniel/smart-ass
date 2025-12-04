@@ -52,7 +52,6 @@ public static class StringParsing
     {
         _ when str.Contains('\n') => str.Split(["\r\n", "\n"], options),
         _ when str.Contains(';') => str.Split(';', options),
-        _ when str.Contains(',') => str.Split(',', options),
         _ => [str],
     };
 
@@ -69,7 +68,7 @@ public static class StringParsing
         {
             if (string.IsNullOrWhiteSpace(line))
             {
-                if (buffer.Any())
+                if (buffer.Count != 0)
                 {
                     yield return buffer.ToArray();
                     buffer.Clear();
@@ -84,7 +83,7 @@ public static class StringParsing
                 buffer.Add(options.HasFlag(StringSplitOptions.TrimEntries) ? line.Trim() : line);
             }
         }
-        if (buffer.Any())
+        if (buffer.Count != 0)
         {
             yield return buffer.ToArray();
         }

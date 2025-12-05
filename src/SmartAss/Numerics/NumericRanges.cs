@@ -30,8 +30,12 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
         }
     }
 
+    /// <summary>True if any of the ranges contains the specified number.</summary>
     [Pure]
-    public NumericRanges<TNumber> Merge(IEnumerable<NumericRange<TNumber>> other)
+    public bool Contains(TNumber number) => collection.Any(c => c.Contains(number));
+
+    [Pure]
+    public NumericRanges<TNumber> Merge(params IEnumerable<NumericRange<TNumber>> other)
     {
         Guard.NotNull(other, nameof(other));
         return this.Concat(other).Merge();
@@ -61,9 +65,8 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
     {
         var filtered = this;
         foreach (var except in other)
-        {
             filtered = NumericRangeExtensions.Except(filtered, except);
-        }
+
         return filtered.Merge();
     }
 
@@ -71,11 +74,29 @@ public readonly struct NumericRanges<TNumber> : IReadOnlyList<NumericRange<TNumb
     public override string ToString() => string.Join("; ", collection);
 
     [Pure]
+    public IEnumerable<TNumber> Iterate() => this.SelectMany(r => r);
+
+    [Pure]
+    public IEnumerable<TNumber> Where(Func<TNumber, bool> predicate) => this.SelectMany(r => r).Where(predicate);
+
+    [Pure]
     public IEnumerator<NumericRange<TNumber>> GetEnumerator() => (collection ?? []).GetEnumerator();
 
     [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    public static implicit operator NumericRanges<TNumber>(Range range) => New(range);
+
     [Pure]
     public static NumericRanges<TNumber> New(params IEnumerable<NumericRange<TNumber>> ranges) => new(ranges.Merge());
+
+    [Pure]
+    public static NumericRanges<TNumber> New(params IEnumerable<Range> ranges) => new(ranges.Select(NumericRange<TNumber>.New).Merge());
+
+    [Pure]
+    public static NumericRanges<TNumber> Parse(string str) => new(
+    [
+        .. str.Split(['\r', '\n', ' ', ';', ','], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+              .Select(NumericRange<TNumber>.Parse)
+    ]);
 }

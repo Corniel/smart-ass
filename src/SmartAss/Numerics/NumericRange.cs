@@ -1,10 +1,11 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace SmartAss.Numerics;
 
 [TypeConverter(typeof(Conversion.Numerics.NumericRangeTypeConverter))]
-public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
+public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>, IEnumerable<TNumber>
 
     where TNumber : struct, INumber<TNumber>
 {
@@ -55,6 +56,7 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
         else return Empty;
     }
 
+    /// <inheritdoc cref="IReadOnlySet{T}.Contains(T)" />
     [Pure]
     public bool Contains(TNumber number) => Lower <= number && number <= Upper;
 
@@ -76,6 +78,18 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
     [Pure]
     public override int GetHashCode() => HashCode.Combine(Lower, Upper);
 
+    /// <inheritdoc cref="IEnumerable.GetEnumerator()" />
+    [Pure]
+    public Iterator GetEnumerator() => new(Lower, Upper);
+
+    /// <inheritdoc />
+    [Pure]
+    IEnumerator<TNumber> IEnumerable<TNumber>.GetEnumerator() => GetEnumerator();
+
+    /// <inheritdoc />
+    [Pure]
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
     /// <summary>Compares two Ranges.</summary>
     public static bool operator ==(NumericRange<TNumber> a, NumericRange<TNumber> b) => a.Equals(b);
 
@@ -84,8 +98,17 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
 
     public static NumericRange<TNumber> operator &(NumericRange<TNumber> left, NumericRange<TNumber> right) => left.Intersection(right);
 
+    public static implicit operator NumericRange<TNumber>(Range range) => New(range);
+
     [Pure]
     public override string ToString() => IsEmpty ? "{}" : $"{{{Lower}..{Upper}}}";
+
+    [Pure]
+    public static NumericRange<TNumber> New(Range range) => new
+    (
+        TNumber.CreateChecked(range.Start.Value),
+        TNumber.CreateChecked(range.End.Value)
+    );
 
     [Pure]
     public static NumericRange<TNumber> Parse(string str)
@@ -100,4 +123,26 @@ public readonly struct NumericRange<TNumber> : IEquatable<NumericRange<TNumber>>
 
     [Pure]
     private static TNumber Max(TNumber l, TNumber r) => l > r ? l : r;
+
+    public struct Iterator(TNumber lower, TNumber upper) : IEnumerator<TNumber>
+    {
+        private readonly TNumber Upper = upper;
+
+        /// <inheritdoc />
+        public TNumber Current { get; private set; } = lower - TNumber.One;
+
+        /// <inheritdoc />
+        readonly object IEnumerator.Current => Current;
+
+        /// <inheritdoc />
+        [Impure]
+        public bool MoveNext() => ++Current <= Upper;
+
+        /// <inheritdoc />
+        public readonly void Dispose() { /* Nothing to dispose. */ }
+
+        /// <inheritdoc />
+        [DoesNotReturn]
+        public void Reset() => throw new NotSupportedException();
+    }
 }

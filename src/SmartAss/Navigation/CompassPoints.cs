@@ -4,14 +4,15 @@
 // </copyright>
 
 using SmartAss.Numerics;
+using System.Collections.Immutable;
 
 namespace SmartAss.Navigation;
 
 public static class CompassPoints
 {
-    public static readonly IReadOnlyList<CompassPoint> All = [CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W, CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW];
-    public static readonly IReadOnlyList<CompassPoint> Primary = [CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W];
-    public static readonly IReadOnlyList<CompassPoint> Secondary = [CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW];
+    public static readonly ImmutableArray<CompassPoint> All = [CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W, CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW];
+    public static readonly ImmutableArray<CompassPoint> Primary = [CompassPoint.N, CompassPoint.E, CompassPoint.S, CompassPoint.W];
+    public static readonly ImmutableArray<CompassPoint> Secondary = [CompassPoint.NE, CompassPoint.NW, CompassPoint.SE, CompassPoint.SW];
 
     [Pure]
     public static string Short(this CompassPoint compassPoint)

@@ -6,7 +6,7 @@
 using SmartAss.Collections;
 using SmartAss.Diagnostics;
 using SmartAss.Numerics;
-using System.Buffers;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using CharPixel = System.Collections.Generic.KeyValuePair<SmartAss.Numerics.Point, char>;
@@ -15,21 +15,21 @@ namespace SmartAss.Parsing;
 
 [DebuggerDisplay("{DebuggerDisplay}")]
 [DebuggerTypeProxy(typeof(CollectionDebugView))]
-public readonly struct CharPixels : IEnumerable<CharPixel>, IEquatable<CharPixels>
+public readonly struct CharPixels : IReadOnlyCollection<CharPixel>, IEquatable<CharPixels>
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private readonly IReadOnlyCollection<CharPixel> items;
+    private readonly ImmutableArray<CharPixel> items;
 
     private CharPixels(IEnumerable<CharPixel> pixels, int col, int row, bool hasMissingColumns)
     {
-        items = pixels.ToArray();
+        items = [.. pixels];
         Cols = col;
         Rows = row;
         HasMissingColumns = hasMissingColumns;
     }
 
     /// <summary>Gets the total of pixels.</summary>
-    public int Count => items?.Count ?? 0;
+    public int Count => items.Length;
 
     /// <summary>Gets the number of columns.</summary>
     public int Cols { get; }
@@ -148,8 +148,7 @@ public readonly struct CharPixels : IEnumerable<CharPixel>, IEquatable<CharPixel
 
     /// <inheritdoc />
     [Pure]
-    public IEnumerator<CharPixel> GetEnumerator()
-        => (items ?? []).GetEnumerator();
+    public IEnumerator<CharPixel> GetEnumerator() => items.AsEnumerable().GetEnumerator();
 
     /// <inheritdoc />
     [Pure]

@@ -36,6 +36,10 @@ public readonly struct Point3D(int x, int y, int z) : IEquatable<Point3D>
     public int ManhattanDistance(Point3D other)
         => (X - other.X).Abs() + (Y - other.Y).Abs() + (Z - other.Z).Abs();
 
+    /// <summary>Represents the point as a vector.</summary>
+    [Pure]
+    public Vector3D Vector() => new(X, Y, Z);
+
     [Pure]
     private Point3D Add(Vector3D vector)
         => new(X + vector.X, Y + vector.Y, Z + vector.Z);

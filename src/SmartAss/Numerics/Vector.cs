@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace SmartAss.Numerics;
 
-public readonly struct Vector : IEquatable<Vector>
+public readonly struct Vector(int x, int y) : IEquatable<Vector>
 {
     /// <summary>Zero length vector.</summary>
     public static readonly Vector O;
@@ -37,24 +37,17 @@ public readonly struct Vector : IEquatable<Vector>
     /// <summary>Southwest (-1, 1).</summary>
     public static readonly Vector SW = S + W;
 
-    /// <summary>Initializes a new instance of the <see cref="Vector"/> struct.</summary>
-    public Vector(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
-
     /// <summary> Gets or sets the x-coordinate.</summary>
-    public int X { get; }
+    public int X { get; } = x;
 
     /// <summary> Gets or sets the y-coordinate.</summary>
-    public int Y { get; }
+    public int Y { get; } = y;
 
     /// <summary>Gets the angle.</summary>
     public double Angle => Math.Atan2(Y, X);
 
     /// <summary>Gets the length².</summary>
-    public int Length2 => X.Sqr() + Y.Sqr();
+    public long Length2 => X.Long().Sqr() + Y.Long().Sqr();
 
     public bool IsHorizontal => X != 0 && Y == 0;
 

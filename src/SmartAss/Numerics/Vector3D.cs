@@ -39,6 +39,9 @@ public readonly struct Vector3D : IEquatable<Vector3D>
 #pragma warning restore S112 // General or reserved exceptions should never be thrown
     };
 
+    /// <summary>Gets the length².</summary>
+    public long Length2 => X.Long().Sqr() + Y.Long().Sqr() + Z.Long().Sqr();
+
     [Pure]
     public Vector3D Adjust(int x = 0, int y = 0, int z = 0) => new(X + x, Y + y, Z + z);
 

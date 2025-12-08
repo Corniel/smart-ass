@@ -9,27 +9,19 @@ using System.ComponentModel;
 namespace SmartAss.Numerics;
 
 [TypeConverter(typeof(Conversion.Numerics.Point3DTypeConverter))]
-public readonly struct Point3D : IEquatable<Point3D>
+public readonly struct Point3D(int x, int y, int z) : IEquatable<Point3D>
 {
     /// <summary>The origin.</summary>
     public static readonly Point3D O;
 
-    /// <summary>Initializes a new instance of the <see cref="Point3D"/> struct.</summary>
-    public Point3D(int x, int y, int z)
-    {
-        X = x;
-        Y = y;
-        Z = z;
-    }
-
     /// <summary> Gets or sets the x-coordinate.</summary>
-    public int X { get; }
+    public int X { get; } = x;
 
     /// <summary> Gets or sets the y-coordinate.</summary>
-    public int Y { get; }
+    public int Y { get; } = y;
 
     /// <summary> Gets or sets the z-coordinate.</summary>
-    public int Z { get; }
+    public int Z { get; } = z;
 
     /// <summary>Deconstructs the point.</summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -51,6 +43,10 @@ public readonly struct Point3D : IEquatable<Point3D>
     [Pure]
     private Point3D Subtract(Vector3D vector)
         => new(X - vector.X, Y - vector.Y, Z - vector.Z);
+
+    [Pure]
+    private Vector3D Subtract(Point3D other)
+        => new(X - other.X, Y - other.Y, Z - other.Z);
 
     /// <inheritdoc />
     [Pure]
@@ -81,6 +77,9 @@ public readonly struct Point3D : IEquatable<Point3D>
     public static Point3D operator +(Point3D point, Vector3D vector) => point.Add(vector);
 
     public static Point3D operator -(Point3D point, Vector3D vector) => point.Subtract(vector);
+
+    /// <summary>Calulates the vector distantce between two points.</summary>
+    public static Vector3D operator -(Point3D point, Point3D other) => point.Subtract(other);
 
     [Pure]
     public static Point3D Parse(string str)

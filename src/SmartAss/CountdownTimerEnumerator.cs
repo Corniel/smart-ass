@@ -30,10 +30,10 @@ internal struct CountdownTimerEnumerator<T>
     }
 
     /// <inheritdoc />
-    public T Current => array[index];
+    public readonly T Current => array[index];
 
     /// <inheritdoc />
-    object IEnumerator.Current => Current;
+    readonly object? IEnumerator.Current => Current;
 
     /// <inheritdoc />
     [Impure]

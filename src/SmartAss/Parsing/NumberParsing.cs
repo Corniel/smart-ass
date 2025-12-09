@@ -16,7 +16,12 @@ public static class NumberParsing
 
     /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
     [Pure]
-    public static int Int32(this string str) => str.Int32N() ?? 0;
+    public static int Int32(this string str)
+    {
+        var interator = new Int32sParser(str);
+        interator.MoveNext();
+        return interator.Current;
+    }
 
     /// <summary>Gets the <see cref="int"/> value of the <see cref="string"/>.</summary>
     [Pure]
@@ -71,19 +76,19 @@ public static class NumberParsing
 
     /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
     [Pure]
-    public static IEnumerable<int> Int32s(this IEnumerable<string> strings) => strings.SelectMany(Int32s);
+    public static Int32sParser Int32s(this string str) => new(str);
 
     /// <summary>Gets the <see cref="int"/> values of the <see cref="string"/>.</summary>
     [Pure]
-    public static IEnumerable<int> Int32s(this string str) => new Int32sParser(str);
+    public static IEnumerable<int> Int32s(this IEnumerable<string> strings) => strings.SelectMany(s => s.Int32s());
 
     /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>
     [Pure]
-    public static IEnumerable<long> Int64s(this string str) => new Int64sParser(str);
+    public static Int64sParser Int64s(this string str) => new(str);
 
     /// <summary>Gets the <see cref="long"/> values of the <see cref="string"/>.</summary>
     [Pure]
-    public static IEnumerable<long> Int64s(this IEnumerable<string> strings) => strings.SelectMany(Int64s);
+    public static IEnumerable<long> Int64s(this IEnumerable<string> strings) => strings.SelectMany(s => s.Int64s());
 
     /// <summary>Gets the <see cref="BigInteger"/> values of the <see cref="string"/>.</summary>
     [Pure]
@@ -91,20 +96,14 @@ public static class NumberParsing
         => str.Split(Splitters, SplitOptions)
         .Select(n => BigInt(n));
 
-    private struct Int32sParser : IEnumerator<int>, IEnumerable<int>
+    public struct Int32sParser(string s) : IEnumerator<int>, IEnumerable<int>
     {
-        private readonly string str;
+        private readonly string str = s;
         private int pos = -1;
 
-        public Int32sParser(string s)
-        {
-            str = s;
-            Current = 0;
-        }
+        public int Current { get; private set; } = 0;
 
-        public int Current { get; private set; }
-
-        object IEnumerator.Current => Current;
+        readonly object IEnumerator.Current => Current;
 
         [Impure]
         public bool MoveNext()
@@ -127,31 +126,24 @@ public static class NumberParsing
             return any;
         }
 
-        public void Reset() => Do.Nothing();
+        [Pure]
+        public readonly IEnumerator<int> GetEnumerator() => this;
 
         [Pure]
-        public IEnumerator<int> GetEnumerator() => this;
+        readonly IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        [Pure]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public readonly void Dispose() { /* Nothing to dispose */ }
 
-        public void Dispose() => Do.Nothing();
+        public void Reset() => throw new NotSupportedException();
     }
 
-    private struct Int64sParser : IEnumerator<long>, IEnumerable<long>
+    public struct Int64sParser(string s) : IEnumerator<long>, IEnumerable<long>
     {
-        private readonly string str;
         private int pos = -1;
 
-        public Int64sParser(string s)
-        {
-            str = s;
-            Current = 0;
-        }
+        public long Current { get; private set; } = 0;
 
-        public long Current { get; private set; }
-
-        object IEnumerator.Current => Current;
+        readonly object IEnumerator.Current => Current;
 
         [Impure]
         public bool MoveNext()
@@ -159,12 +151,12 @@ public static class NumberParsing
             var any = false;
             var negative = false;
             Current = 0;
-            while (++pos < str.Length)
+            while (++pos < s.Length)
             {
-                var ch = str[pos];
+                var ch = s[pos];
                 if (ch >= '0' && ch <= '9')
                 {
-                    negative |= !any && pos != 0 && str[pos - 1] == '-';
+                    negative |= !any && pos != 0 && s[pos - 1] == '-';
                     any = true;
                     Current *= 10;
                     Current += negative ? -(ch - '0') : ch - '0';
@@ -174,14 +166,14 @@ public static class NumberParsing
             return any;
         }
 
-        public void Reset() => Do.Nothing();
+        [Pure]
+        public readonly IEnumerator<long> GetEnumerator() => this;
 
         [Pure]
-        public IEnumerator<long> GetEnumerator() => this;
+        readonly IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        [Pure]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public readonly void Dispose() { /* Nothing to dispose */ }
 
-        public void Dispose() => Do.Nothing();
+        public void Reset() => throw new NotSupportedException();
     }
 }

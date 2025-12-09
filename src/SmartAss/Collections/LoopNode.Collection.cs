@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SmartAss.Collections;
@@ -11,7 +12,7 @@ public partial class LoopNode<T>
     object ICollection.SyncRoot => false;
 
     /// <inheritdoc />
-    public void CopyTo(Array array, int index) => ToArray().CopyTo(array, index);
+    public void CopyTo(Array array, int index) => Fix().ToArray().CopyTo(array, index);
 
     /// <summary>Bypasses the specified number of nodes in the loop.</summary>
     [Pure]
@@ -39,9 +40,9 @@ public partial class LoopNode<T>
         }
     }
 
-    /// <summary>Creates an array of the nodes in the loop.</summary>
+    /// <summary>Creates an immutable array of the nodes in the loop.</summary>
     [Pure]
-    public LoopNode<T>[] ToArray() => GetEnumerator().Take(Count).ToArray();
+    public ImmutableArray<LoopNode<T>> Fix() => [.. GetEnumerator().Take(Count)];
 
     /// <summary>Creates an list of the nodes in the loop.</summary>
     [Pure]

@@ -5,6 +5,27 @@ namespace System.Linq;
 
 public static class SmartAssEnumerabelExtensions
 {
+    extension<T>(IEnumerable<T> source)
+    {
+        [Pure]
+        public bool HasAtmost(int count, Func<T, bool> condition)
+        {
+            foreach (var item in source)
+                if (condition(item) && (--count) is -1) return false;
+
+            return true;
+        }
+    }
+
+    [Pure]
+    public static bool None<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+    {
+        foreach (TSource element in source)
+            if (predicate(element)) return false;
+
+        return true;
+    }
+
     [Pure]
     public static bool AllDistinct<TSource>(this IEnumerable<TSource> source)
     {

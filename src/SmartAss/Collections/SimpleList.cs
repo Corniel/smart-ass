@@ -4,6 +4,7 @@
 // </copyright>
 
 using SmartAss.Diagnostics;
+using SmartAss.Logging;
 using static System.FormattableString;
 
 namespace SmartAss.Collections;
@@ -15,15 +16,13 @@ namespace SmartAss.Collections;
 /// The capacity is a hard limit.
 /// The clear just resets the count.
 /// </remarks>
+[Mutable]
 [DebuggerDisplay("{DebuggerDisplay}")]
 [DebuggerTypeProxy(typeof(CollectionDebugView))]
-public class SimpleList<T> : ICollection<T>
+public class SimpleList<T>(int capacity) : ICollection<T>
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private readonly T[] array;
-
-    /// <summary>Initializes a new instance of the <see cref="SimpleList{T}"/> class.</summary>
-    public SimpleList(int capacity) => array = new T[capacity];
+    private readonly T[] array = new T[capacity];
 
     /// <summary>Gets an item of the simple list based on its index.</summary>
     public T this[int index] => array[index];
@@ -37,21 +36,17 @@ public class SimpleList<T> : ICollection<T>
     /// <inheritdoc />
     public bool IsReadOnly => false;
 
-    /// <summary>Returns true if the simple list is empty.</summary>
-    [Pure]
-    public bool IsEmpty() => Count == 0;
-
     /// <summary>Returns true if the simple list has any items.</summary>
     [Pure]
-    public bool HasAny() => Count != 0;
+    public bool NotEmpty => Count != 0;
 
     /// <summary>Returns true if the simple list contains one item.</summary>
     [Pure]
-    public bool HasSingle() => Count == 1;
+    public bool HasSingle => Count == 1;
 
     /// <summary>Returns true if the simple list contains multiple items.</summary>
     [Pure]
-    public bool HasMultiple() => Count > 1;
+    public bool HasMultiple => Count > 1;
 
     /// <inheritdoc />
     public virtual void Add(T item) => array[Count++] = item;
@@ -62,9 +57,15 @@ public class SimpleList<T> : ICollection<T>
         Guard.NotNull(items, nameof(items));
 
         foreach (var item in items)
-        {
-            Add(item);
-        }
+            array[Count++] = item;
+    }
+
+    public void Set(IEnumerable<T> items)
+    {
+        Guard.NotNull(items, nameof(items));
+        Count = 0;
+        foreach (var item in items)
+            array[Count++] = item;
     }
 
     /// <summary>Gets the index of the item.</summary>
@@ -78,19 +79,22 @@ public class SimpleList<T> : ICollection<T>
     public int IndexOf(T item)
     {
         for (var index = 0; index < Count; index++)
-        {
             if (Equals(array[index], item))
-            {
                 return index;
-            }
-        }
 
         return -1;
     }
 
     /// <inheritdoc />
     [Pure]
-    public virtual bool Contains(T item) => IndexOf(item) != -1;
+    public virtual bool Contains(T item)
+    {
+        for (var index = 0; index < Count; index++)
+            if (Equals(array[index], item))
+                return true;
+
+        return false;
+    }
 
     /// <inheritdoc />
     [CollectionMutation]
@@ -120,9 +124,13 @@ public class SimpleList<T> : ICollection<T>
     /// <inheritdoc />
     public virtual void Clear() => Count = 0;
 
+    /// <inheritdoc cref="IEnumerable.GetEnumerator()" />
+    [Pure]
+    public Iterator GetEnumerator() => new(array, Count);
+
     /// <inheritdoc />
     [Pure]
-    public IEnumerator<T> GetEnumerator() => new ArrayEnumerator<T>(array, Count);
+    IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
 
     /// <inheritdoc />
     [Pure]
@@ -131,4 +139,31 @@ public class SimpleList<T> : ICollection<T>
     /// <summary>Represents the simple list as a DEBUG <see cref="string"/>.</summary>
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     internal string DebuggerDisplay => Invariant($"Count = {Count:#,##0}, Capacity: {Capacity:#,##0}");
+
+    /// <summary>Enumerates through a (subset of) an array.</summary>
+    /// <typeparam name="T">
+    /// The type of the array to enumerate through.
+    /// </typeparam>
+    public struct Iterator(T[] array, int count) : IEnumerator<T>
+    {
+        private readonly T[] Array = array;
+        private readonly int End = count;
+        private int index = -1;
+
+        /// <inheritdoc />
+        public readonly T Current => Array[index];
+
+        /// <inheritdoc />
+        readonly object? IEnumerator.Current => Current;
+
+        /// <inheritdoc />
+        [Impure]
+        public bool MoveNext() => ++index < End;
+
+        /// <inheritdoc />
+        public void Reset() => throw new NotSupportedException();
+
+        /// <inheritdoc />
+        public readonly void Dispose() { /* Nothing to dispose */ }
+    }
 }

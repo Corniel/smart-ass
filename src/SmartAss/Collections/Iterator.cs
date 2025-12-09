@@ -8,5 +8,5 @@ public interface Iterator<out T> : IEnumerable<T>, IEnumerator<T>
     [Pure]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    object IEnumerator.Current => Current;
+    object? IEnumerator.Current => Current;
 }

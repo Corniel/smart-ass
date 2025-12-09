@@ -10,7 +10,7 @@ public sealed class PointTypeConverter : TypeConverter
         => sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
 
     [Pure]
-    public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object? value)
+    public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
        => value is string str
         ? Point.Parse(str)
         : base.ConvertFrom(context, culture, value);

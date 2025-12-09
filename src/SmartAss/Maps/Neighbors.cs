@@ -23,20 +23,12 @@ public static class Neighbors
     public static GridNeighbors Sphere<T>(Grid<T> grid, Point position, IReadOnlyCollection<CompassPoint> directions)
         => new AdHoc<T>(grid, position, directions, n => new Point(n.X.Mod(grid.Cols), n.Y.Mod(grid.Rows)));
 
-    private readonly struct AdHoc<T> : GridNeighbors
+    private readonly struct AdHoc<T>(Grid<T> grid, Point position, IReadOnlyCollection<CompassPoint> directions, Func<Point, Point> selector) : GridNeighbors
     {
-        public AdHoc(Grid<T> grid, Point position, IReadOnlyCollection<CompassPoint> directions, Func<Point, Point> selector)
-        {
-            Grid = grid;
-            Position = position;
-            this.directions = directions;
-            Selector = selector;
-        }
-
-        private readonly Grid<T> Grid;
-        private readonly Point Position;
-        private readonly IReadOnlyCollection<CompassPoint> directions;
-        private readonly Func<Point, Point> Selector;
+        private readonly Grid<T> Grid = grid;
+        private readonly Point Position = position;
+        private readonly IReadOnlyCollection<CompassPoint> directions = directions;
+        private readonly Func<Point, Point> Selector = selector;
 
         public int Count => Directions.Count();
 
@@ -51,21 +43,19 @@ public static class Neighbors
         {
             get
             {
-                var select = Selector;
-                var pos = Position;
-                var grid = Grid;
-                return directions.Select(dir => KeyValuePair.Create(dir, select(pos + dir.ToVector())))
-                    .Where(p => grid.OnGrid(p.Value));
+                var (sel, pos, grd) = (Selector, Position, Grid);
+                return directions.Select(dir => KeyValuePair.Create(dir, sel(pos + dir.ToVector())))
+                    .Where(p => grd.OnGrid(p.Value));
             }
         }
 
         [Pure]
         public IEnumerator<Point> GetEnumerator()
         {
-            var grid = Grid;
+            var grd = Grid;
             return Position.Projections(directions.Select(p => p.ToVector()))
                 .Select(Selector)
-                .Where(grid.OnGrid)
+                .Where(grd.OnGrid)
                 .GetEnumerator();
         }
 

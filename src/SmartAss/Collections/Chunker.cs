@@ -1,22 +1,16 @@
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SmartAss.Collections;
 
-public struct Chunker<TSource> : IEnumerator<Slice<TSource>>, IEnumerable<Slice<TSource>>
+public struct Chunker<TSource>(IReadOnlyList<TSource> source, int groupSize) : IEnumerator<ImmutableArray<TSource>>, IEnumerable<ImmutableArray<TSource>>
 {
-    public Chunker(IReadOnlyList<TSource> source, int groupSize)
-    {
-        Source = source;
-        GroupSize = groupSize;
-        Offset = -groupSize;
-    }
-
-    private readonly IReadOnlyList<TSource> Source;
-    private readonly int GroupSize;
-    private int Offset;
+    private readonly ImmutableArray<TSource> Source = [.. source];
+    private readonly int GroupSize = groupSize;
+    private int Offset = -groupSize;
 
     /// <inheritdoc />
-    public readonly Slice<TSource> Current => new(Source, Offset, GroupSize);
+    public readonly ImmutableArray<TSource> Current => Source[Offset..(Offset + GroupSize)];
 
     /// <inheritdoc />
     readonly object? IEnumerator.Current => Current;
@@ -26,12 +20,12 @@ public struct Chunker<TSource> : IEnumerator<Slice<TSource>>, IEnumerable<Slice<
     public bool MoveNext()
     {
         Offset += GroupSize;
-        return Offset + GroupSize <= Source.Count;
+        return Offset + GroupSize <= Source.Length;
     }
 
     /// <inheritdoc />
     [Pure]
-    public readonly IEnumerator<Slice<TSource>> GetEnumerator() => this;
+    public readonly IEnumerator<ImmutableArray<TSource>> GetEnumerator() => this;
 
     /// <inheritdoc />
     [Pure]
